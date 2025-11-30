@@ -1,0 +1,35 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "globalDependencies": [
+        "**/.env.*local"
+    ],
+    "globalEnv": [
+        "NEXT_PUBLIC_BLOCKFROST_PROJECT_ID",
+        "NEXT_PUBLIC_BLOCKFROST_NETWORK",
+        "NEXT_PUBLIC_CARDANO_EXPLORER"
+    ],
+    "tasks": {
+        "build": {
+            "dependsOn": [
+                "^build"
+            ],
+            "outputs": [
+                ".next/**",
+                "!.next/cache/**",
+                "dist/**"
+            ]
+        },
+        "dev": {
+            "cache": false,
+            "persistent": true
+        },
+        "lint": {
+            "dependsOn": [
+                "^lint"
+            ]
+        },
+        "clean": {
+            "cache": false
+        }
+    }
+}

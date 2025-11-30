@@ -1,0 +1,35 @@
+{
+    "name": "@proofchain/issuer",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev -p 3001",
+        "build": "next build",
+        "start": "next start -p 3001",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@proofchain/chain": "*",
+        "@proofchain/ui": "*",
+        "@types/form-data": "^2.2.1",
+        "axios": "^1.7.9",
+        "form-data": "^4.0.5",
+        "lucide-react": "^0.468.0",
+        "next": "^15.1.0",
+        "papaparse": "^5.4.1",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.1",
+        "@types/papaparse": "^5.3.15",
+        "@types/react": "^18.3.12",
+        "@types/react-dom": "^18.3.1",
+        "autoprefixer": "^10.4.20",
+        "eslint": "^9.17.0",
+        "eslint-config-next": "^15.1.0",
+        "postcss": "^8.4.49",
+        "tailwindcss": "^3.4.17",
+        "typescript": "^5.6.3"
+    }
+}
