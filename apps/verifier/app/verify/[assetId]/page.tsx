@@ -20,7 +20,7 @@ import {
     Award
 } from 'lucide-react';
 import { verifyNFT, type VerificationResult, getIPFSGatewayUrl } from '@proofchain/chain';
-import { ThemeToggle, LanguageSelector } from '@proofchain/ui';
+import { IPFSImage } from '@proofchain/ui';
 import Link from 'next/link';
 
 export default function VerifyPage() {
@@ -56,26 +56,7 @@ export default function VerifyPage() {
     const explorerUrl = process.env.NEXT_PUBLIC_CARDANO_EXPLORER || 'https://preprod.cardanoscan.io';
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
-            {/* Header */}
-            <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800">
-                <div className="container mx-auto px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                            <Shield className="w-8 h-8 text-purple-600" />
-                            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                                PROOFCHAIN
-                            </h1>
-                        </Link>
-
-                        <div className="flex items-center gap-3">
-                            <LanguageSelector />
-                            <ThemeToggle />
-                        </div>
-                    </div>
-                </div>
-            </header>
-
+        <div className="min-h-full">
             <div className="container mx-auto px-4 py-12">
                 <button
                     onClick={() => router.back()}
@@ -121,6 +102,23 @@ export default function VerifyPage() {
 
                             {/* Content */}
                             <div className="p-8 space-y-6">
+                                {/* Document Image */}
+                                {verification.metadata.image && (
+                                    <div className="mb-6">
+                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">
+                                            📄 Image du Diplôme:
+                                        </p>
+                                        <div className="relative rounded-xl overflow-hidden border-2 border-purple-200 dark:border-purple-800 shadow-lg bg-gray-50 dark:bg-gray-900 min-h-[300px]">
+                                            <IPFSImage
+                                                src={getIPFSGatewayUrl(verification.metadata.image)}
+                                                alt={`Diplôme de ${verification.metadata.attributes.studentName}`}
+                                                className="w-full h-auto max-h-[500px]"
+                                                fallbackText="Image du diplôme non disponible"
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+
                                 {/* Student ID */}
                                 <div>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">ID Étudiant</p>
@@ -173,16 +171,16 @@ export default function VerifyPage() {
                                 </div>
 
                                 {/* Honors/Grade */}
-                                {(verification.metadata.attributes.honors || verification.metadata.attributes.grade) && (
+                                {((verification.metadata.attributes as any).honors || (verification.metadata.attributes as any).grade) && (
                                     <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-                                        {verification.metadata.attributes.honors && (
+                                        {(verification.metadata.attributes as any).honors && (
                                             <div className="inline-block px-4 py-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-lg font-medium">
-                                                🏆 {verification.metadata.attributes.honors}
+                                                🏆 {(verification.metadata.attributes as any).honors}
                                             </div>
                                         )}
-                                        {verification.metadata.attributes.grade && (
+                                        {(verification.metadata.attributes as any).grade && (
                                             <p className="mt-3 text-gray-700 dark:text-gray-300">
-                                                Note: <span className="font-bold">{verification.metadata.attributes.grade}</span>
+                                                Note: <span className="font-bold">{(verification.metadata.attributes as any).grade}</span>
                                             </p>
                                         )}
                                     </div>

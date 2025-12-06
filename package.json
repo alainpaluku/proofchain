@@ -5,8 +5,7 @@
   "description": "Cardano blockchain-based academic verification platform",
   "workspaces": [
     "apps/*",
-    "packages/*",
-    "api/*"
+    "packages/*"
   ],
   "scripts": {
     "dev": "turbo run dev",

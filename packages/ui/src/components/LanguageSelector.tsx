@@ -18,7 +18,7 @@ const languages: { code: Language; name: string; flag: string }[] = [
 
 interface LanguageSelectorProps {
     className?: string;
-    variant?: 'dropdown' | 'buttons';
+    variant?: 'dropdown' | 'buttons' | 'icon';
 }
 
 export function LanguageSelector({ className = '', variant = 'dropdown' }: LanguageSelectorProps) {
@@ -45,6 +45,56 @@ export function LanguageSelector({ className = '', variant = 'dropdown' }: Langu
                         {lang.flag} {lang.code.toUpperCase()}
                     </button>
                 ))}
+            </div>
+        );
+    }
+
+    if (variant === 'icon') {
+        return (
+            <div className={`relative ${className}`}>
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="p-2 min-w-[44px] min-h-[44px] rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    aria-label="Changer la langue"
+                    aria-expanded={isOpen}
+                    aria-haspopup="true"
+                >
+                    <Languages className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                </button>
+
+                {isOpen && (
+                    <>
+                        <div
+                            className="fixed inset-0 z-40"
+                            onClick={() => setIsOpen(false)}
+                        />
+                        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
+                            <div className="py-1">
+                                {languages.map((lang) => (
+                                    <button
+                                        key={lang.code}
+                                        onClick={() => {
+                                            setLanguage(lang.code);
+                                            setIsOpen(false);
+                                        }}
+                                        className={`
+                                            w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors
+                                            ${language === lang.code ? 'bg-gray-50 dark:bg-gray-700/50' : ''}
+                                        `}
+                                    >
+                                        <span className="text-xl">{lang.flag}</span>
+                                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            {lang.name}
+                                        </span>
+                                        {language === lang.code && (
+                                            <div className="ml-auto w-2 h-2 rounded-full bg-purple-600" />
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
         );
     }

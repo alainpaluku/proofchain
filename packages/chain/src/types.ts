@@ -41,6 +41,7 @@ export interface MintingResult {
     assetId?: string;
     error?: string;
     policyId?: string;
+    metadata?: DiplomaMetadata;
 }
 
 export interface VerificationResult {

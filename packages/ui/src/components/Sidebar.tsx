@@ -1,6 +1,6 @@
 /**
  * PROOFCHAIN - Sidebar Navigation Component
- * Reusable sidebar for all applications
+ * Reusable sidebar for all applications with collapse support
  */
 
 'use client';
@@ -22,23 +22,49 @@ interface SidebarProps {
     logo?: React.ReactNode;
     footer?: React.ReactNode;
     className?: string;
+    collapsed?: boolean;
+    onClose?: () => void;
 }
 
-export function Sidebar({ items, logo, footer, className = '' }: SidebarProps) {
+export function Sidebar({ 
+    items, 
+    logo, 
+    footer, 
+    className = '',
+    collapsed = false,
+    onClose
+}: SidebarProps) {
     const pathname = usePathname();
+
+    const handleLinkClick = () => {
+        // Close mobile menu when a link is clicked
+        onClose?.();
+    };
 
     return (
         <aside
             className={`
-        w-64 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800
-        flex flex-col fixed left-0 top-0 z-40
-        ${className}
-      `}
+                ${collapsed ? 'w-20' : 'w-64'} 
+                h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800
+                flex flex-col fixed left-0 top-0 z-40 transition-all duration-300
+                ${className}
+            `}
         >
             {/* Logo */}
             {logo && (
-                <div className="p-6 border-b border-gray-200 dark:border-gray-800">
-                    {logo}
+                <div className={`
+                    ${collapsed ? 'p-4' : 'p-6'} 
+                    border-b border-gray-200 dark:border-gray-800 
+                    transition-all duration-300
+                    ${collapsed ? 'flex justify-center' : ''}
+                `}>
+                    {collapsed ? (
+                        <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+                            <span className="text-white font-bold text-lg">P</span>
+                        </div>
+                    ) : (
+                        logo
+                    )}
                 </div>
             )}
 
@@ -52,20 +78,27 @@ export function Sidebar({ items, logo, footer, className = '' }: SidebarProps) {
                         <Link
                             key={item.href}
                             href={item.href}
+                            onClick={handleLinkClick}
                             className={`
-                flex items-center gap-3 px-4 py-3 rounded-lg transition-all
-                ${isActive
+                                flex items-center ${collapsed ? 'justify-center' : 'gap-3'} 
+                                px-4 py-3 rounded-lg transition-all
+                                ${isActive
                                     ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-medium'
                                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                                 }
-              `}
+                            `}
+                            title={collapsed ? item.label : undefined}
                         >
-                            <Icon className="w-5 h-5" />
-                            <span className="flex-1">{item.label}</span>
-                            {item.badge && (
-                                <span className="px-2 py-0.5 text-xs font-semibold bg-purple-600 text-white rounded-full">
-                                    {item.badge}
-                                </span>
+                            <Icon className="w-5 h-5 flex-shrink-0" />
+                            {!collapsed && (
+                                <>
+                                    <span className="flex-1">{item.label}</span>
+                                    {item.badge && (
+                                        <span className="px-2 py-0.5 text-xs font-semibold bg-purple-600 text-white rounded-full">
+                                            {item.badge}
+                                        </span>
+                                    )}
+                                </>
                             )}
                         </Link>
                     );
@@ -73,7 +106,7 @@ export function Sidebar({ items, logo, footer, className = '' }: SidebarProps) {
             </nav>
 
             {/* Footer */}
-            {footer && (
+            {footer && !collapsed && (
                 <div className="p-4 border-t border-gray-200 dark:border-gray-800">
                     {footer}
                 </div>

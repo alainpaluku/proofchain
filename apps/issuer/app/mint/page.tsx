@@ -22,10 +22,11 @@ import {
     type MintingResult
 } from '@proofchain/chain';
 import { useWallet, ConnectWalletButton, useI18n } from '@proofchain/ui';
+import { issuerTranslations } from '../../lib/translations';
 
 export default function MintPage() {
     const { walletApi, connected } = useWallet();
-    const { t } = useI18n();
+    const { t } = useI18n(issuerTranslations);
 
     const [formData, setFormData] = useState({
         studentName: '',
@@ -35,10 +36,10 @@ export default function MintPage() {
         institution: '',
         institutionId: '',
         graduationDate: '',
-        graduationDate: '',
     });
 
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
 
     const [isUploading, setIsUploading] = useState(false);
     const [isMinting, setIsMinting] = useState(false);
@@ -54,30 +55,63 @@ export default function MintPage() {
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        console.log('📁 File selected:', file?.name, file?.size, 'bytes');
+        console.log('📁 File selected:', file?.name, file?.size, 'bytes', file?.type);
 
         if (!file) {
             console.warn('⚠️ No file selected');
             setImageFile(null);
+            setImagePreview(null);
             return;
         }
 
-        // Validate file type - only PNG or JPG
+        // STRICT validation - only PNG or JPG/JPEG
         const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
         const validExtensions = ['.png', '.jpg', '.jpeg'];
         const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
 
-        if (!validTypes.includes(file.type) && !validExtensions.includes(fileExtension)) {
-            setError('⚠️ L\'image doit être un fichier PNG ou JPG uniquement');
-            console.error('❌ Invalid image type:', file.type, file.name);
+        // Check both MIME type AND file extension
+        const isValidType = validTypes.includes(file.type);
+        const isValidExtension = validExtensions.includes(fileExtension);
+
+        if (!isValidType || !isValidExtension) {
+            setError(`⚠️ Format de fichier non valide: "${file.type}" (${fileExtension})\n\n✗ Seuls les fichiers PNG et JPG/JPEG sont acceptés.\n\nVeuillez soumettre un format compatible.`);
+            console.error('❌ Invalid image format:', {
+                fileName: file.name,
+                mimeType: file.type,
+                extension: fileExtension,
+                validTypes,
+                validExtensions
+            });
             e.target.value = ''; // Reset input
             setImageFile(null);
+            setImagePreview(null);
+            return;
+        }
+
+        // Validate file size (max 10 MB)
+        const maxFileSize = 10 * 1024 * 1024; // 10 MB
+        if (file.size > maxFileSize) {
+            setError(`⚠️ L'image est trop volumineuse: ${(file.size / 1024 / 1024).toFixed(2)} MB\n\nTaille maximum: 10 MB\n\nVeuillez compresser votre image.`);
+            console.error('❌ Image too large:', file.size, 'bytes');
+            e.target.value = '';
+            setImageFile(null);
+            setImagePreview(null);
             return;
         }
 
         setImageFile(file);
         setError(null); // Clear any previous errors
-        console.log('✅ Image file set:', file.name, file.size, 'bytes', file.type);
+
+        // Create local preview URL
+        const previewUrl = URL.createObjectURL(file);
+        setImagePreview(previewUrl);
+
+        console.log('✅ Image file validated and set:', {
+            name: file.name,
+            size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
+            type: file.type,
+            extension: fileExtension
+        });
     };
 
     const handleMint = async (e: React.FormEvent) => {
@@ -222,9 +256,9 @@ export default function MintPage() {
                     institution: '',
                     institutionId: '',
                     graduationDate: '',
-                    graduationDate: '',
                 });
                 setImageFile(null);
+                setImagePreview(null);
                 // Reset file input
                 const imgInput = document.getElementById('image-upload') as HTMLInputElement;
                 if (imgInput) imgInput.value = '';
@@ -243,32 +277,19 @@ export default function MintPage() {
     const explorerUrl = process.env.NEXT_PUBLIC_CARDANO_EXPLORER || 'https://preprod.cardanoscan.io';
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+        <div className="p-6 space-y-8 max-w-4xl mx-auto">
             {/* Header */}
-            <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800">
-                <div className="container mx-auto px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <Coins className="w-8 h-8 text-purple-600" />
-                            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                                PROOFCHAIN Issuer
-                            </h1>
-                        </div>
-                        <ConnectWalletButton showBalance={true} />
-                    </div>
+            <div className="flex items-center justify-between">
+                <div>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        {t('action.mint')} Diploma NFT
+                    </h1>
+                    <p className="text-gray-600 dark:text-gray-400">
+                        Créez un diplôme NFT sur la blockchain Cardano
+                    </p>
                 </div>
-            </header>
-
-            <div className="container mx-auto px-4 py-8">
-                <div className="max-w-4xl mx-auto">
-                    <div className="mb-8">
-                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                            {t('action.mint')} Diploma NFT
-                        </h2>
-                        <p className="text-gray-600 dark:text-gray-400">
-                            Créez un diplôme NFT sur la blockchain Cardano
-                        </p>
-                    </div>
+                <ConnectWalletButton showBalance={true} />
+            </div>
 
                     {/* Success Message */}
                     {mintResult?.success && (
@@ -282,6 +303,34 @@ export default function MintPage() {
                                     <p className="text-green-600 dark:text-green-500 mb-4">
                                         Le diplôme NFT a été créé sur la blockchain Cardano. Les frais ont été payés avec vos ADA de test.
                                     </p>
+
+                                    {/* Document Image Preview */}
+                                    {(imagePreview || mintResult.metadata?.image) && (
+                                        <div className="mb-4 bg-white dark:bg-gray-800 rounded-lg p-4">
+                                            <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
+                                                📄 Aperçu du Document:
+                                            </p>
+                                            <div className="relative rounded-lg overflow-hidden border-2 border-gray-200 dark:border-gray-700 shadow-lg">
+                                                <img
+                                                    src={imagePreview || (mintResult.metadata?.image ? (Array.isArray(mintResult.metadata.image) ? mintResult.metadata.image.join('') : mintResult.metadata.image) : '')}
+                                                    alt="Document émis"
+                                                    className="w-full h-auto max-h-96 object-contain bg-gray-100 dark:bg-gray-900"
+                                                    onError={(e) => {
+                                                        const target = e.target as HTMLImageElement;
+                                                        // If local preview fails, try IPFS URL
+                                                        if (imagePreview && mintResult.metadata?.image) {
+                                                            target.src = Array.isArray(mintResult.metadata.image)
+                                                                ? mintResult.metadata.image.join('')
+                                                                : mintResult.metadata.image;
+                                                        } else {
+                                                            target.style.display = 'none';
+                                                        }
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+
                                     <div className="space-y-3 bg-white dark:bg-gray-800 rounded-lg p-4">
                                         <div>
                                             <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
@@ -526,25 +575,54 @@ export default function MintPage() {
                                     >
                                         <Upload className={`w-6 h-6 ${imageFile ? 'text-green-600' : 'text-gray-400'}`} />
                                         <span className={imageFile ? 'text-green-700 dark:text-green-400 font-medium' : 'text-gray-600 dark:text-gray-400'}>
-                                            {imageFile ? `✓ ${imageFile.name} (${(imageFile.size / 1024 / 1024).toFixed(2)} MB)` : 'Upload Image (PNG ou JPG)'}
+                                            {imageFile ? `✓ ${imageFile.name} (${(imageFile.size / 1024 / 1024).toFixed(2)} MB)` : 'Cliquez pour sélectionner une image (PNG ou JPG)'}
                                         </span>
                                     </label>
                                 </div>
-                                {imageFile && (
-                                    <p className="text-xs text-green-600 dark:text-green-400 mt-1">
-                                        ✓ Image sélectionnée: {imageFile.type}
-                                    </p>
+
+                                {/* Image Preview */}
+                                {imagePreview && (
+                                    <div className="mt-4 bg-white dark:bg-gray-800 rounded-lg p-4 border-2 border-green-500">
+                                        <p className="text-sm font-medium text-green-700 dark:text-green-400 mb-2">
+                                            ✓ Aperçu de l'image sélectionnée:
+                                        </p>
+                                        <div className="relative rounded-lg overflow-hidden border-2 border-gray-200 dark:border-gray-700 shadow-lg">
+                                            <img
+                                                src={imagePreview}
+                                                alt="Aperçu du diplôme"
+                                                className="w-full h-auto max-h-96 object-contain bg-gray-100 dark:bg-gray-900"
+                                            />
+                                        </div>
+                                        <div className="mt-2 flex items-center justify-between">
+                                            <p className="text-xs text-green-600 dark:text-green-400">
+                                                ✓ Format: {imageFile?.type} | Taille: {(imageFile!.size / 1024 / 1024).toFixed(2)} MB
+                                            </p>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setImageFile(null);
+                                                    setImagePreview(null);
+                                                    const imgInput = document.getElementById('image-upload') as HTMLInputElement;
+                                                    if (imgInput) imgInput.value = '';
+                                                }}
+                                                className="text-xs text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium"
+                                            >
+                                                ✗ Supprimer
+                                            </button>
+                                        </div>
+                                    </div>
                                 )}
+
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                                    Formats acceptés: PNG, JPG uniquement (max 10 MB)
+                                    ⚠️ Formats acceptés: <strong>PNG, JPG/JPEG uniquement</strong> (max 10 MB)
                                 </p>
                             </div>
 
                             {/* File Status Indicator */}
-                            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 text-sm">
+                            <div className={`rounded-lg p-3 text-sm ${imageFile ? 'bg-green-50 dark:bg-green-900/20 border border-green-500' : 'bg-red-50 dark:bg-red-900/20 border border-red-500'}`}>
                                 <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">État de l'image :</p>
                                 <p className={imageFile ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
-                                    {imageFile ? `✓ Image sélectionnée (${imageFile.type})` : '✗ Image manquante'}
+                                    {imageFile ? `✓ Image valide sélectionnée (${imageFile.type})` : '✗ Aucune image sélectionnée - Veuillez uploader un fichier PNG ou JPG'}
                                 </p>
                             </div>
                         </div>
@@ -624,8 +702,6 @@ export default function MintPage() {
                             </div>
                         )}
                     </form>
-                </div>
-            </div>
         </div>
     );
 }

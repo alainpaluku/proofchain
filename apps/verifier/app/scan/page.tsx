@@ -1,18 +1,13 @@
-/**
- * PROOFCHAIN Verifier - QR Code Scanner Page
- * Scan QR codes to verify diplomas
- */
-
 'use client';
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, QrCode, Camera, Upload } from 'lucide-react';
-import { ThemeToggle, LanguageSelector } from '@proofchain/ui';
-import Link from 'next/link';
+import { ArrowLeft, QrCode, Camera, Upload, Scan, FileSearch } from 'lucide-react';
+import { useI18n } from '@proofchain/ui';
 
 export default function ScanPage() {
     const router = useRouter();
+    const { t } = useI18n();
     const [manualInput, setManualInput] = useState('');
 
     const handleManualSubmit = (e: React.FormEvent) => {
@@ -23,111 +18,117 @@ export default function ScanPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             {/* Header */}
-            <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800">
-                <div className="container mx-auto px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                            <QrCode className="w-8 h-8 text-purple-600" />
-                            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                                PROOFCHAIN
+            <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
+                <div className="max-w-4xl mx-auto px-4 py-4">
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={() => router.back()}
+                            className="p-2 min-w-[44px] min-h-[44px] hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors"
+                            aria-label="Retour"
+                        >
+                            <ArrowLeft className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                        </button>
+                        <div>
+                            <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                <Scan className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                                {t('scan.title')}
                             </h1>
-                        </Link>
-
-                        <div className="flex items-center gap-3">
-                            <LanguageSelector />
-                            <ThemeToggle />
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                {t('scan.subtitle')}
+                            </p>
                         </div>
                     </div>
                 </div>
-            </header>
+            </div>
 
-            <div className="container mx-auto px-4 py-12">
-                <button
-                    onClick={() => router.back()}
-                    className="flex items-center gap-2 text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 mb-8 transition-colors"
-                >
-                    <ArrowLeft className="w-5 h-5" />
-                    Retour
-                </button>
+            {/* Content */}
+            <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+                {/* Scanner Section */}
+                <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm">
+                    <div className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-2xl p-8">
+                        {/* Scanner Placeholder */}
+                        <div className="relative aspect-square max-w-md mx-auto mb-6">
+                            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 dark:from-purple-600/10 dark:to-blue-600/10 rounded-2xl" />
+                            <div className="relative h-full flex flex-col items-center justify-center gap-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl bg-white/50 dark:bg-gray-800/50">
+                                <Camera className="w-24 h-24 text-gray-400 dark:text-gray-500" />
+                                <div className="text-center space-y-1">
+                                    <p className="text-gray-600 dark:text-gray-400 font-medium text-lg">
+                                        Scanner QR Code
+                                    </p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-500 max-w-xs">
+                                        Fonctionnalité en développement
+                                    </p>
+                                </div>
+                            </div>
 
-                <div className="max-w-2xl mx-auto space-y-8">
-                    <div className="text-center">
-                        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                            Scanner un QR Code
-                        </h2>
-                        <p className="text-lg text-gray-600 dark:text-gray-400">
-                            Scannez le QR code du diplôme pour vérifier son authenticité
-                        </p>
-                    </div>
-
-                    {/* QR Scanner Placeholder */}
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                        <div className="aspect-square bg-gray-100 dark:bg-gray-700 rounded-xl flex flex-col items-center justify-center gap-4">
-                            <Camera className="w-24 h-24 text-gray-400" />
-                            <p className="text-gray-500 dark:text-gray-400 text-center">
-                                Scanner QR Code
-                            </p>
-                            <p className="text-sm text-gray-400 dark:text-gray-500 text-center max-w-xs">
-                                Fonctionnalité de scan en cours de développement.
-                                Utilisez la saisie manuelle ci-dessous.
-                            </p>
+                            {/* Corner Decorations */}
+                            <div className="absolute top-3 left-3 w-8 h-8 border-t-4 border-l-4 border-purple-600 rounded-tl-lg" />
+                            <div className="absolute top-3 right-3 w-8 h-8 border-t-4 border-r-4 border-purple-600 rounded-tr-lg" />
+                            <div className="absolute bottom-3 left-3 w-8 h-8 border-b-4 border-l-4 border-purple-600 rounded-bl-lg" />
+                            <div className="absolute bottom-3 right-3 w-8 h-8 border-b-4 border-r-4 border-purple-600 rounded-br-lg" />
                         </div>
 
-                        <div className="mt-6 flex gap-3">
+                        {/* Action Buttons */}
+                        <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
                             <button
                                 disabled
-                                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-xl font-medium cursor-not-allowed"
+                                className="flex items-center justify-center gap-2 px-6 py-4 bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 rounded-xl font-medium cursor-not-allowed"
                             >
                                 <Camera className="w-5 h-5" />
-                                Activer la caméra
+                                Caméra
                             </button>
                             <button
                                 disabled
-                                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-xl font-medium cursor-not-allowed"
+                                className="flex items-center justify-center gap-2 px-6 py-4 bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 rounded-xl font-medium cursor-not-allowed"
                             >
                                 <Upload className="w-5 h-5" />
-                                Importer une image
+                                Importer
                             </button>
                         </div>
                     </div>
+                </div>
 
-                    {/* Manual Input */}
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                            Ou entrez l'Asset ID manuellement
-                        </h3>
-                        <form onSubmit={handleManualSubmit} className="space-y-4">
-                            <input
-                                type="text"
-                                value={manualInput}
-                                onChange={(e) => setManualInput(e.target.value)}
-                                placeholder="Collez l'Asset ID ici..."
-                                className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-purple-600 dark:focus:border-purple-400 focus:outline-none transition-all"
-                            />
-                            <button
-                                type="submit"
-                                disabled={!manualInput.trim()}
-                                className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                Vérifier le diplôme
-                            </button>
-                        </form>
+                {/* Divider */}
+                <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-300 dark:border-gray-700" />
+                    </div>
+                    <div className="relative flex justify-center">
+                        <span className="px-4 bg-gray-50 dark:bg-gray-900 text-sm text-gray-500 dark:text-gray-400 font-medium">
+                            OU
+                        </span>
+                    </div>
+                </div>
+
+                {/* Manual Input */}
+                <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm">
+                    <div className="flex items-center gap-2 mb-6">
+                        <FileSearch className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                            {t('scan.manualTitle')}
+                        </h2>
                     </div>
 
-                    {/* Instructions */}
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-6">
-                        <h4 className="font-bold text-blue-900 dark:text-blue-300 mb-3">
-                            Comment utiliser le scanner ?
-                        </h4>
-                        <ol className="space-y-2 text-sm text-blue-800 dark:text-blue-400">
-                            <li>1. Positionnez le QR code du diplôme devant votre caméra</li>
-                            <li>2. Attendez que le code soit détecté automatiquement</li>
-                            <li>3. La vérification se lancera automatiquement</li>
-                            <li>4. Consultez les résultats de la vérification</li>
-                        </ol>
-                    </div>
+                    <form onSubmit={handleManualSubmit} className="space-y-4">
+                        <input
+                            type="text"
+                            value={manualInput}
+                            onChange={(e) => setManualInput(e.target.value)}
+                            placeholder={t('scan.manualPlaceholder')}
+                            className="w-full px-5 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:border-purple-600 dark:focus:border-purple-400 focus:outline-none focus:ring-4 focus:ring-purple-100 dark:focus:ring-purple-900/30 transition-all"
+                        />
+
+                        <button
+                            type="submit"
+                            disabled={!manualInput.trim()}
+                            className="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center gap-2"
+                        >
+                            <QrCode className="w-5 h-5" />
+                            {t('scan.verifyButton')}
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

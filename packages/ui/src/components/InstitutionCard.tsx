@@ -84,21 +84,7 @@ export function InstitutionCard({
                     </div>
                 </div>
 
-                {/* Honors/Grade */}
-                {(metadata.attributes.honors || metadata.attributes.grade) && (
-                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                        {metadata.attributes.honors && (
-                            <div className="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 text-sm font-medium rounded-full">
-                                🏆 {metadata.attributes.honors}
-                            </div>
-                        )}
-                        {metadata.attributes.grade && (
-                            <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                                Grade: <span className="font-semibold">{metadata.attributes.grade}</span>
-                            </div>
-                        )}
-                    </div>
-                )}
+
 
                 {/* Transaction link */}
                 {txHash && (

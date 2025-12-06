@@ -200,6 +200,7 @@ export async function mintDiplomaNFT(
             txHash,
             assetId,
             policyId,
+            metadata: params.metadata,
         };
     } catch (error: any) {
         console.error('❌ Minting Error:', error);

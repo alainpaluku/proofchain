@@ -17,8 +17,54 @@ body {
   background: rgb(var(--background-rgb));
 }
 
+/* Focus visible styles for accessibility */
+@layer base {
+  *:focus-visible {
+    @apply outline-none ring-2 ring-purple-600 ring-offset-2 dark:ring-purple-400 dark:ring-offset-gray-900;
+  }
+
+  /* Ensure buttons have proper focus indicators */
+  button:focus-visible,
+  a:focus-visible {
+    @apply outline-none ring-2 ring-purple-600 ring-offset-2 dark:ring-purple-400 dark:ring-offset-gray-900;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Smooth scrolling for users who don't prefer reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Touch target utilities */
+  .touch-target {
+    @apply min-w-[44px] min-h-[44px];
+  }
+
+  /* Safe area padding for mobile devices */
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }

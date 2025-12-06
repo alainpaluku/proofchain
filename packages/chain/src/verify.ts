@@ -79,8 +79,6 @@ export async function verifyNFT(assetId: string): Promise<VerificationResult> {
                 institutionId: metadata.institutionId || '',
                 graduationDate: metadata.graduationDate || '',
                 issueDate: metadata.issueDate || '',
-                grade: metadata.grade,
-                honors: metadata.honors,
                 documentHash: metadata.documentHash || '',
             },
             version: metadata.version || '1.0',
