@@ -15,6 +15,7 @@
     "verifier:dev": "npm run dev --workspace=apps/verifier",
     "issuer:dev": "npm run dev --workspace=apps/issuer",
     "admin:dev": "npm run dev --workspace=apps/admin",
+    "landing:dev": "npm run dev --workspace=apps/landing",
     "api:dev": "npm run dev --workspace=api/hono-api"
   },
   "devDependencies": {
