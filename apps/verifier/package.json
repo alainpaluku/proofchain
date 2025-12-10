@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@proofchain/chain": "*",
+        "@proofchain/shared": "*",
         "@proofchain/ui": "*",
         "axios": "^1.7.9",
         "html5-qrcode": "^2.3.8",

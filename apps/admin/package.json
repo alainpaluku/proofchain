@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@proofchain/chain": "*",
+    "@proofchain/shared": "*",
     "@proofchain/ui": "*",
     "lucide-react": "^0.263.1",
     "next": "15.5.6",
