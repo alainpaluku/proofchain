@@ -2,57 +2,49 @@
 
 Ce projet est un monorepo avec 4 applications Next.js. Chaque app doit être déployée comme un **projet Vercel séparé**.
 
-## Prérequis
-
-Le repo doit être connecté à GitHub: `https://github.com/alainpaluku/proofchain`
-
 ## Configuration pour chaque application
 
-Créez **4 projets Vercel** avec les configurations suivantes:
+Créez **4 projets Vercel** en important le repo `alainpaluku/proofchain`:
 
 ### 1. Landing Page (proofchain-landing)
 
 | Paramètre | Valeur |
 |-----------|--------|
-| **Root Directory** | `apps/landing` |
+| **Root Directory** | `.` (racine) |
 | **Framework Preset** | Next.js |
-| **Build Command** | `cd ../.. && npm install && npm run build --workspace=@proofchain/landing` |
-| **Output Directory** | `.next` |
-| **Install Command** | `npm install` |
+| **Build Command** | `npx turbo run build --filter=@proofchain/landing` |
+| **Output Directory** | `apps/landing/.next` |
 
 ### 2. Verifier (proofchain-verifier)
 
 | Paramètre | Valeur |
 |-----------|--------|
-| **Root Directory** | `apps/verifier` |
+| **Root Directory** | `.` (racine) |
 | **Framework Preset** | Next.js |
-| **Build Command** | `cd ../.. && npm install && npm run build --workspace=@proofchain/verifier` |
-| **Output Directory** | `.next` |
-| **Install Command** | `npm install` |
+| **Build Command** | `npx turbo run build --filter=@proofchain/verifier` |
+| **Output Directory** | `apps/verifier/.next` |
 
 ### 3. Issuer (proofchain-issuer)
 
 | Paramètre | Valeur |
 |-----------|--------|
-| **Root Directory** | `apps/issuer` |
+| **Root Directory** | `.` (racine) |
 | **Framework Preset** | Next.js |
-| **Build Command** | `cd ../.. && npm install && npm run build --workspace=@proofchain/issuer` |
-| **Output Directory** | `.next` |
-| **Install Command** | `npm install` |
+| **Build Command** | `npx turbo run build --filter=@proofchain/issuer` |
+| **Output Directory** | `apps/issuer/.next` |
 
 ### 4. Admin (proofchain-admin)
 
 | Paramètre | Valeur |
 |-----------|--------|
-| **Root Directory** | `apps/admin` |
+| **Root Directory** | `.` (racine) |
 | **Framework Preset** | Next.js |
-| **Build Command** | `cd ../.. && npm install && npm run build --workspace=@proofchain/admin` |
-| **Output Directory** | `.next` |
-| **Install Command** | `npm install` |
+| **Build Command** | `npx turbo run build --filter=@proofchain/admin` |
+| **Output Directory** | `apps/admin/.next` |
 
 ## Variables d'environnement
 
-Ajoutez ces variables dans chaque projet Vercel (Settings > Environment Variables):
+Ajoutez ces variables dans chaque projet (Settings > Environment Variables):
 
 ```
 NEXT_PUBLIC_BLOCKFROST_PROJECT_ID=votre_project_id
@@ -64,18 +56,11 @@ NEXT_PUBLIC_SUPABASE_URL=votre_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=votre_anon_key
 ```
 
-## Étapes de déploiement
+## Étapes
 
-1. Allez sur [vercel.com](https://vercel.com)
-2. Cliquez sur "Add New Project"
-3. Importez le repo `alainpaluku/proofchain`
-4. Configurez selon le tableau ci-dessus pour chaque app
+1. Allez sur [vercel.com](https://vercel.com) > "Add New Project"
+2. Importez `alainpaluku/proofchain`
+3. **IMPORTANT**: Laissez Root Directory vide (`.` = racine)
+4. Modifiez Build Command et Output Directory selon le tableau
 5. Ajoutez les variables d'environnement
-6. Cliquez sur "Deploy"
-
-## URLs de production (exemple)
-
-- Landing: `https://proofchain-landing.vercel.app`
-- Verifier: `https://proofchain-verifier.vercel.app`
-- Issuer: `https://proofchain-issuer.vercel.app`
-- Admin: `https://proofchain-admin.vercel.app`
+6. Deploy!
