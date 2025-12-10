@@ -1,20 +1,11 @@
 /**
  * PROOFCHAIN - Wallet Connection Hook
- * Manage Nami wallet connection state
+ * Manage Nami/Lace wallet connection state
  */
 
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-
-interface CardanoWallet {
-    enable: () => Promise<WalletApi>;
-}
-
-interface CardanoWindow {
-    lace?: CardanoWallet;
-    nami?: CardanoWallet;
-}
 
 interface WalletApi {
     getUsedAddresses: () => Promise<string[]>;
@@ -29,9 +20,15 @@ export interface WalletState {
     address: string | null;
     balance: string | null;
     network: 'mainnet' | 'preprod' | 'preview' | null;
-    walletApi: any | null;
+    walletApi: WalletApi | null;
     isLoading: boolean;
     error: string | null;
+}
+
+// Helper to get cardano from window
+function getCardano() {
+    if (typeof window === 'undefined') return undefined;
+    return (window as any).cardano;
 }
 
 export function useWallet() {
@@ -45,33 +42,33 @@ export function useWallet() {
         error: null,
     });
 
-    // Get cardano object from window
-    const getCardano = useCallback((): CardanoWindow | undefined => {
-        if (typeof window !== 'undefined') {
-            return (window as unknown as { cardano?: CardanoWindow }).cardano;
-        }
-        return undefined;
+    const [walletChecked, setWalletChecked] = useState(false);
+    const [laceInstalled, setLaceInstalled] = useState(false);
+    const [namiInstalled, setNamiInstalled] = useState(false);
+
+    // Check wallet availability on mount
+    useEffect(() => {
+        const checkWallets = () => {
+            const cardano = getCardano();
+            setLaceInstalled(!!cardano?.lace);
+            setNamiInstalled(!!cardano?.nami);
+            setWalletChecked(true);
+        };
+
+        // Check immediately and after a delay (wallets inject async)
+        checkWallets();
+        const timeout = setTimeout(checkWallets, 1000);
+        return () => clearTimeout(timeout);
     }, []);
 
-    // Check if Lace is installed
-    const isLaceInstalled = useCallback(() => {
-        return !!getCardano()?.lace;
-    }, [getCardano]);
-
-    // Check if Nami is installed
-    const isNamiInstalled = useCallback(() => {
-        return !!getCardano()?.nami;
-    }, [getCardano]);
-
-    // Connect to wallet (Lace preferred, then Nami)
+    // Connect to wallet
     const connect = useCallback(async () => {
-        const laceAvailable = isLaceInstalled();
-        const namiAvailable = isNamiInstalled();
-
-        if (!laceAvailable && !namiAvailable) {
+        const cardano = getCardano();
+        
+        if (!cardano?.lace && !cardano?.nami) {
             setState(prev => ({
                 ...prev,
-                error: 'No compatible wallet found. Please install Lace (lace.io) or Nami (namiwallet.io)',
+                error: 'No compatible wallet found. Please install Lace or Nami.',
             }));
             return false;
         }
@@ -79,29 +76,24 @@ export function useWallet() {
         setState(prev => ({ ...prev, isLoading: true, error: null }));
 
         try {
-            let walletApi;
-            const cardano = getCardano();
+            let walletApi: WalletApi;
 
-            // Prefer Lace if available
-            if (laceAvailable && cardano?.lace) {
+            if (cardano?.lace) {
                 walletApi = await cardano.lace.enable();
-            } else if (namiAvailable && cardano?.nami) {
+            } else if (cardano?.nami) {
                 walletApi = await cardano.nami.enable();
             } else {
                 throw new Error('No wallet available');
             }
 
-            // Get wallet address
             const addressHex = await walletApi.getUsedAddresses();
             const address = addressHex[0];
 
-            // Get network ID
             const networkId = await walletApi.getNetworkId();
             const network = networkId === 0 ? 'preprod' : networkId === 1 ? 'mainnet' : 'preview';
 
-            // Get balance
             const balanceHex = await walletApi.getBalance();
-            const balance = parseInt(balanceHex, 16) / 1_000_000; // Convert lovelace to ADA
+            const balance = parseInt(balanceHex, 16) / 1_000_000;
 
             setState({
                 connected: true,
@@ -113,11 +105,7 @@ export function useWallet() {
                 error: null,
             });
 
-            // Store connection in localStorage
-            if (typeof window !== 'undefined') {
-                localStorage.setItem('walletConnected', 'true');
-            }
-
+            localStorage.setItem('walletConnected', 'true');
             return true;
         } catch (error: any) {
             console.error('Wallet connection error:', error);
@@ -128,7 +116,7 @@ export function useWallet() {
             }));
             return false;
         }
-    }, [isLaceInstalled, isNamiInstalled]);
+    }, []);
 
     // Disconnect wallet
     const disconnect = useCallback(() => {
@@ -141,27 +129,24 @@ export function useWallet() {
             isLoading: false,
             error: null,
         });
-
-        if (typeof window !== 'undefined') {
-            localStorage.removeItem('walletConnected');
-        }
+        localStorage.removeItem('walletConnected');
     }, []);
 
-    // Auto-reconnect on mount if previously connected
+    // Auto-reconnect
     useEffect(() => {
-        const wasConnected = typeof window !== 'undefined' && localStorage.getItem('walletConnected');
-        if (wasConnected) {
-            if (isLaceInstalled() || isNamiInstalled()) {
-                connect();
-            }
+        if (!walletChecked) return;
+        
+        const wasConnected = localStorage.getItem('walletConnected');
+        if (wasConnected && (laceInstalled || namiInstalled)) {
+            connect();
         }
-    }, [connect, isLaceInstalled, isNamiInstalled]);
+    }, [walletChecked, laceInstalled, namiInstalled, connect]);
 
     return {
         ...state,
         connect,
         disconnect,
-        isLaceInstalled: isLaceInstalled(),
-        isNamiInstalled: isNamiInstalled(),
+        isLaceInstalled: laceInstalled,
+        isNamiInstalled: namiInstalled,
     };
 }
