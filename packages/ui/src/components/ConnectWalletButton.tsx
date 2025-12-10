@@ -1,14 +1,8 @@
-/**
- * PROOFCHAIN - Connect Wallet Button Component
- * Nami wallet connection with Mesh UI support
- */
-
 'use client';
 
 import React from 'react';
 import { Wallet, LogOut, AlertCircle } from 'lucide-react';
 import { useWallet } from '../hooks/useWallet';
-import { useI18n } from '../hooks/useI18n';
 
 interface ConnectWalletButtonProps {
     className?: string;
@@ -24,13 +18,9 @@ export function ConnectWalletButton({
     showBalance = true,
 }: ConnectWalletButtonProps) {
     const { connected, address, balance, connect, disconnect, isLoading, error, isNamiInstalled, isLaceInstalled } = useWallet();
-    const { t } = useI18n();
     const [mounted, setMounted] = React.useState(false);
 
-    // Fix hydration error - only render wallet-specific content after mount
-    React.useEffect(() => {
-        setMounted(true);
-    }, []);
+    React.useEffect(() => { setMounted(true); }, []);
 
     const sizeClasses = {
         sm: 'px-3 py-1.5 text-sm',
@@ -45,49 +35,26 @@ export function ConnectWalletButton({
     };
 
     const handleClick = () => {
-        if (connected) {
-            disconnect();
-        } else {
-            connect();
-        }
+        if (connected) { disconnect(); } else { connect(); }
     };
 
-    // Show loading state during SSR/hydration
     if (!mounted) {
         return (
             <div className={`flex items-center gap-2 ${className}`}>
-                <button
-                    disabled
-                    className={`
-                        flex items-center gap-2 rounded-lg font-medium transition-all
-                        ${sizeClasses[size]}
-                        ${variantClasses[variant]}
-                        opacity-50
-                    `}
-                >
+                <button disabled className={`flex items-center gap-2 rounded-lg font-medium transition-all ${sizeClasses[size]} ${variantClasses[variant]} opacity-50`}>
                     <Wallet className="w-4 h-4" />
-                    {t('wallet.connect')}
+                    Connecter le portefeuille
                 </button>
             </div>
         );
     }
 
-    // Show install prompt if no wallet installed
     if (!isNamiInstalled && !isLaceInstalled) {
         return (
             <div className={`flex items-center gap-2 ${className}`}>
-                <a
-                    href="https://www.lace.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`
-            flex items-center gap-2 rounded-lg font-medium transition-all
-            ${sizeClasses[size]}
-            ${variantClasses[variant]}
-          `}
-                >
+                <a href="https://www.lace.io/" target="_blank" rel="noopener noreferrer" className={`flex items-center gap-2 rounded-lg font-medium transition-all ${sizeClasses[size]} ${variantClasses[variant]}`}>
                     <AlertCircle className="w-4 h-4" />
-                    Install Lace Wallet
+                    Installer Lace Wallet
                 </a>
             </div>
         );
@@ -97,40 +64,26 @@ export function ConnectWalletButton({
         <div className={`flex items-center gap-2 ${className}`}>
             {connected && showBalance && balance && (
                 <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {balance} ₳
-                    </span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{balance} ₳</span>
                 </div>
             )}
 
-            <button
-                onClick={handleClick}
-                disabled={isLoading}
-                className={`
-          flex items-center gap-2 rounded-lg font-medium transition-all
-          disabled:opacity-50 disabled:cursor-not-allowed
-          ${sizeClasses[size]}
-          ${variantClasses[variant]}
-          ${className}
-        `}
-            >
+            <button onClick={handleClick} disabled={isLoading} className={`flex items-center gap-2 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${sizeClasses[size]} ${variantClasses[variant]} ${className}`}>
                 {isLoading ? (
                     <>
                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        {t('status.loading')}
+                        Chargement...
                     </>
                 ) : connected ? (
                     <>
                         <LogOut className="w-4 h-4" />
-                        <span className="hidden sm:inline">{t('wallet.disconnect')}</span>
-                        <span className="sm:hidden">
-                            {address?.slice(0, 6)}...{address?.slice(-4)}
-                        </span>
+                        <span className="hidden sm:inline">Déconnecter</span>
+                        <span className="sm:hidden">{address?.slice(0, 6)}...{address?.slice(-4)}</span>
                     </>
                 ) : (
                     <>
                         <Wallet className="w-4 h-4" />
-                        {t('wallet.connect')}
+                        Connecter le portefeuille
                     </>
                 )}
             </button>

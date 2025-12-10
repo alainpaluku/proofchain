@@ -2,11 +2,8 @@
 
 import React, { useState } from 'react';
 import { Settings, Building2, Bell, Shield, Key, Save } from 'lucide-react';
-import { useI18n } from '@proofchain/ui';
-import { issuerTranslations } from '../../lib/translations';
 
 export default function SettingsPage() {
-    const { t } = useI18n(issuerTranslations);
     const [settings, setSettings] = useState({
         institutionName: '',
         institutionId: '',
@@ -41,10 +38,10 @@ export default function SettingsPage() {
     const handleSave = () => {
         try {
             localStorage.setItem('institutionSettings', JSON.stringify(settings));
-            alert(t('issuer.common.success'));
+            alert('Paramètres sauvegardés avec succès');
         } catch (error) {
             console.error('Erreur sauvegarde:', error);
-            alert(t('issuer.common.error'));
+            alert('Erreur lors de la sauvegarde');
         }
     };
 
@@ -54,10 +51,10 @@ export default function SettingsPage() {
             <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                     <Settings className="w-8 h-8 text-purple-600" />
-                    {t('issuer.settings.title')}
+                    Paramètres
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400 mt-1">
-                    {t('issuer.settings.subtitle')}
+                    Configurez votre institution et vos préférences
                 </p>
             </div>
 
@@ -244,7 +241,7 @@ export default function SettingsPage() {
                     className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold transition-all shadow-lg"
                 >
                     <Save className="w-5 h-5" />
-                    {t('issuer.common.save')}
+                    Sauvegarder
                 </button>
             </div>
         </div>

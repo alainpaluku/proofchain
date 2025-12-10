@@ -12,6 +12,7 @@
         "@proofchain/chain": "*",
         "@proofchain/ui": "*",
         "axios": "^1.7.9",
+        "html5-qrcode": "^2.3.8",
         "lucide-react": "^0.468.0",
         "next": "^15.1.0",
         "react": "^18.3.1",

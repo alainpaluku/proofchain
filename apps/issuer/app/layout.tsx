@@ -1,17 +1,25 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import { AuthWrapper } from '../components/AuthWrapper';
+import { ThemeScript } from '@proofchain/ui';
 
 export const metadata: Metadata = {
     title: 'PROOFCHAIN Issuer',
     description: 'Issue academic diplomas as NFTs on Cardano',
     manifest: '/manifest.json',
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: 'default',
+        title: 'PROOFCHAIN Issuer',
+    },
 };
 
 export const viewport: Viewport = {
-    themeColor: '#7c3aed',
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    themeColor: '#6ecaff',
 };
-
-import AppLayout from '../components/AppLayout';
 
 export default function RootLayout({
     children,
@@ -21,24 +29,15 @@ export default function RootLayout({
     return (
         <html lang="fr" suppressHydrationWarning>
             <head>
-                <link rel="icon" href="/favicon.ico" />
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            (function() {
-                                const theme = localStorage.getItem('theme') || 'system';
-                                if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                                    document.documentElement.classList.add('dark');
-                                }
-                            })();
-                        `,
-                    }}
-                />
+                <link rel="icon" href="/icons/icon-192x192.png" />
+                <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+                <ThemeScript />
             </head>
             <body className="antialiased">
-                <AppLayout>
+                <AuthWrapper>
                     {children}
-                </AppLayout>
+                </AuthWrapper>
             </body>
         </html>
     );

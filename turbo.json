@@ -1,12 +1,19 @@
 {
     "$schema": "https://turbo.build/schema.json",
     "globalDependencies": [
-        "**/.env.*local"
+        "**/.env.*local",
+        ".env"
     ],
     "globalEnv": [
+        "NODE_ENV",
         "NEXT_PUBLIC_BLOCKFROST_PROJECT_ID",
         "NEXT_PUBLIC_BLOCKFROST_NETWORK",
-        "NEXT_PUBLIC_CARDANO_EXPLORER"
+        "NEXT_PUBLIC_CARDANO_EXPLORER",
+        "NEXT_PUBLIC_PINATA_API_KEY",
+        "NEXT_PUBLIC_PINATA_SECRET_KEY",
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+        "SUPABASE_SERVICE_ROLE_KEY"
     ],
     "tasks": {
         "build": {
@@ -17,6 +24,15 @@
                 ".next/**",
                 "!.next/cache/**",
                 "dist/**"
+            ],
+            "env": [
+                "NEXT_PUBLIC_BLOCKFROST_PROJECT_ID",
+                "NEXT_PUBLIC_BLOCKFROST_NETWORK",
+                "NEXT_PUBLIC_CARDANO_EXPLORER",
+                "NEXT_PUBLIC_PINATA_API_KEY",
+                "NEXT_PUBLIC_PINATA_SECRET_KEY",
+                "NEXT_PUBLIC_SUPABASE_URL",
+                "NEXT_PUBLIC_SUPABASE_ANON_KEY"
             ]
         },
         "dev": {

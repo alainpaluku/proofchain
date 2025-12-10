@@ -53,9 +53,10 @@ export function useAsync<T, Args extends any[] = []>(
 
     useEffect(() => {
         if (immediate) {
-            execute();
+            (execute as () => Promise<T>)();
         }
-    }, [immediate]);
+        // execute is stable due to useCallback, only run on immediate change
+    }, [immediate, execute]);
 
     return {
         data,

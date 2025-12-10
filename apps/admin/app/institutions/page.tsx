@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Building2, Search, Eye, Ban, CheckCircle, XCircle, Mail, Phone, Globe } from 'lucide-react';
-import { Card, CardHeader, EmptyState, Button, InputField } from '@proofchain/ui';
+import React, { useState, useEffect } from 'react';
+import { Building2, Search, Eye, Ban, CheckCircle, Mail, Phone, Globe } from 'lucide-react';
+import { Card, EmptyState, Button, LoadingSpinner } from '@proofchain/ui';
+import { adminService } from '@proofchain/shared';
 
-interface Institution {
+interface InstitutionDisplay {
     id: string;
     name: string;
     email: string;
@@ -12,7 +13,7 @@ interface Institution {
     website: string;
     country: string;
     status: 'active' | 'suspended' | 'pending';
-    kycStatus: 'approved' | 'pending' | 'rejected';
+    kycStatus: 'approved' | 'pending' | 'rejected' | 'incomplete' | null;
     diplomasIssued: number;
     subscription: string;
     joinedDate: string;
@@ -20,9 +21,40 @@ interface Institution {
 
 export default function InstitutionsPage() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [institutions] = useState<Institution[]>([]);
+    const [institutions, setInstitutions] = useState<InstitutionDisplay[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    const filteredInstitutions = institutions.filter(inst =>
+    useEffect(() => {
+        loadInstitutions();
+    }, []);
+
+    const loadInstitutions = async () => {
+        setLoading(true);
+        const result = await adminService.getAllInstitutions();
+        if (result.success && result.data) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const mapped: InstitutionDisplay[] = result.data.map((inst: any) => ({
+                id: inst.id,
+                name: inst.name,
+                email: inst.email,
+                phone: inst.phone || '',
+                website: inst.website || '',
+                country: inst.country_code,
+                status: inst.kyc_status === 'approved' ? 'active' : 'pending',
+                kycStatus: inst.kyc_status,
+                diplomasIssued: inst.documents_issued || 0,
+                subscription: inst.subscription_plan || 'free',
+                joinedDate: inst.created_at ? new Date(inst.created_at).toLocaleDateString('fr-FR') : 'N/A',
+            }));
+            setInstitutions(mapped);
+        } else {
+            setError(result.error || 'Erreur de chargement');
+        }
+        setLoading(false);
+    };
+
+    const filteredInstitutions = institutions.filter((inst: InstitutionDisplay) =>
         inst.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         inst.email.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -82,8 +114,22 @@ export default function InstitutionsPage() {
                 </div>
             </Card>
 
+            {/* Loading */}
+            {loading && (
+                <div className="flex justify-center py-12">
+                    <LoadingSpinner size="lg" />
+                </div>
+            )}
+
+            {/* Error */}
+            {error && (
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 text-red-700 dark:text-red-400">
+                    {error}
+                </div>
+            )}
+
             {/* Institutions List */}
-            {filteredInstitutions.length === 0 ? (
+            {!loading && filteredInstitutions.length === 0 ? (
                 <EmptyState
                     icon={Building2}
                     title="Aucune institution"
@@ -130,7 +176,7 @@ export default function InstitutionsPage() {
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                                 <div>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">KYC</p>
-                                    <p className={`font-semibold ${getKYCStatusColor(institution.kycStatus)}`}>
+                                    <p className={`font-semibold ${getKYCStatusColor(institution.kycStatus || 'pending')}`}>
                                         {institution.kycStatus === 'approved' ? 'Approuvé' : institution.kycStatus === 'pending' ? 'En attente' : 'Rejeté'}
                                     </p>
                                 </div>

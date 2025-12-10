@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
-import { FileCheck, CheckCircle, XCircle, Eye, Building2, Mail, Phone, Globe, FileText } from 'lucide-react';
-import { Card, CardHeader, EmptyState, Button } from '@proofchain/ui';
+import React, { useState, useEffect } from 'react';
+import { FileCheck, CheckCircle, XCircle, Eye, Building2, Mail, Phone, Globe, Loader2 } from 'lucide-react';
+import { Card, EmptyState, Button, LoadingSpinner } from '@proofchain/ui';
+import { adminService, type KYCPendingRequest } from '@proofchain/shared';
 
 interface KYCRequest {
     id: string;
@@ -21,17 +22,66 @@ interface KYCRequest {
 }
 
 export default function KYCValidationPage() {
-    const [requests] = useState<KYCRequest[]>([]);
-    const [selectedRequest, setSelectedRequest] = useState<KYCRequest | null>(null);
+    const [requests, setRequests] = useState<KYCRequest[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [actionLoading, setActionLoading] = useState<string | null>(null);
 
-    const handleApprove = (id: string) => {
-        console.log('Approving KYC:', id);
-        // TODO: Implement approval logic
+    useEffect(() => {
+        loadRequests();
+    }, []);
+
+    const loadRequests = async () => {
+        setLoading(true);
+        const result = await adminService.getPendingKYCRequests();
+        if (result.success && result.data) {
+            const mapped: KYCRequest[] = result.data.map((req: KYCPendingRequest) => ({
+                id: req.id,
+                institutionName: req.name,
+                email: req.email,
+                phone: req.phone || '',
+                website: req.website || '',
+                country: req.countryCode,
+                registrationNumber: req.registrationNumber || '',
+                submittedDate: req.kycSubmittedAt 
+                    ? new Date(req.kycSubmittedAt).toLocaleDateString('fr-FR')
+                    : 'N/A',
+                documents: {
+                    registrationCert: !!req.documents.legalDocs,
+                    ministerialDecree: !!req.documents.ministerialDecree,
+                    taxCert: !!req.documents.taxCertificate,
+                },
+            }));
+            setRequests(mapped);
+        } else {
+            setError(result.error || 'Erreur de chargement');
+        }
+        setLoading(false);
     };
 
-    const handleReject = (id: string) => {
-        console.log('Rejecting KYC:', id);
-        // TODO: Implement rejection logic
+    const handleApprove = async (id: string) => {
+        setActionLoading(id);
+        const result = await adminService.approveKYC(id);
+        if (result.success) {
+            setRequests(prev => prev.filter(r => r.id !== id));
+        } else {
+            alert(result.error || 'Erreur lors de l\'approbation');
+        }
+        setActionLoading(null);
+    };
+
+    const handleReject = async (id: string) => {
+        const reason = prompt('Raison du rejet :');
+        if (!reason) return;
+        
+        setActionLoading(id);
+        const result = await adminService.rejectKYC(id, reason);
+        if (result.success) {
+            setRequests(prev => prev.filter(r => r.id !== id));
+        } else {
+            alert(result.error || 'Erreur lors du rejet');
+        }
+        setActionLoading(null);
     };
 
     return (
@@ -47,8 +97,22 @@ export default function KYCValidationPage() {
                 </p>
             </div>
 
+            {/* Loading */}
+            {loading && (
+                <div className="flex justify-center py-12">
+                    <LoadingSpinner size="lg" />
+                </div>
+            )}
+
+            {/* Error */}
+            {error && (
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 text-red-700 dark:text-red-400">
+                    {error}
+                </div>
+            )}
+
             {/* KYC Requests */}
-            {requests.length === 0 ? (
+            {!loading && requests.length === 0 ? (
                 <EmptyState
                     icon={FileCheck}
                     title="Aucune demande KYC"
@@ -139,10 +203,22 @@ export default function KYCValidationPage() {
                                 <Button variant="outline" size="sm" icon={Eye}>
                                     Voir documents
                                 </Button>
-                                <Button variant="primary" size="sm" icon={CheckCircle} onClick={() => handleApprove(request.id)}>
-                                    Approuver
+                                <Button 
+                                    variant="primary" 
+                                    size="sm" 
+                                    icon={actionLoading === request.id ? Loader2 : CheckCircle} 
+                                    onClick={() => handleApprove(request.id)}
+                                    disabled={actionLoading === request.id}
+                                >
+                                    {actionLoading === request.id ? 'Chargement...' : 'Approuver'}
                                 </Button>
-                                <Button variant="danger" size="sm" icon={XCircle} onClick={() => handleReject(request.id)}>
+                                <Button 
+                                    variant="danger" 
+                                    size="sm" 
+                                    icon={XCircle} 
+                                    onClick={() => handleReject(request.id)}
+                                    disabled={actionLoading === request.id}
+                                >
                                     Rejeter
                                 </Button>
                             </div>

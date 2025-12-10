@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Settings, Shield, Bell, Key, Save } from 'lucide-react';
-import { Card, CardHeader, InputField, SelectField, ToggleSwitch, Button } from '@proofchain/ui';
+import { Card, CardHeader, InputField, ToggleSwitch, Button } from '@proofchain/ui';
 
 export default function SettingsPage() {
     const [settings, setSettings] = useState({

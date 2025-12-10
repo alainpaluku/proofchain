@@ -6,11 +6,22 @@
 'use client';
 
 import React from 'react';
-import { GraduationCap, Calendar, Award, Building2, CheckCircle2, ExternalLink } from 'lucide-react';
-import type { DiplomaMetadata } from '@proofchain/chain';
+import { GraduationCap, Calendar, Award, Building2, CheckCircle2, ExternalLink, FileText } from 'lucide-react';
+
+// Données complètes du diplôme (depuis Supabase)
+interface DiplomaData {
+    documentId: string;
+    studentName?: string;
+    studentId?: string;
+    degree?: string;
+    field?: string;
+    institution?: string;
+    graduationDate?: string;
+    issueDate?: string;
+}
 
 interface InstitutionCardProps {
-    metadata: DiplomaMetadata;
+    data: DiplomaData;
     assetId?: string;
     txHash?: string;
     verified?: boolean;
@@ -19,7 +30,7 @@ interface InstitutionCardProps {
 }
 
 export function InstitutionCard({
-    metadata,
+    data,
     assetId,
     txHash,
     verified = false,
@@ -31,11 +42,11 @@ export function InstitutionCard({
     return (
         <div
             className={`
-        relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700
-        bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all
-        ${onClick ? 'cursor-pointer hover:scale-[1.02]' : ''}
-        ${className}
-      `}
+                relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700
+                bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all
+                ${onClick ? 'cursor-pointer hover:scale-[1.02]' : ''}
+                ${className}
+            `}
             onClick={onClick}
         >
             {/* Gradient header */}
@@ -51,40 +62,47 @@ export function InstitutionCard({
 
             {/* Content */}
             <div className="p-6 space-y-4">
-                {/* Student name */}
+                {/* Student name or Document ID */}
                 <div>
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                        {metadata.attributes.studentName}
+                        {data.studentName || 'Document Vérifié'}
                     </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                        ID: {metadata.attributes.studentId}
+                    <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                        <FileText className="w-3 h-3" />
+                        {data.studentId || data.documentId}
                     </p>
                 </div>
 
                 {/* Degree info */}
                 <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                        <GraduationCap className="w-5 h-5 text-purple-600" />
-                        <span className="font-medium">{metadata.attributes.degree}</span>
-                    </div>
+                    {data.degree && (
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                            <GraduationCap className="w-5 h-5 text-purple-600" />
+                            <span className="font-medium">{data.degree}</span>
+                        </div>
+                    )}
 
-                    <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                        <Award className="w-5 h-5 text-blue-600" />
-                        <span>{metadata.attributes.field}</span>
-                    </div>
+                    {data.field && (
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                            <Award className="w-5 h-5 text-blue-600" />
+                            <span>{data.field}</span>
+                        </div>
+                    )}
 
-                    <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                        <Building2 className="w-5 h-5 text-indigo-600" />
-                        <span>{metadata.attributes.institution}</span>
-                    </div>
+                    {data.institution && (
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                            <Building2 className="w-5 h-5 text-indigo-600" />
+                            <span>{data.institution}</span>
+                        </div>
+                    )}
 
-                    <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                        <Calendar className="w-5 h-5 text-green-600" />
-                        <span>{new Date(metadata.attributes.graduationDate).toLocaleDateString()}</span>
-                    </div>
+                    {data.graduationDate && (
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                            <Calendar className="w-5 h-5 text-green-600" />
+                            <span>{new Date(data.graduationDate).toLocaleDateString()}</span>
+                        </div>
+                    )}
                 </div>
-
-
 
                 {/* Transaction link */}
                 {txHash && (

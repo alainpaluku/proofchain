@@ -1,21 +1,14 @@
-/**
- * PROOFCHAIN Issuer - Dashboard Page
- */
-
 'use client';
 
 import React from 'react';
 import { Coins, Users, FileCheck, Award, Clock } from 'lucide-react';
 import Link from 'next/link';
-import { useI18n, StatCard, Card, CardHeader, EmptyState } from '@proofchain/ui';
-import { issuerTranslations } from '../lib/translations';
+import { StatCard, Card, CardHeader } from '@proofchain/ui';
 
 export default function HomePage() {
-    const { t } = useI18n(issuerTranslations);
-    
     const stats = [
         {
-            labelKey: 'issuer.dashboard.stats.diplomas',
+            label: 'Diplômes émis',
             value: '0',
             change: '+0%',
             icon: Award,
@@ -23,7 +16,7 @@ export default function HomePage() {
             iconClass: 'text-purple-600 dark:text-purple-400'
         },
         {
-            labelKey: 'issuer.dashboard.stats.students',
+            label: 'Étudiants',
             value: '0',
             change: '+0%',
             icon: Users,
@@ -31,7 +24,7 @@ export default function HomePage() {
             iconClass: 'text-blue-600 dark:text-blue-400'
         },
         {
-            labelKey: 'issuer.dashboard.stats.verified',
+            label: 'Vérifiés',
             value: '0',
             change: '+0%',
             icon: FileCheck,
@@ -39,7 +32,7 @@ export default function HomePage() {
             iconClass: 'text-green-600 dark:text-green-400'
         },
         {
-            labelKey: 'issuer.dashboard.stats.pending',
+            label: 'En attente',
             value: '0',
             change: '+0%',
             icon: Clock,
@@ -48,33 +41,24 @@ export default function HomePage() {
         }
     ];
 
-    const [recentActivity, setRecentActivity] = React.useState<Array<{
+    const [recentActivity] = React.useState<Array<{
         student: string;
         action: string;
         time: string;
         status: string;
     }>>([]);
 
-    // Charger les statistiques depuis l'API
-    React.useEffect(() => {
-        // TODO: Appeler l'API pour récupérer les vraies statistiques
-        // const data = await fetchStats();
-        // setStats(data);
-    }, []);
-
     return (
         <div className="p-6 space-y-8 max-w-7xl mx-auto">
-            {/* Header */}
             <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                    {t('issuer.dashboard.title')}
+                    Tableau de bord
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400">
-                    {t('issuer.dashboard.subtitle')}
+                    Vue d'ensemble de votre activité
                 </p>
             </div>
 
-            {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, index) => (
                     <StatCard
@@ -83,21 +67,20 @@ export default function HomePage() {
                         iconBgClass={stat.bgClass}
                         iconClass={stat.iconClass}
                         value={stat.value}
-                        label={t(stat.labelKey)}
+                        label={stat.label}
                         change={stat.change}
                     />
                 ))}
             </div>
 
-            {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Link
                     href="/mint"
                     className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl p-6 text-white hover:shadow-xl transition-all hover:-translate-y-1"
                 >
                     <Coins className="w-8 h-8 mb-3" />
-                    <h3 className="text-xl font-bold mb-2">{t('issuer.dashboard.quickActions.mint')}</h3>
-                    <p className="text-purple-100">{t('issuer.dashboard.quickActions.mintDesc')}</p>
+                    <h3 className="text-xl font-bold mb-2">Émettre un diplôme</h3>
+                    <p className="text-purple-100">Créer un nouveau NFT diplôme</p>
                 </Link>
 
                 <Link
@@ -105,8 +88,8 @@ export default function HomePage() {
                     className="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all hover:-translate-y-1"
                 >
                     <Users className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('issuer.dashboard.quickActions.students')}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">{t('issuer.dashboard.quickActions.studentsDesc')}</p>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Gérer les étudiants</h3>
+                    <p className="text-gray-600 dark:text-gray-400">Voir et modifier les profils</p>
                 </Link>
 
                 <Link
@@ -114,14 +97,13 @@ export default function HomePage() {
                     className="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all hover:-translate-y-1"
                 >
                     <FileCheck className="w-8 h-8 text-green-600 dark:text-green-400 mb-3" />
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('issuer.dashboard.quickActions.kyc')}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">{t('issuer.dashboard.quickActions.kycDesc')}</p>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Valider KYC</h3>
+                    <p className="text-gray-600 dark:text-gray-400">Vérifier les identités</p>
                 </Link>
             </div>
 
-            {/* Recent Activity */}
             <Card>
-                <CardHeader title={t('issuer.dashboard.recentActivity')} />
+                <CardHeader title="Activité récente" />
                 <div className="space-y-4">
                     {recentActivity.map((activity, index) => (
                         <div

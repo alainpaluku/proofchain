@@ -7,6 +7,28 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
+// Extend Window interface for Cardano wallets
+declare global {
+    interface Window {
+        cardano?: {
+            lace?: {
+                enable: () => Promise<WalletApi>;
+            };
+            nami?: {
+                enable: () => Promise<WalletApi>;
+            };
+        };
+    }
+}
+
+interface WalletApi {
+    getUsedAddresses: () => Promise<string[]>;
+    getNetworkId: () => Promise<number>;
+    getBalance: () => Promise<string>;
+    signTx: (tx: string, partialSign?: boolean) => Promise<string>;
+    submitTx: (tx: string) => Promise<string>;
+}
+
 export interface WalletState {
     connected: boolean;
     address: string | null;

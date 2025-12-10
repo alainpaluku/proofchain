@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { CreditCard, Edit, Plus, DollarSign } from 'lucide-react';
-import { Card, CardHeader, Button, InputField, SelectField } from '@proofchain/ui';
+import { Card, CardHeader, Button, InputField } from '@proofchain/ui';
 
 interface SubscriptionPlan {
     id: string;
@@ -15,7 +15,7 @@ interface SubscriptionPlan {
 }
 
 export default function SubscriptionsPage() {
-    const [plans, setPlans] = useState<SubscriptionPlan[]>([
+    const [plans] = useState<SubscriptionPlan[]>([
         {
             id: '1',
             name: 'Starter',

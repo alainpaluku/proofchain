@@ -1,13 +1,26 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { AuthUser, getCurrentUser, onAuthStateChange, signInWithGoogle, signOut } from '../lib/auth';
+import { 
+    AuthUser, 
+    AuthError,
+    getCurrentUser, 
+    onAuthStateChange, 
+    signInWithEmail, 
+    signUp,
+    signOut,
+    resetPassword,
+    updatePassword 
+} from '../lib/auth';
 
 interface AuthContextType {
     user: AuthUser | null;
     loading: boolean;
-    signIn: (redirectTo?: string) => Promise<void>;
+    signIn: (email: string, password: string) => Promise<{ success: boolean; error?: AuthError }>;
+    signUp: (email: string, password: string, name?: string) => Promise<{ success: boolean; error?: AuthError }>;
     signOut: () => Promise<void>;
+    resetPassword: (email: string) => Promise<{ success: boolean; error?: AuthError }>;
+    updatePassword: (newPassword: string) => Promise<{ success: boolean; error?: AuthError }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,8 +45,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return unsubscribe;
     }, []);
 
-    const handleSignIn = async (redirectTo?: string) => {
-        await signInWithGoogle(redirectTo);
+    const handleSignIn = async (email: string, password: string) => {
+        return await signInWithEmail(email, password);
+    };
+
+    const handleSignUp = async (email: string, password: string, name?: string) => {
+        return await signUp(email, password, name);
     };
 
     const handleSignOut = async () => {
@@ -41,8 +58,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(null);
     };
 
+    const handleResetPassword = async (email: string) => {
+        return await resetPassword(email);
+    };
+
+    const handleUpdatePassword = async (newPassword: string) => {
+        return await updatePassword(newPassword);
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loading, signIn: handleSignIn, signOut: handleSignOut }}>
+        <AuthContext.Provider value={{ 
+            user, 
+            loading, 
+            signIn: handleSignIn, 
+            signUp: handleSignUp,
+            signOut: handleSignOut,
+            resetPassword: handleResetPassword,
+            updatePassword: handleUpdatePassword
+        }}>
             {children}
         </AuthContext.Provider>
     );

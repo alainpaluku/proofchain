@@ -1,6 +1,6 @@
 /**
  * PROOFCHAIN Verifier - Verification Page
- * Real NFT verification using Blockfrost API
+ * Real NFT verification using API (Supabase + Blockfrost)
  */
 
 'use client';
@@ -16,35 +16,68 @@ import {
     Calendar,
     Building2,
     GraduationCap,
-    Award
+    Award,
+    User,
+    Hash
 } from 'lucide-react';
-import { verifyNFT, type VerificationResult, getIPFSGatewayUrl } from '@proofchain/chain';
+import { getIPFSGatewayUrl } from '@proofchain/chain';
 import { IPFSImage } from '@proofchain/ui';
+
+// Type pour la réponse de l'API de vérification
+interface VerificationResponse {
+    valid: boolean;
+    source: 'supabase' | 'blockchain' | 'both';
+    document?: {
+        documentId: string;
+        studentName: string;
+        studentNumber: string;
+        degree: string;
+        fieldOfStudy: string;
+        institution: string;
+        institutionCode: string;
+        graduationDate: string;
+        issueDate: string;
+        status: string;
+        ipfsUrl?: string;
+        txHash?: string;
+        assetId?: string;
+        policyId?: string;
+    };
+    blockchain?: {
+        verified: boolean;
+        txHash?: string;
+        mintedAt?: string;
+        policyId?: string;
+    };
+    error?: string;
+}
 
 export default function VerifyPage() {
     const params = useParams();
     const router = useRouter();
-    const assetId = params.assetId as string;
+    const queryId = params.assetId as string;
 
-    const [verification, setVerification] = useState<VerificationResult | null>(null);
+    const [verification, setVerification] = useState<VerificationResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (assetId) {
+        if (queryId) {
             performVerification();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [assetId]);
+    }, [queryId]);
 
     async function performVerification() {
         setIsLoading(true);
         try {
-            const result = await verifyNFT(assetId);
-            setVerification(result);
+            const response = await fetch(`/api/verify?q=${encodeURIComponent(queryId)}`);
+            const data: VerificationResponse = await response.json();
+            setVerification(data);
         } catch (error) {
             console.error('Verification error:', error);
             setVerification({
                 valid: false,
+                source: 'supabase',
                 error: 'Failed to verify diploma',
             });
         } finally {
@@ -52,7 +85,10 @@ export default function VerifyPage() {
         }
     }
 
+    const assetId = verification?.document?.assetId || queryId;
+
     const explorerUrl = process.env.NEXT_PUBLIC_CARDANO_EXPLORER || 'https://preprod.cardanoscan.io';
+    const locale = 'fr-FR';
 
     return (
         <div className="min-h-full">
@@ -70,7 +106,7 @@ export default function VerifyPage() {
                         <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mb-4" />
                         <p className="text-lg text-gray-600 dark:text-gray-400">Vérification en cours...</p>
                     </div>
-                ) : verification?.valid && verification.metadata ? (
+                ) : verification?.valid && verification.document ? (
                     <div className="max-w-4xl mx-auto space-y-6">
                         {/* Verification Status */}
                         <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-2xl p-6">
@@ -78,10 +114,11 @@ export default function VerifyPage() {
                                 <CheckCircle2 className="w-12 h-12 text-green-600" />
                                 <div>
                                     <h2 className="text-2xl font-bold text-green-700 dark:text-green-400">
-                                        Diplôme Vérifié ✓
+                                        Diplôme Authentique
                                     </h2>
                                     <p className="text-green-600 dark:text-green-500">
-                                        Ce diplôme est authentique et enregistré sur la blockchain Cardano
+                                        Ce document a été vérifié et est authentique
+                                        {verification.source === 'both' && ' ✓ Blockchain'}
                                     </p>
                                 </div>
                             </div>
@@ -93,33 +130,46 @@ export default function VerifyPage() {
                                 <div className="absolute inset-0 bg-black/10" />
                                 <div className="absolute bottom-4 left-6">
                                     <h3 className="text-3xl font-bold text-white">
-                                        {verification.metadata.attributes.studentName}
+                                        {verification.document.studentName}
                                     </h3>
                                 </div>
                             </div>
 
                             <div className="p-8 space-y-6">
-                                {verification.metadata.image && (
+                                {verification.document.ipfsUrl && (
                                     <div className="mb-6">
                                         <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">
-                                            📄 Image du Diplôme:
+                                            📄 Image du diplôme:
                                         </p>
                                         <div className="relative rounded-xl overflow-hidden border-2 border-purple-200 dark:border-purple-800 shadow-lg bg-gray-50 dark:bg-gray-900 min-h-[300px]">
                                             <IPFSImage
-                                                src={getIPFSGatewayUrl(verification.metadata.image)}
-                                                alt={`Diplôme de ${verification.metadata.attributes.studentName}`}
+                                                src={getIPFSGatewayUrl(verification.document.ipfsUrl)}
+                                                alt={verification.document.studentName}
                                                 className="w-full h-auto max-h-[500px]"
-                                                fallbackText="Image du diplôme non disponible"
+                                                fallbackText="Image du diplôme"
                                             />
                                         </div>
                                     </div>
                                 )}
 
-                                <div>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">ID Étudiant</p>
-                                    <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                                        {verification.metadata.attributes.studentId}
-                                    </p>
+                                <div className="flex items-start gap-3">
+                                    <Hash className="w-6 h-6 text-gray-600 mt-1" />
+                                    <div>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">ID du document</p>
+                                        <p className="text-lg font-semibold text-gray-900 dark:text-white font-mono">
+                                            {verification.document.documentId}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-start gap-3">
+                                    <User className="w-6 h-6 text-gray-600 mt-1" />
+                                    <div>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">Numéro étudiant</p>
+                                        <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                                            {verification.document.studentNumber}
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -128,7 +178,7 @@ export default function VerifyPage() {
                                         <div>
                                             <p className="text-sm text-gray-500 dark:text-gray-400">Diplôme</p>
                                             <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                                                {verification.metadata.attributes.degree}
+                                                {verification.document.degree}
                                             </p>
                                         </div>
                                     </div>
@@ -136,9 +186,9 @@ export default function VerifyPage() {
                                     <div className="flex items-start gap-3">
                                         <Award className="w-6 h-6 text-blue-600 mt-1" />
                                         <div>
-                                            <p className="text-sm text-gray-500 dark:text-gray-400">Domaine</p>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">Filière</p>
                                             <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                                                {verification.metadata.attributes.field}
+                                                {verification.document.fieldOfStudy}
                                             </p>
                                         </div>
                                     </div>
@@ -148,7 +198,10 @@ export default function VerifyPage() {
                                         <div>
                                             <p className="text-sm text-gray-500 dark:text-gray-400">Institution</p>
                                             <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                                                {verification.metadata.attributes.institution}
+                                                {verification.document.institution}
+                                            </p>
+                                            <p className="text-sm text-gray-500">
+                                                ({verification.document.institutionCode})
                                             </p>
                                         </div>
                                     </div>
@@ -156,44 +209,24 @@ export default function VerifyPage() {
                                     <div className="flex items-start gap-3">
                                         <Calendar className="w-6 h-6 text-green-600 mt-1" />
                                         <div>
-                                            <p className="text-sm text-gray-500 dark:text-gray-400">Date d&apos;obtention</p>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">Date de graduation</p>
                                             <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                                                {new Date(verification.metadata.attributes.graduationDate).toLocaleDateString('fr-FR')}
+                                                {new Date(verification.document.graduationDate).toLocaleDateString(locale)}
                                             </p>
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                                {((verification.metadata.attributes as any).honors || (verification.metadata.attributes as any).grade) && (
-                                    <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-                                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                                        {(verification.metadata.attributes as any).honors && (
-                                            <div className="inline-block px-4 py-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-lg font-medium">
-                                                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                                                🏆 {(verification.metadata.attributes as any).honors}
-                                            </div>
-                                        )}
-                                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                                        {(verification.metadata.attributes as any).grade && (
-                                            <p className="mt-3 text-gray-700 dark:text-gray-300">
-                                                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                                                Note: <span className="font-bold">{(verification.metadata.attributes as any).grade}</span>
-                                            </p>
-                                        )}
-                                    </div>
-                                )}
-
-                                {verification.metadata.attributes.documentHash && (
+                                {verification.document.ipfsUrl && (
                                     <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
                                         <a
-                                            href={getIPFSGatewayUrl(verification.metadata.attributes.documentHash)}
+                                            href={getIPFSGatewayUrl(verification.document.ipfsUrl)}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-2 text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 font-medium"
                                         >
                                             <Download className="w-5 h-5" />
-                                            Télécharger le document original
+                                            Télécharger le document
                                         </a>
                                     </div>
                                 )}
@@ -207,43 +240,54 @@ export default function VerifyPage() {
                             </h4>
 
                             <div className="space-y-3 text-sm">
-                                <div>
-                                    <p className="text-gray-500 dark:text-gray-400">Policy ID</p>
-                                    <p className="font-mono text-gray-900 dark:text-white break-all">
-                                        {verification.policyId}
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p className="text-gray-500 dark:text-gray-400">Asset ID</p>
-                                    <p className="font-mono text-gray-900 dark:text-white break-all">
-                                        {assetId}
-                                    </p>
-                                </div>
-
-                                {verification.txHash && (
+                                {verification.document.policyId && (
                                     <div>
-                                        <p className="text-gray-500 dark:text-gray-400">Transaction Hash</p>
+                                        <p className="text-gray-500 dark:text-gray-400">Policy ID</p>
+                                        <p className="font-mono text-gray-900 dark:text-white break-all">
+                                            {verification.document.policyId}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {verification.document.assetId && (
+                                    <div>
+                                        <p className="text-gray-500 dark:text-gray-400">Asset ID</p>
+                                        <p className="font-mono text-gray-900 dark:text-white break-all">
+                                            {verification.document.assetId}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {(verification.document.txHash || verification.blockchain?.txHash) && (
+                                    <div>
+                                        <p className="text-gray-500 dark:text-gray-400">Hash de transaction</p>
                                         <a
-                                            href={`${explorerUrl}/transaction/${verification.txHash}`}
+                                            href={`${explorerUrl}/transaction/${verification.document.txHash || verification.blockchain?.txHash}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-2 text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 font-mono break-all"
                                         >
-                                            {verification.txHash}
+                                            {verification.document.txHash || verification.blockchain?.txHash}
                                             <ExternalLink className="w-4 h-4 flex-shrink-0" />
                                         </a>
                                     </div>
                                 )}
 
-                                {verification.mintedAt && (
+                                {verification.blockchain?.mintedAt && (
                                     <div>
-                                        <p className="text-gray-500 dark:text-gray-400">Date d&apos;émission</p>
+                                        <p className="text-gray-500 dark:text-gray-400">Date de mint</p>
                                         <p className="text-gray-900 dark:text-white">
-                                            {new Date(verification.mintedAt).toLocaleString('fr-FR')}
+                                            {new Date(verification.blockchain.mintedAt).toLocaleString(locale)}
                                         </p>
                                     </div>
                                 )}
+
+                                <div>
+                                    <p className="text-gray-500 dark:text-gray-400">Date d'émission</p>
+                                    <p className="text-gray-900 dark:text-white">
+                                        {new Date(verification.document.issueDate).toLocaleDateString(locale)}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -252,10 +296,10 @@ export default function VerifyPage() {
                         <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 rounded-2xl p-8 text-center">
                             <XCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
                             <h2 className="text-2xl font-bold text-red-700 dark:text-red-400 mb-2">
-                                Diplôme Non Vérifié
+                                Document Non Vérifié
                             </h2>
                             <p className="text-red-600 dark:text-red-500 mb-4">
-                                {verification?.error || 'Ce diplôme n\'a pas pu être vérifié sur la blockchain'}
+                                {verification?.error || 'Ce document n\'a pas pu être vérifié'}
                             </p>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
                                 Asset ID: <span className="font-mono">{assetId}</span>

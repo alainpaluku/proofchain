@@ -1,209 +1,176 @@
 # 🚀 Déploiement sur Vercel
 
-Guide pour déployer les 3 applications ProofChain sur Vercel.
+Guide pour déployer les 3 applications PROOFCHAIN sur Vercel.
 
 ## 📋 Prérequis
 
 - Compte Vercel (gratuit)
 - Repository GitHub connecté à Vercel
+- Variables d'environnement configurées (voir `.env.example`)
 
 ## 🏗️ Architecture
 
 ```
-proofchaines/
+proofchain/
 ├── apps/
-│   ├── verifier/    ← App 1 (Port 3000 en local)
-│   ├── issuer/      ← App 2 (Port 3001 en local)
-│   └── admin/       ← App 3 (Port 3002 en local)
-└── packages/        ← Packages partagés
+│   ├── verifier/    ← App publique (vérification diplômes)
+│   ├── issuer/      ← App institutions (émission NFT)
+│   └── admin/       ← App admin (gestion plateforme)
+├── packages/
+│   ├── ui/          ← Composants UI partagés
+│   ├── shared/      ← Logique métier partagée
+│   └── chain/       ← Intégration Cardano
+└── turbo.json       ← Configuration Turborepo
 ```
 
 Chaque app sera déployée comme un **projet Vercel séparé**.
 
 ---
 
-## 📝 Étapes de déploiement
+## 📝 Déploiement rapide
 
-### 1. Accéder à Vercel
+### 1. Importer le repository
 
-1. Va sur [vercel.com](https://vercel.com)
-2. Connecte-toi avec ton compte GitHub
-3. Clique sur **"Add New..."** → **"Project"**
+1. Va sur [vercel.com/new](https://vercel.com/new)
+2. Connecte ton compte GitHub
+3. Sélectionne le repository `proofchain`
+4. **Important** : Tu devras créer 3 projets séparés
 
-### 2. Importer le repository
+### 2. Configuration par app
 
-1. Sélectionne le repository **`palukuba/proofchaines`**
-2. Clique sur **"Import"**
+| App | Root Directory | Project Name |
+|-----|----------------|--------------|
+| Verifier | `apps/verifier` | `proofchain-verifier` |
+| Issuer | `apps/issuer` | `proofchain-issuer` |
+| Admin | `apps/admin` | `proofchain-admin` |
 
-### 3. Configuration du projet
+### 3. Paramètres de build (automatiques)
 
-#### Pour l'app **Verifier** :
-
-| Paramètre | Valeur |
-|-----------|--------|
-| **Project Name** | `proofchain-verifier` |
-| **Framework Preset** | `Next.js` |
-| **Root Directory** | `apps/verifier` |
-| **Build Command** | `npm run build` (ou laisser par défaut) |
-| **Output Directory** | Laisser par défaut |
-
-**⚠️ IMPORTANT :**
-
-Clique sur **"Root Directory"** → **"Edit"** et sélectionne :
-```
-apps/verifier
-```
-
-#### Pour l'app **Issuer** :
-
-| Paramètre | Valeur |
-|-----------|--------|
-| **Project Name** | `proofchain-issuer` |
-| **Framework Preset** | `Next.js` |
-| **Root Directory** | `apps/issuer` |
-
-#### Pour l'app **Admin** :
-
-| Paramètre | Valeur |
-|-----------|--------|
-| **Project Name** | `proofchain-admin` |
-| **Framework Preset** | `Next.js` |
-| **Root Directory** | `apps/admin` |
+Vercel détecte automatiquement Next.js. Les fichiers `vercel.json` dans chaque app configurent :
+- Framework: Next.js
+- Build Command: `npm run build`
+- Output Directory: `.next`
+- Region: `cdg1` (Paris)
 
 ---
 
 ## 🔐 Variables d'environnement
 
-Dans **Settings > Environment Variables**, ajoute :
+### Variables communes (toutes les apps)
+
+```env
+NEXT_PUBLIC_BLOCKFROST_PROJECT_ID=your_blockfrost_id
+NEXT_PUBLIC_BLOCKFROST_NETWORK=preprod
+NEXT_PUBLIC_CARDANO_EXPLORER=https://preprod.cardanoscan.io
+```
 
 ### Variables Verifier
 
-| Variable | Environnement |
-|----------|---------------|
-| `NEXT_PUBLIC_BLOCKFROST_PROJECT_ID` | Production, Preview, Development |
-| `NEXT_PUBLIC_BLOCKFROST_NETWORK` | `preprod` |
-| `NEXT_PUBLIC_CARDANO_EXPLORER` | `https://preprod.cardanoscan.io` |
+```env
+# Aucune variable supplémentaire requise
+```
 
 ### Variables Issuer
 
-| Variable | Environnement |
-|----------|---------------|
-| `NEXT_PUBLIC_BLOCKFROST_PROJECT_ID` | Production, Preview, Development |
-| `NEXT_PUBLIC_BLOCKFROST_NETWORK` | `preprod` |
-| `NEXT_PUBLIC_PINATA_API_KEY` | Production, Preview, Development |
-| `NEXT_PUBLIC_PINATA_SECRET_KEY` | Production, Preview, Development |
+```env
+PINATA_API_KEY=your_pinata_api_key
+PINATA_SECRET_KEY=your_pinata_secret_key
+NEXT_PUBLIC_PINATA_JWT=your_pinata_jwt
+```
 
 ### Variables Admin
 
-| Variable | Environnement |
-|----------|---------------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Production, Preview, Development |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Production, Preview, Development |
-
----
-
-## ⚙️ Configuration Next.js pour Vercel
-
-Les fichiers `next.config.js` doivent être configurés pour Vercel (pas d'export statique).
-
-Modifie chaque `next.config.js` pour retirer `output: 'export'` :
-
-```javascript
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-    transpilePackages: ['@proofchain/ui', '@proofchain/chain', '@proofchain/shared'],
-    images: {
-        domains: ['gateway.pinata.cloud', 'ipfs.io'],
-    },
-};
-
-module.exports = nextConfig;
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
 ---
 
-## 🌐 URLs de déploiement
+## ⚙️ Configuration importante
 
-Après déploiement, tu auras :
+### Activer l'accès aux packages partagés
 
-- **Verifier** : `https://proofchain-verifier.vercel.app`
-- **Issuer** : `https://proofchain-issuer.vercel.app`
-- **Admin** : `https://proofchain-admin.vercel.app`
+Dans **Settings > General** de chaque projet Vercel :
+
+1. Trouve **"Root Directory"**
+2. Active **"Include source files outside of the Root Directory in the Build Step"**
+
+Cela permet à Vercel d'accéder aux packages dans `packages/*`.
+
+### Version Node.js
+
+Dans **Settings > General** :
+- Node.js Version: `20.x`
 
 ---
 
-## 🔄 Déploiements automatiques
+## 🌐 URLs de production
 
-- Chaque push sur `main` → Déploiement en **Production**
-- Chaque push sur une autre branche → Déploiement **Preview**
-- Chaque Pull Request → URL de preview automatique
+Après déploiement :
+
+| App | URL |
+|-----|-----|
+| Verifier | `https://proofchain-verifier.vercel.app` |
+| Issuer | `https://proofchain-issuer.vercel.app` |
+| Admin | `https://proofchain-admin.vercel.app` |
 
 ---
 
 ## 🔗 Domaines personnalisés
 
 1. Va dans **Settings > Domains**
-2. Ajoute ton domaine personnalisé
-3. Configure les DNS selon les instructions Vercel
+2. Ajoute ton domaine
+3. Configure les DNS :
 
-Exemple :
-- `verifier.proofchain.io` → proofchain-verifier.vercel.app
-- `issuer.proofchain.io` → proofchain-issuer.vercel.app
-- `admin.proofchain.io` → proofchain-admin.vercel.app
+```
+verifier.proofchain.io  → CNAME → cname.vercel-dns.com
+issuer.proofchain.io    → CNAME → cname.vercel-dns.com
+admin.proofchain.io     → CNAME → cname.vercel-dns.com
+```
 
 ---
 
-## 📊 Monorepo avec Turborepo
+## 🔄 Déploiements automatiques
 
-Vercel détecte automatiquement Turborepo. Pour optimiser les builds :
-
-1. Va dans **Settings > General**
-2. Active **"Include source files outside of the Root Directory"**
-3. Cela permet d'accéder aux packages partagés (`packages/*`)
+- Push sur `main` → Déploiement **Production**
+- Push sur autre branche → Déploiement **Preview**
+- Pull Request → URL de preview automatique
 
 ---
 
 ## ❓ Résolution de problèmes
 
-### Erreur "Module not found: @proofchain/ui"
-→ Active l'option "Include source files outside of the Root Directory"
+### "Module not found: @proofchain/ui"
+→ Active "Include source files outside of the Root Directory"
 
-### Erreur "Build failed - Node version"
-→ Dans Settings > General, définis Node.js Version sur `20.x`
+### "Build failed - Node version"
+→ Définis Node.js Version sur `20.x`
 
-### Erreur avec les routes dynamiques
-→ Vercel supporte nativement les routes dynamiques, pas besoin de query params
+### "WASM not supported"
+→ Déjà configuré dans `next.config.js` avec `asyncWebAssembly: true`
 
-### Erreur "WASM not supported"
-→ Ajoute dans `next.config.js` :
-```javascript
-webpack: (config) => {
-    config.experiments = {
-        ...config.experiments,
-        asyncWebAssembly: true,
-    };
-    return config;
-},
-```
+### Erreur Blockfrost/crypto
+→ Les fallbacks sont configurés dans `next.config.js`
+
+### Build trop long
+→ Turborepo cache les builds. Le premier peut être long, les suivants seront rapides.
 
 ---
 
-## 🆚 Vercel vs Cloudflare Pages
+## 📊 Monitoring
 
-| Fonctionnalité | Vercel | Cloudflare Pages |
-|----------------|--------|------------------|
-| Routes dynamiques | ✅ Natif | ⚠️ Edge Runtime requis |
-| SSR | ✅ Complet | ⚠️ Limité |
-| API Routes | ✅ Serverless | ⚠️ Workers |
-| WASM | ✅ Supporté | ⚠️ Limité |
-| Prix | Gratuit (limité) | Gratuit (généreux) |
-
-**Recommandation** : Vercel est plus adapté pour ce projet Next.js avec routes dynamiques et WASM (lucid-cardano).
+Vercel fournit automatiquement :
+- Analytics de performance
+- Logs en temps réel
+- Métriques Web Vitals
+- Alertes d'erreurs
 
 ---
 
 ## 📞 Support
 
 - [Documentation Vercel](https://vercel.com/docs)
-- [Guide Monorepo Vercel](https://vercel.com/docs/monorepos)
+- [Guide Monorepo](https://vercel.com/docs/monorepos/turborepo)
 - [Next.js sur Vercel](https://vercel.com/docs/frameworks/nextjs)

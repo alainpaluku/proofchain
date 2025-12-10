@@ -4,6 +4,9 @@
  * 
  * This is the CORE function for diploma NFT creation
  * NO MOCKS - Real blockchain transactions
+ * 
+ * IMPORTANT: Seul le document_id est stocké dans les métadonnées NFT
+ * Les données complètes (nom étudiant, etc.) sont dans Supabase
  */
 
 import { Lucid, MintingPolicy, PolicyId, fromText, Data } from 'lucid-cardano';

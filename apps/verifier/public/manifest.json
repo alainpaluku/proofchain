@@ -4,8 +4,8 @@
     "description": "Verify academic diplomas on Cardano blockchain",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#7c3aed",
+    "background_color": "#1a1a2e",
+    "theme_color": "#6ecaff",
     "orientation": "portrait",
     "icons": [
         {

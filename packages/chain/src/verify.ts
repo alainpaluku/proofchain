@@ -31,7 +31,15 @@ async function blockfrostRequest(endpoint: string) {
         if (response.status === 404) {
             return null;
         }
-        throw new Error(`Blockfrost API error: ${response.statusText}`);
+        // Get more details about the error
+        let errorDetail = response.statusText || `HTTP ${response.status}`;
+        try {
+            const errorBody = await response.json();
+            errorDetail = errorBody.message || errorBody.error || errorDetail;
+        } catch {
+            // Ignore JSON parse errors
+        }
+        throw new Error(`Blockfrost API error (${response.status}): ${errorDetail}`);
     }
 
     return response.json();
@@ -64,13 +72,14 @@ export async function verifyNFT(assetId: string): Promise<VerificationResult> {
             };
         }
 
-        // Parse diploma metadata
+        // Parse diploma metadata - support both old format (direct attributes) and new format (documentId reference)
         const diplomaMetadata: DiplomaMetadata = {
             name: metadata.name || '',
             image: metadata.image || '',
             mediaType: metadata.mediaType,
             description: metadata.description,
-            attributes: {
+            attributes: metadata.attributes || {
+                // Support legacy format where attributes are at root level
                 studentName: metadata.studentName || '',
                 studentId: metadata.studentId || '',
                 degree: metadata.degree || '',
@@ -80,6 +89,11 @@ export async function verifyNFT(assetId: string): Promise<VerificationResult> {
                 graduationDate: metadata.graduationDate || '',
                 issueDate: metadata.issueDate || '',
                 documentHash: metadata.documentHash || '',
+                // New format fields
+                documentId: metadata.documentId || '',
+                platform: metadata.platform || 'PROOFCHAIN',
+                version: metadata.version || '1.0',
+                verifyUrl: metadata.verifyUrl || '',
             },
             version: metadata.version || '1.0',
             standard: 'CIP-25',

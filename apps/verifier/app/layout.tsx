@@ -2,12 +2,14 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import AppLayout from '../components/AppLayout';
+import { Providers } from '../components/Providers';
+import { ThemeScript } from '@proofchain/ui';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    title: 'PROOFCHAIN Verifier - Academic Verification',
-    description: 'Verify academic credentials on the Cardano blockchain',
+    title: 'PROOFCHAIN Verifier - Vérification de diplômes',
+    description: 'Vérifiez l\'authenticité des diplômes sur la blockchain Cardano',
     manifest: '/manifest.json',
     appleWebApp: {
         capable: true,
@@ -21,7 +23,7 @@ export const viewport: Viewport = {
     initialScale: 1,
     maximumScale: 1,
     userScalable: false,
-    themeColor: '#7c3aed',
+    themeColor: '#6ecaff',
 };
 
 export default function RootLayout({
@@ -32,27 +34,18 @@ export default function RootLayout({
     return (
         <html lang="fr" suppressHydrationWarning>
             <head>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/icons/icon-192x192.png" />
                 <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            (function() {
-                                const theme = localStorage.getItem('theme') || 'system';
-                                if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                                    document.documentElement.classList.add('dark');
-                                }
-                            })();
-                        `,
-                    }}
-                />
+                <ThemeScript />
             </head>
             <body className={inter.className}>
-                <AppLayout>
-                    {children}
-                </AppLayout>
+                <Providers>
+                    <AppLayout>
+                        {children}
+                    </AppLayout>
+                </Providers>
             </body>
         </html>
     );

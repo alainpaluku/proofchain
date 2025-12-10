@@ -1,6 +1,6 @@
 /**
  * PROOFCHAIN - Supabase Database Types
- * Auto-generated types for type-safe database access
+ * Types pour l'accès type-safe à la base de données
  */
 
 export type Json =
@@ -57,6 +57,7 @@ export interface Institution {
     updated_at: string | null;
     created_by: string | null;
 }
+
 
 export interface Student {
     id: string;
@@ -147,77 +148,53 @@ export interface AdminLog {
     created_at: string | null;
 }
 
-// Database schema type
+// Types utilitaires pour les opérations CRUD
+type InsertType<T> = Partial<T> & { [K in keyof T]?: T[K] };
+type UpdateType<T> = Partial<T>;
+
+// Database schema type compatible avec Supabase
 export interface Database {
     public: {
         Tables: {
             countries: {
                 Row: Country;
-                Insert: Omit<Country, 'id' | 'created_at'> & { id?: string; created_at?: string | null };
-                Update: Partial<Omit<Country, 'id'>>;
+                Insert: InsertType<Country>;
+                Update: UpdateType<Country>;
             };
             institutions: {
                 Row: Institution;
-                Insert: Omit<Institution, 'id' | 'created_at' | 'updated_at' | 'documents_issued' | 'students_count'> & {
-                    id?: string;
-                    created_at?: string | null;
-                    updated_at?: string | null;
-                    documents_issued?: number | null;
-                    students_count?: number | null;
-                };
-                Update: Partial<Omit<Institution, 'id'>>;
+                Insert: InsertType<Institution>;
+                Update: UpdateType<Institution>;
             };
             students: {
                 Row: Student;
-                Insert: Omit<Student, 'id' | 'created_at' | 'updated_at' | 'documents_issued'> & {
-                    id?: string;
-                    created_at?: string | null;
-                    updated_at?: string | null;
-                    documents_issued?: number | null;
-                };
-                Update: Partial<Omit<Student, 'id' | 'institution_id'>>;
+                Insert: InsertType<Student>;
+                Update: UpdateType<Student>;
             };
             documents: {
                 Row: Document;
-                Insert: Omit<Document, 'id' | 'created_at' | 'updated_at'> & {
-                    id?: string;
-                    created_at?: string | null;
-                    updated_at?: string | null;
-                };
-                Update: Partial<Omit<Document, 'id' | 'document_code' | 'document_id' | 'institution_id' | 'student_id'>>;
+                Insert: InsertType<Document>;
+                Update: UpdateType<Document>;
             };
             verification_logs: {
                 Row: VerificationLog;
-                Insert: Omit<VerificationLog, 'id' | 'verified_at'> & {
-                    id?: string;
-                    verified_at?: string | null;
-                };
-                Update: never;
+                Insert: InsertType<VerificationLog>;
+                Update: UpdateType<VerificationLog>;
             };
             import_logs: {
                 Row: ImportLog;
-                Insert: Omit<ImportLog, 'id' | 'imported_at'> & {
-                    id?: string;
-                    imported_at?: string | null;
-                };
-                Update: never;
+                Insert: InsertType<ImportLog>;
+                Update: UpdateType<ImportLog>;
             };
             subscription_plans: {
                 Row: SubscriptionPlanData;
-                Insert: Omit<SubscriptionPlanData, 'id' | 'created_at' | 'updated_at'> & {
-                    id?: string;
-                    created_at?: string | null;
-                    updated_at?: string | null;
-                };
-                Update: Partial<Omit<SubscriptionPlanData, 'id' | 'plan_name'>>;
+                Insert: InsertType<SubscriptionPlanData>;
+                Update: UpdateType<SubscriptionPlanData>;
             };
             admin_logs: {
                 Row: AdminLog;
-                Insert: Omit<AdminLog, 'id' | 'created_at'> & {
-                    id?: string;
-                    created_at?: string | null;
-                };
-                Update: never;
+                Insert: InsertType<AdminLog>;
+                Update: UpdateType<AdminLog>;
             };
         };
         Enums: {

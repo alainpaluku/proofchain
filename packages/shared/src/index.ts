@@ -5,6 +5,16 @@
 
 // Types
 export * from './types';
+export type { 
+    InstitutionType, 
+    KYCStatus, 
+    DocumentStatus, 
+    SubscriptionPlan as DBSubscriptionPlan,
+    Institution as DBInstitution,
+    Student,
+    Document,
+    Database
+} from './types/database.types';
 
 // Contexts
 export { AppProvider, useApp } from './contexts/AppContext';
@@ -23,7 +33,31 @@ export { api } from './services/api';
 export { diplomaService } from './services/diploma.service';
 export { institutionService } from './services/institution.service';
 export { statsService } from './services/stats.service';
+export { documentService } from './services/document.service';
+export { studentService } from './services/student.service';
+export { issuerService } from './services/issuer.service';
+export { adminService } from './services/admin.service';
+export type { KYCPendingRequest } from './services/admin.service';
 
 // Utils
 export * from './utils/format';
 export * from './utils/validation';
+
+// Auth
+export { AuthProvider, useAuth } from './components/AuthProvider';
+export { AuthWrapper, type AuthWrapperProps } from './components/AuthWrapper';
+export { 
+    signUp, 
+    signInWithEmail, 
+    signOut, 
+    resetPassword, 
+    updatePassword,
+    getCurrentUser,
+    onAuthStateChange,
+    isAdminEmail,
+    ADMIN_EMAIL
+} from './lib/auth';
+export type { AuthUser, AuthError } from './lib/auth';
+
+// Supabase
+export { getSupabaseClient, supabase, isSupabaseConfigured, createServerSupabaseClient } from './lib/supabase';

@@ -551,13 +551,67 @@ CREATE POLICY "Only admins can create admin logs"
 -- SEED DATA
 -- ============================================================================
 
--- Insert countries
+-- Insert African countries
 INSERT INTO countries (code, name) VALUES
+    -- Afrique Centrale
     ('CD', 'République Démocratique du Congo'),
-    ('US', 'United States'),
-    ('FR', 'France'),
-    ('BE', 'Belgium'),
-    ('CA', 'Canada')
+    ('CG', 'République du Congo'),
+    ('CF', 'République Centrafricaine'),
+    ('CM', 'Cameroun'),
+    ('GA', 'Gabon'),
+    ('GQ', 'Guinée Équatoriale'),
+    ('TD', 'Tchad'),
+    -- Afrique de l'Est
+    ('RW', 'Rwanda'),
+    ('BI', 'Burundi'),
+    ('UG', 'Ouganda'),
+    ('KE', 'Kenya'),
+    ('TZ', 'Tanzanie'),
+    ('ET', 'Éthiopie'),
+    ('ER', 'Érythrée'),
+    ('DJ', 'Djibouti'),
+    ('SO', 'Somalie'),
+    ('SS', 'Soudan du Sud'),
+    ('SD', 'Soudan'),
+    -- Afrique de l'Ouest
+    ('NG', 'Nigeria'),
+    ('GH', 'Ghana'),
+    ('CI', 'Côte d''Ivoire'),
+    ('SN', 'Sénégal'),
+    ('ML', 'Mali'),
+    ('BF', 'Burkina Faso'),
+    ('NE', 'Niger'),
+    ('GN', 'Guinée'),
+    ('BJ', 'Bénin'),
+    ('TG', 'Togo'),
+    ('SL', 'Sierra Leone'),
+    ('LR', 'Liberia'),
+    ('MR', 'Mauritanie'),
+    ('GM', 'Gambie'),
+    ('GW', 'Guinée-Bissau'),
+    ('CV', 'Cap-Vert'),
+    -- Afrique du Nord
+    ('MA', 'Maroc'),
+    ('DZ', 'Algérie'),
+    ('TN', 'Tunisie'),
+    ('LY', 'Libye'),
+    ('EG', 'Égypte'),
+    -- Afrique Australe
+    ('ZA', 'Afrique du Sud'),
+    ('AO', 'Angola'),
+    ('ZM', 'Zambie'),
+    ('ZW', 'Zimbabwe'),
+    ('MW', 'Malawi'),
+    ('MZ', 'Mozambique'),
+    ('BW', 'Botswana'),
+    ('NA', 'Namibie'),
+    ('SZ', 'Eswatini'),
+    ('LS', 'Lesotho'),
+    -- Îles
+    ('MG', 'Madagascar'),
+    ('MU', 'Maurice'),
+    ('SC', 'Seychelles'),
+    ('KM', 'Comores')
 ON CONFLICT (code) DO NOTHING;
 
 -- Insert subscription plans

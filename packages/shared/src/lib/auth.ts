@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Authentication avec Google via Supabase
+ * PROOFCHAIN - Authentication par Email/Mot de passe via Supabase
  */
 
 import { getSupabaseClient, isSupabaseConfigured } from './supabase';
@@ -9,30 +9,148 @@ export type AuthUser = {
     email: string;
     name?: string;
     avatar?: string;
+    role?: 'admin' | 'issuer' | 'verifier';
+};
+
+// Email admin autorisé (hardcoded pour sécurité)
+export const ADMIN_EMAIL = 'alainpaluku@proton.me';
+
+/**
+ * Vérifie si un email est admin
+ */
+export function isAdminEmail(email: string): boolean {
+    return email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+}
+
+export type AuthError = {
+    message: string;
+    code?: string;
 };
 
 /**
- * Connexion avec Google
+ * Inscription avec email et mot de passe
  */
-export async function signInWithGoogle(redirectTo?: string) {
+export async function signUp(email: string, password: string, name?: string): Promise<{ success: boolean; error?: AuthError }> {
     if (!isSupabaseConfigured()) {
-        throw new Error('Supabase non configuré');
+        return { success: false, error: { message: 'Supabase non configuré' } };
     }
 
     const supabase = getSupabaseClient();
-    const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
+    const { error } = await supabase.auth.signUp({
+        email,
+        password,
         options: {
-            redirectTo: redirectTo || `${window.location.origin}/auth/callback`,
-            queryParams: {
-                access_type: 'offline',
-                prompt: 'consent',
+            data: {
+                full_name: name,
             },
         },
     });
 
-    if (error) throw error;
-    return data;
+    if (error) {
+        return { 
+            success: false, 
+            error: { 
+                message: getErrorMessage(error.message),
+                code: error.message 
+            } 
+        };
+    }
+
+    return { success: true };
+}
+
+/**
+ * Connexion avec email et mot de passe
+ */
+export async function signInWithEmail(email: string, password: string): Promise<{ success: boolean; error?: AuthError }> {
+    if (!isSupabaseConfigured()) {
+        return { success: false, error: { message: 'Supabase non configuré' } };
+    }
+
+    const supabase = getSupabaseClient();
+    const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    });
+
+    if (error) {
+        return { 
+            success: false, 
+            error: { 
+                message: getErrorMessage(error.message),
+                code: error.message 
+            } 
+        };
+    }
+
+    return { success: true };
+}
+
+/**
+ * Réinitialisation du mot de passe
+ */
+export async function resetPassword(email: string): Promise<{ success: boolean; error?: AuthError }> {
+    if (!isSupabaseConfigured()) {
+        return { success: false, error: { message: 'Supabase non configuré' } };
+    }
+
+    const supabase = getSupabaseClient();
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/reset-password`,
+    });
+
+    if (error) {
+        return { 
+            success: false, 
+            error: { 
+                message: getErrorMessage(error.message),
+                code: error.message 
+            } 
+        };
+    }
+
+    return { success: true };
+}
+
+/**
+ * Mise à jour du mot de passe
+ */
+export async function updatePassword(newPassword: string): Promise<{ success: boolean; error?: AuthError }> {
+    if (!isSupabaseConfigured()) {
+        return { success: false, error: { message: 'Supabase non configuré' } };
+    }
+
+    const supabase = getSupabaseClient();
+    const { error } = await supabase.auth.updateUser({
+        password: newPassword,
+    });
+
+    if (error) {
+        return { 
+            success: false, 
+            error: { 
+                message: getErrorMessage(error.message),
+                code: error.message 
+            } 
+        };
+    }
+
+    return { success: true };
+}
+
+/**
+ * Traduction des messages d'erreur Supabase
+ */
+function getErrorMessage(code: string): string {
+    const messages: Record<string, string> = {
+        'Invalid login credentials': 'Email ou mot de passe incorrect',
+        'Email not confirmed': 'Veuillez confirmer votre email avant de vous connecter',
+        'User already registered': 'Un compte existe déjà avec cet email',
+        'Password should be at least 6 characters': 'Le mot de passe doit contenir au moins 6 caractères',
+        'Unable to validate email address: invalid format': 'Format d\'email invalide',
+        'Email rate limit exceeded': 'Trop de tentatives, veuillez réessayer plus tard',
+    };
+    return messages[code] || code;
 }
 
 /**
@@ -57,11 +175,14 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
 
     if (!user) return null;
 
+    const email = user.email || '';
+    
     return {
         id: user.id,
-        email: user.email || '',
+        email,
         name: user.user_metadata?.full_name || user.user_metadata?.name,
         avatar: user.user_metadata?.avatar_url || user.user_metadata?.picture,
+        role: isAdminEmail(email) ? 'admin' : 'issuer',
     };
 }
 
@@ -74,11 +195,13 @@ export function onAuthStateChange(callback: (user: AuthUser | null) => void) {
     const supabase = getSupabaseClient();
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
         if (session?.user) {
+            const email = session.user.email || '';
             callback({
                 id: session.user.id,
-                email: session.user.email || '',
+                email,
                 name: session.user.user_metadata?.full_name || session.user.user_metadata?.name,
                 avatar: session.user.user_metadata?.avatar_url || session.user.user_metadata?.picture,
+                role: isAdminEmail(email) ? 'admin' : 'issuer',
             });
         } else {
             callback(null);
