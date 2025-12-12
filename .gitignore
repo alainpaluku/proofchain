@@ -26,13 +26,15 @@ coverage/
 # Kiro IDE
 .kiro/
 
+# Supabase temp
+supabase/.temp/
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
 
 # IDE
-.vscode/*
-!.vscode/settings.json
+.vscode/
 .idea/
 *.swp
 *.swo
