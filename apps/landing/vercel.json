@@ -1,6 +1,0 @@
-{
-  "installCommand": "npm install --prefix ../..",
-  "buildCommand": "cd ../.. && npm run build --workspace=@proofchain/landing",
-  "outputDirectory": ".next",
-  "framework": "nextjs"
-}
