@@ -1,0 +1,6 @@
+{
+  "installCommand": "cd ../.. && npm install",
+  "buildCommand": "cd ../.. && npx turbo run build --filter=@proofchain/admin",
+  "outputDirectory": ".next",
+  "framework": "nextjs"
+}
