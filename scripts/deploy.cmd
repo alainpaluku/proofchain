@@ -1,36 +1,35 @@
 @echo off
 REM PROOFCHAIN - Vercel Deployment Script
 REM Usage: deploy.cmd [app] [--prod]
-REM   app: landing, issuer, verifier, admin, or all (default)
-REM   --prod: deploy to production
 
 setlocal enabledelayedexpansion
 
 set APP=%1
 set PROD=%2
+set ROOT_DIR=%CD%
+set FAILED=0
+set SUCCESS=0
 
 if "%APP%"=="" set APP=all
 if "%PROD%"=="--prod" (
     set PROD_FLAG=--prod
+    set MODE=PRODUCTION
 ) else (
     set PROD_FLAG=
+    set MODE=PREVIEW
 )
 
 echo.
 echo ========================================
 echo   PROOFCHAIN - Vercel Deployment
 echo ========================================
-echo.
+echo Mode: %MODE%
 
-REM Build first
-echo Building all apps...
-call npm run build
+vercel --version >nul 2>&1
 if errorlevel 1 (
-    echo Build failed!
+    echo Vercel CLI not found. Install with: npm i -g vercel
     exit /b 1
 )
-echo Build successful!
-echo.
 
 if "%APP%"=="all" (
     call :deploy_app landing
@@ -43,22 +42,27 @@ if "%APP%"=="all" (
 
 echo.
 echo ========================================
-echo   Deployment Complete!
-echo ========================================
-goto :eof
+echo   Success: %SUCCESS% / Failed: %FAILED%
+if %FAILED% GTR 0 exit /b 1
+exit /b 0
 
 :deploy_app
 set APP_NAME=%1
 echo.
-echo Deploying %APP_NAME%...
-cd apps\%APP_NAME%
+echo --- Deploying %APP_NAME% ---
 
-if not exist ".vercel" (
-    echo Creating Vercel project...
-    call vercel link --yes
+if not exist "%ROOT_DIR%\apps\%APP_NAME%\.vercel\project.json" (
+    echo   Not linked. Run: vercel link --cwd apps/%APP_NAME%
+    set /a FAILED+=1
+    goto :eof
 )
 
-call vercel %PROD_FLAG%
-cd ..\..
-echo %APP_NAME% deployed!
+vercel %PROD_FLAG% --yes --cwd "%ROOT_DIR%\apps\%APP_NAME%"
+if errorlevel 1 (
+    echo   [FAIL] %APP_NAME%
+    set /a FAILED+=1
+) else (
+    echo   [OK] %APP_NAME%
+    set /a SUCCESS+=1
+)
 goto :eof

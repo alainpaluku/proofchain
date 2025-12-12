@@ -1,19 +1,12 @@
 # PROOFCHAIN - Script de déploiement Vercel pour Monorepo
-# 
-# IMPORTANT: Pour un monorepo, chaque app doit être configurée sur Vercel avec:
-# - Root Directory: apps/<app-name>
-# - Build Command: cd ../.. && npm install && npx turbo run build --filter=@proofchain/<app-name>
-# - Output Directory: .next
-#
-# Ce script déploie les apps déjà configurées sur Vercel
 
 param(
     [string]$App = "all",
-    [switch]$Production = $false,
-    [switch]$Setup = $false
+    [switch]$Production = $false
 )
 
 $ErrorActionPreference = "Continue"
+$RootDir = Get-Location
 
 $Apps = [ordered]@{
     "landing"  = "apps/landing"
@@ -22,63 +15,43 @@ $Apps = [ordered]@{
     "admin"    = "apps/admin"
 }
 
-function Show-Setup {
-    Write-Host ""
-    Write-Host "========================================" -ForegroundColor Cyan
-    Write-Host " VERCEL SETUP INSTRUCTIONS" -ForegroundColor Cyan
-    Write-Host "========================================" -ForegroundColor Cyan
-    Write-Host ""
-    Write-Host "Pour chaque app, créez un projet sur https://vercel.com/new :" -ForegroundColor Yellow
-    Write-Host ""
-    
-    foreach ($appName in $Apps.Keys) {
-        Write-Host "[$appName]" -ForegroundColor Green
-        Write-Host "  1. Import GitHub repo: alainpaluku/proofchain"
-        Write-Host "  2. Root Directory: $($Apps[$appName])"
-        Write-Host "  3. Framework: Next.js"
-        Write-Host "  4. Build Command: cd ../.. && npm install && npx turbo run build --filter=@proofchain/$appName"
-        Write-Host "  5. Output Directory: .next"
-        Write-Host ""
-    }
-    
-    Write-Host "Après configuration, relancez ce script sans -Setup" -ForegroundColor Yellow
-}
-
 function Deploy-App {
     param([string]$AppName, [string]$AppPath, [bool]$IsProd)
     
     Write-Host ""
     Write-Host "--- Deploying $AppName ---" -ForegroundColor Cyan
     
-    if (-not (Test-Path "$AppPath/.vercel/project.json")) {
+    $projectJsonPath = Join-Path $RootDir $AppPath ".vercel" "project.json"
+    
+    if (-not (Test-Path $projectJsonPath)) {
         Write-Host "  Not linked. Run: vercel link --cwd $AppPath" -ForegroundColor Yellow
         return $false
     }
     
-    Push-Location $AppPath
+    $fullAppPath = Join-Path $RootDir $AppPath
     
     try {
         if ($IsProd) {
-            $result = vercel --prod --yes 2>&1
+            $result = & vercel --prod --yes --cwd $fullAppPath 2>&1
         } else {
-            $result = vercel --yes 2>&1
+            $result = & vercel --yes --cwd $fullAppPath 2>&1
         }
         
-        $resultStr = $result -join " "
+        $resultStr = $result -join "`n"
         
         if ($resultStr -match "(https://[^\s]+\.vercel\.app)") {
             Write-Host "  OK: $($Matches[1])" -ForegroundColor Green
-            Pop-Location
             return $true
-        } else {
-            Write-Host "  Result: $resultStr" -ForegroundColor Yellow
-            Pop-Location
+        } elseif ($resultStr -match "Error") {
+            Write-Host "  Error: $resultStr" -ForegroundColor Red
             return $false
+        } else {
+            Write-Host "  $resultStr" -ForegroundColor Yellow
+            return $true
         }
     }
     catch {
         Write-Host "  Error: $_" -ForegroundColor Red
-        Pop-Location
         return $false
     }
 }
@@ -89,15 +62,15 @@ Write-Host "========================================" -ForegroundColor Magenta
 Write-Host "   PROOFCHAIN - Vercel Deployment" -ForegroundColor Magenta
 Write-Host "========================================" -ForegroundColor Magenta
 
-if ($Setup) {
-    Show-Setup
-    exit 0
+$vercelVersion = & vercel --version 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Vercel CLI not found. Install with: npm i -g vercel" -ForegroundColor Red
+    exit 1
 }
 
 $mode = if ($Production) { "PRODUCTION" } else { "PREVIEW" }
 Write-Host "Mode: $mode" -ForegroundColor Yellow
 
-# Déployer
 $results = @{}
 
 if ($App -eq "all") {
@@ -107,17 +80,13 @@ if ($App -eq "all") {
 } elseif ($Apps.Contains($App)) {
     $results[$App] = Deploy-App -AppName $App -AppPath $Apps[$App] -IsProd $Production
 } else {
-    Write-Host "Unknown app: $App" -ForegroundColor Red
-    Write-Host "Available: $($Apps.Keys -join ', ')" -ForegroundColor Yellow
+    Write-Host "Unknown app: $App. Available: $($Apps.Keys -join ', ')" -ForegroundColor Red
     exit 1
 }
 
 # Summary
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host " Summary" -ForegroundColor Cyan
-Write-Host "========================================" -ForegroundColor Cyan
-
 $ok = 0; $fail = 0
 foreach ($name in $results.Keys) {
     if ($results[$name]) { 
@@ -129,9 +98,10 @@ foreach ($name in $results.Keys) {
     }
 }
 
-Write-Host ""
 if ($fail -eq 0) {
     Write-Host "All deployments successful!" -ForegroundColor Green
+    exit 0
 } else {
-    Write-Host "$fail failed. Run with -Setup for configuration help." -ForegroundColor Yellow
+    Write-Host "$fail deployment(s) failed." -ForegroundColor Yellow
+    exit 1
 }
