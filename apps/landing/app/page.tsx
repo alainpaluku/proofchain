@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
     Shield,
     GraduationCap,
@@ -16,14 +17,6 @@ import {
 } from 'lucide-react';
 
 const apps = [
-    {
-        name: 'Verifier',
-        description: 'Vérifiez l\'authenticité des diplômes en scannant un QR code ou en entrant l\'ID du document.',
-        icon: Search,
-        color: 'from-green-500 to-emerald-600',
-        url: process.env.NEXT_PUBLIC_VERIFIER_URL || 'https://proofchain-verifier.vercel.app',
-        features: ['Scan QR Code', 'Vérification blockchain', 'Résultats instantanés'],
-    },
     {
         name: 'Issuer',
         description: 'Émettez des diplômes certifiés sur la blockchain Cardano sous forme de NFT uniques.',
@@ -65,7 +58,17 @@ const features = [
     },
 ];
 
-export default function LandingPage() {
+export default function ProofchainPage() {
+    const router = useRouter();
+    const [query, setQuery] = useState('');
+
+    const handleVerify = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (query.trim()) {
+            router.push('/verify/' + encodeURIComponent(query.trim()));
+        }
+    };
+
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
@@ -94,6 +97,27 @@ export default function LandingPage() {
                             Sécurisez et vérifiez vos diplômes sur la blockchain.
                         </p>
 
+                        {/* Verification Form */}
+                        <form onSubmit={handleVerify} className="max-w-xl mx-auto mb-8">
+                            <div className="flex gap-3">
+                                <input
+                                    type="text"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    placeholder="Entrez le Document ID ou Asset ID"
+                                    className="flex-1 px-6 py-4 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={!query.trim()}
+                                    className="px-8 py-4 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                                >
+                                    <Search className="w-5 h-5" />
+                                    Vérifier
+                                </button>
+                            </div>
+                        </form>
+
                         <div className="flex flex-wrap justify-center gap-4">
                             <a
                                 href="#apps"
@@ -103,7 +127,7 @@ export default function LandingPage() {
                                 <ArrowRight className="w-5 h-5" />
                             </a>
                             <a
-                                href="https://github.com/alainpaluku/proofchain"
+                                href="https://github.com/alainpaluku/proofchains"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/20 transition-all flex items-center gap-2"
@@ -157,11 +181,11 @@ export default function LandingPage() {
                             Nos Applications
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                            Trois applications spécialisées pour répondre à tous vos besoins
+                            Deux applications spécialisées pour répondre à tous vos besoins
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
                         {apps.map((app, index) => (
                             <div
                                 key={index}
@@ -218,7 +242,7 @@ export default function LandingPage() {
                         Rejoignez les institutions qui font confiance à PROOFCHAIN pour certifier leurs diplômes sur la blockchain.
                     </p>
                     <a
-                        href={apps[1].url}
+                        href={apps[0].url}
                         className="inline-flex items-center gap-2 px-8 py-4 bg-white text-purple-900 font-semibold rounded-xl hover:bg-purple-100 transition-all hover:scale-105"
                     >
                         Commencer maintenant
@@ -237,10 +261,9 @@ export default function LandingPage() {
                         </div>
                         
                         <div className="flex gap-6">
-                            <a href={apps[0].url} className="hover:text-white transition-colors">Verifier</a>
-                            <a href={apps[1].url} className="hover:text-white transition-colors">Issuer</a>
-                            <a href={apps[2].url} className="hover:text-white transition-colors">Admin</a>
-                            <a href="https://github.com/alainpaluku/proofchain" className="hover:text-white transition-colors">GitHub</a>
+                            <a href={apps[0].url} className="hover:text-white transition-colors">Issuer</a>
+                            <a href={apps[1].url} className="hover:text-white transition-colors">Admin</a>
+                            <a href="https://github.com/alainpaluku/proofchains" className="hover:text-white transition-colors">GitHub</a>
                         </div>
                         
                         <p className="text-sm">

@@ -86,7 +86,7 @@ export default function HomePage() {
         }
     ];
 
-    const verifierUrl = process.env.NEXT_PUBLIC_VERIFIER_URL || 'https://proofchain-verifier.vercel.app';
+    const landingUrl = process.env.NEXT_PUBLIC_LANDING_URL || 'https://proofchain-landing.vercel.app';
     const explorerUrl = process.env.NEXT_PUBLIC_CARDANO_EXPLORER || 'https://preprod.cardanoscan.io';
 
     return (
@@ -176,7 +176,7 @@ export default function HomePage() {
                                     {doc.status === 'issued' && (
                                         <>
                                             <a
-                                                href={`${verifierUrl}/verify/${doc.document_id}`}
+                                                href={`${landingUrl}/verify/${doc.document_id}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900/30 rounded-lg transition-colors"

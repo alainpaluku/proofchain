@@ -14,8 +14,7 @@
 
 | App | Port | URL | Code |
 |-----|------|-----|------|
-| 🏠 Landing | 3003 | [landing-rouge-phi.vercel.app](https://landing-rouge-phi.vercel.app/) | [apps/landing](./apps/landing) |
-| ✅ Verifier | 3000 | [proofchain-verifier.vercel.app](https://proofchain-verifier.vercel.app) | [apps/verifier](./apps/verifier) |
+| 🏠 Landing (+ Verifier) | 3003 | [proofchain-landing.vercel.app](https://proofchain-landing.vercel.app/) | [apps/landing](./apps/landing) |
 | 🎓 Issuer | 3001 | [proofchain-issuer.vercel.app](https://proofchain-issuer.vercel.app) | [apps/issuer](./apps/issuer) |
 | ⚙️ Admin | 3002 | [proofchain-admin.vercel.app](https://proofchain-admin.vercel.app) | [apps/admin](./apps/admin) |
 
@@ -32,7 +31,6 @@ npm run dev
 
 # App spécifique
 npm run issuer:dev
-npm run verifier:dev
 npm run admin:dev
 ```
 
@@ -42,8 +40,7 @@ npm run admin:dev
 
 | Dossier | Description |
 |---------|-------------|
-| [apps/landing](./apps/landing) | Landing page publique |
-| [apps/verifier](./apps/verifier) | Vérification de diplômes |
+| [apps/landing](./apps/landing) | Landing page + Vérification de diplômes |
 | [apps/issuer](./apps/issuer) | Portail institutions |
 | [apps/admin](./apps/admin) | Dashboard administration |
 | [packages/ui](./packages/ui) | Composants React partagés |
@@ -91,9 +88,8 @@ Voir [package.json](./package.json) pour toutes les commandes.
 ```bash
 npm run dev              # Toutes les apps
 npm run issuer:dev       # Issuer uniquement
-npm run verifier:dev     # Verifier uniquement
 npm run admin:dev        # Admin uniquement
-npm run landing:dev      # Landing uniquement
+npm run landing:dev      # Landing uniquement (inclut la vérification)
 ```
 
 ### Build & Lint
@@ -129,7 +125,7 @@ NEXT_PUBLIC_BLOCKFROST_NETWORK=preprod
 PINATA_JWT=eyJxxx...
 
 # === URLs des apps ===
-NEXT_PUBLIC_VERIFIER_URL=https://proofchain-verifier.vercel.app
+NEXT_PUBLIC_LANDING_URL=https://proofchain-landing.vercel.app
 NEXT_PUBLIC_ISSUER_URL=https://proofchain-issuer.vercel.app
 NEXT_PUBLIC_ADMIN_URL=https://proofchain-admin.vercel.app
 ```
@@ -146,11 +142,10 @@ NEXT_PUBLIC_ADMIN_URL=https://proofchain-admin.vercel.app
 - 📊 Dashboard avec statistiques
 - 🔐 Authentification sécurisée
 
-### Pour la vérification ([Verifier](./apps/verifier))
-- � Scsan QR code
-- � Recherche cpar ID document
+### Pour la vérification (intégré dans [Landing](./apps/landing))
+- 🔍 Recherche par ID document ou Asset ID
 - ✅ Vérification blockchain en temps réel
-- 📄 Affichage des métadonnées
+- 📄 Affichage des métadonnées du diplôme
 
 ### Administration ([Admin](./apps/admin))
 - ✅ Validation KYC des institutions

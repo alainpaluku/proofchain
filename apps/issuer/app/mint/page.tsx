@@ -62,7 +62,7 @@ export default function MintPage() {
     const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
 
     const generateQRCode = useCallback(async (docId: string) => {
-        const verifyUrl = `${process.env.NEXT_PUBLIC_VERIFIER_URL || 'https://proofchain-verifier.vercel.app'}/verify/${docId}`;
+        const verifyUrl = `${process.env.NEXT_PUBLIC_LANDING_URL || 'https://proofchain-landing.vercel.app'}/verify/${docId}`;
         try {
             const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
                 width: 256,
@@ -198,7 +198,7 @@ export default function MintPage() {
             setIsUploading(false);
             setIsMinting(true);
 
-            const verifyUrl = `${process.env.NEXT_PUBLIC_VERIFIER_URL || 'https://proofchain.io'}/verify/${document.document_id}`;
+            const verifyUrl = `${process.env.NEXT_PUBLIC_LANDING_URL || 'https://proofchain-landing.vercel.app'}/verify/${document.document_id}`;
             
             const metadata = {
                 name: `PROOFCHAIN Diploma - ${document.document_id}`,
@@ -321,7 +321,7 @@ export default function MintPage() {
 
                             <div className="mt-4 flex flex-wrap gap-3">
                                 <a
-                                    href={`${process.env.NEXT_PUBLIC_VERIFIER_URL || 'https://proofchain-verifier.vercel.app'}/verify/${documentId}`}
+                                    href={`${process.env.NEXT_PUBLIC_LANDING_URL || 'https://proofchain-landing.vercel.app'}/verify/${documentId}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium"

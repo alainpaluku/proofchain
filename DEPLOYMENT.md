@@ -7,8 +7,7 @@ proofchain/
 ├── apps/
 │   ├── admin/      → Dashboard administrateur (port 3002)
 │   ├── issuer/     → Portail émetteur de certificats (port 3001)
-│   ├── landing/    → Site vitrine (port 3003)
-│   └── verifier/   → Vérification de certificats (port 3000)
+│   └── landing/    → Site vitrine + Vérification (port 3003)
 ├── packages/
 │   ├── chain/      → Logique blockchain Cardano
 │   ├── shared/     → Utilitaires partagés
@@ -28,7 +27,6 @@ Si vos 4 projets existent déjà sur Vercel :
 | Projet | Root Directory |
 |--------|----------------|
 | proofchain-landing | `apps/landing` |
-| proofchain-verifier | `apps/verifier` |
 | proofchain-issuer | `apps/issuer` |
 | proofchain-admin | `apps/admin` |
 
@@ -53,7 +51,6 @@ Pour créer de nouveaux projets Vercel :
 | App | Root Directory | Nom suggéré |
 |-----|----------------|-------------|
 | Landing | `apps/landing` | proofchain-landing |
-| Verifier | `apps/verifier` | proofchain-verifier |
 | Issuer | `apps/issuer` | proofchain-issuer |
 | Admin | `apps/admin` | proofchain-admin |
 
@@ -112,7 +109,6 @@ vercel login
 ```bash
 # Pour chaque app
 vercel link --cwd apps/landing
-vercel link --cwd apps/verifier
 vercel link --cwd apps/issuer
 vercel link --cwd apps/admin
 ```
@@ -158,8 +154,7 @@ Chaque app possède son propre `vercel.json` :
 
 | App | Domaine suggéré |
 |-----|-----------------|
-| Landing | proofchain.io |
-| Verifier | verify.proofchain.io |
+| Landing (+ Verifier) | proofchain.io |
 | Issuer | issuer.proofchain.io |
 | Admin | admin.proofchain.io |
 
