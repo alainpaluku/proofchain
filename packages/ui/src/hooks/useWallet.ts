@@ -16,7 +16,7 @@ interface WalletApi {
     submitTx: (tx: string) => Promise<string>;
 }
 
-export type WalletType = 'nami' | 'lace' | 'eternl' | 'eternl-mobile' | 'vespr' | 'flint' | null;
+export type WalletType = 'nami' | 'lace' | 'eternl' | 'eternl-mobile' | 'vespr' | 'flint' | 'yoroi' | 'yoroi-mobile' | null;
 
 export interface WalletState {
     connected: boolean;
@@ -52,23 +52,28 @@ function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
-// Check if iOS
-function isIOS() {
-    if (typeof window === 'undefined') return false;
-    return /iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
 
-// Check if Android
-function isAndroid() {
-    if (typeof window === 'undefined') return false;
-    return /Android/i.test(navigator.userAgent);
-}
 
 // Check if in-app browser (wallet browser)
 function isInAppBrowser() {
     if (typeof window === 'undefined') return false;
     const ua = navigator.userAgent.toLowerCase();
-    return ua.includes('eternl') || ua.includes('vespr') || ua.includes('flint') || ua.includes('wv');
+    return ua.includes('eternl') || ua.includes('vespr') || ua.includes('flint') || ua.includes('yoroi') || ua.includes('wv');
+}
+
+// Helper to detect Eternl wallet (handles different property names)
+function getEternlWallet() {
+    const cardano = getCardano();
+    if (!cardano) return null;
+    // Eternl peut être injecté sous différents noms
+    return cardano.eternl || cardano.ccvault || null;
+}
+
+// Helper to detect Yoroi wallet
+function getYoroiWallet() {
+    const cardano = getCardano();
+    if (!cardano) return null;
+    return cardano.yoroi || null;
 }
 
 export function useWallet() {
@@ -94,12 +99,22 @@ export function useWallet() {
             const inAppBrowser = isInAppBrowser();
             
             // Desktop wallets
+            const eternlWallet = getEternlWallet();
+            const yoroiWallet = getYoroiWallet();
+            
             const desktopWallets: WalletInfo[] = [
                 {
                     id: 'eternl',
                     name: 'Eternl',
                     icon: '🔷',
-                    installed: !!cardano?.eternl,
+                    installed: !!eternlWallet,
+                    isMobile: false,
+                },
+                {
+                    id: 'yoroi',
+                    name: 'Yoroi',
+                    icon: '🦋',
+                    installed: !!yoroiWallet,
                     isMobile: false,
                 },
                 {
@@ -136,6 +151,16 @@ export function useWallet() {
                     deepLink: 'eternl://',
                     appStoreUrl: 'https://apps.apple.com/app/eternl/id1603854498',
                     playStoreUrl: 'https://play.google.com/store/apps/details?id=io.eternl.app',
+                },
+                {
+                    id: 'yoroi-mobile',
+                    name: 'Yoroi',
+                    icon: '🦋',
+                    installed: true,
+                    isMobile: true,
+                    deepLink: 'yoroi://',
+                    appStoreUrl: 'https://apps.apple.com/app/emurgos-yoroi-cardano-wallet/id1447326389',
+                    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.emurgo',
                 },
                 {
                     id: 'vespr',
@@ -205,7 +230,10 @@ export function useWallet() {
 
             // If no wallet type specified, try to auto-detect
             if (!selectedWallet) {
-                if (cardano?.eternl) selectedWallet = 'eternl';
+                const eternlWallet = getEternlWallet();
+                const yoroiWallet = getYoroiWallet();
+                if (eternlWallet) selectedWallet = 'eternl';
+                else if (yoroiWallet) selectedWallet = 'yoroi';
                 else if (cardano?.lace) selectedWallet = 'lace';
                 else if (cardano?.nami) selectedWallet = 'nami';
                 else if (isMobile) selectedWallet = 'eternl-mobile';
@@ -260,10 +288,18 @@ export function useWallet() {
 
             // Desktop wallet connection
             switch (selectedWallet) {
-                case 'eternl':
-                    if (!cardano?.eternl) throw new Error('Eternl wallet not installed');
-                    walletApi = await cardano.eternl.enable();
+                case 'eternl': {
+                    const eternlWallet = getEternlWallet();
+                    if (!eternlWallet) throw new Error('Eternl wallet not installed');
+                    walletApi = await eternlWallet.enable();
                     break;
+                }
+                case 'yoroi': {
+                    const yoroiWallet = getYoroiWallet();
+                    if (!yoroiWallet) throw new Error('Yoroi wallet not installed');
+                    walletApi = await yoroiWallet.enable();
+                    break;
+                }
                 case 'lace':
                     if (!cardano?.lace) throw new Error('Lace wallet not installed');
                     walletApi = await cardano.lace.enable();
@@ -272,18 +308,65 @@ export function useWallet() {
                     if (!cardano?.nami) throw new Error('Nami wallet not installed');
                     walletApi = await cardano.nami.enable();
                     break;
+                case 'flint':
+                    if (!cardano?.flint) throw new Error('Flint wallet not installed');
+                    walletApi = await cardano.flint.enable();
+                    break;
                 default:
-                    throw new Error('No compatible wallet found. Please install Eternl, Lace or Nami.');
+                    throw new Error('No compatible wallet found. Please install Eternl, Lace, Yoroi or Nami.');
             }
 
-            const addressHex = await walletApi.getUsedAddresses();
-            const address = addressHex[0];
+            // Get address - try getUsedAddresses first, fallback to getUnusedAddresses
+            let addresses = await walletApi.getUsedAddresses();
+            if (!addresses || addresses.length === 0) {
+                // Fallback pour les wallets qui n'ont pas encore d'adresses utilisées
+                const getUnused = (walletApi as any).getUnusedAddresses;
+                if (typeof getUnused === 'function') {
+                    addresses = await getUnused.call(walletApi);
+                }
+            }
+            const address = addresses?.[0] || null;
 
             const networkId = await walletApi.getNetworkId();
             const network = networkId === 0 ? 'preprod' : networkId === 1 ? 'mainnet' : 'preview';
 
-            const balanceHex = await walletApi.getBalance();
-            const balance = parseInt(balanceHex, 16) / 1_000_000;
+            // Parse balance - CIP-30 retourne du CBOR, on extrait les lovelaces
+            const balanceCbor = await walletApi.getBalance();
+            let balance = 0;
+            try {
+                // Le balance CBOR peut être un simple entier ou un tuple [lovelace, assets]
+                // Pour simplifier, on essaie de parser le hex comme un entier CBOR
+                // Format CBOR: 1b + 8 bytes pour grand entier, ou valeur directe pour petit
+                if (balanceCbor.startsWith('1b')) {
+                    // Grand entier (8 bytes)
+                    balance = parseInt(balanceCbor.slice(2, 18), 16) / 1_000_000;
+                } else if (balanceCbor.startsWith('1a')) {
+                    // Entier 4 bytes
+                    balance = parseInt(balanceCbor.slice(2, 10), 16) / 1_000_000;
+                } else if (balanceCbor.startsWith('19')) {
+                    // Entier 2 bytes
+                    balance = parseInt(balanceCbor.slice(2, 6), 16) / 1_000_000;
+                } else if (balanceCbor.startsWith('18')) {
+                    // Entier 1 byte
+                    balance = parseInt(balanceCbor.slice(2, 4), 16) / 1_000_000;
+                } else if (balanceCbor.startsWith('82')) {
+                    // Tuple [lovelace, assets] - extraire le premier élément
+                    const lovelacePart = balanceCbor.slice(2);
+                    if (lovelacePart.startsWith('1b')) {
+                        balance = parseInt(lovelacePart.slice(2, 18), 16) / 1_000_000;
+                    } else if (lovelacePart.startsWith('1a')) {
+                        balance = parseInt(lovelacePart.slice(2, 10), 16) / 1_000_000;
+                    } else {
+                        balance = parseInt(lovelacePart.slice(0, 2), 16) / 1_000_000;
+                    }
+                } else {
+                    // Petit entier direct (0-23)
+                    balance = parseInt(balanceCbor.slice(0, 2), 16) / 1_000_000;
+                }
+            } catch (e) {
+                console.warn('Could not parse balance CBOR:', balanceCbor);
+                balance = 0;
+            }
 
             setState({
                 connected: true,

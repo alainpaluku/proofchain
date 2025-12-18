@@ -1,5 +1,8 @@
--- PROOFCHAIN Database Schema
+-- ============================================================================
+-- PROOFCHAIN - Complete Database Schema
 -- Supabase PostgreSQL Schema for Academic Document Verification Platform
+-- Version: 2.0 - Consolidated
+-- ============================================================================
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -21,7 +24,7 @@ CREATE TYPE currency_type AS ENUM ('USD', 'FC');
 -- Countries table
 CREATE TABLE countries (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    code VARCHAR(2) NOT NULL UNIQUE, -- CD, US, FR, etc.
+    code VARCHAR(2) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -29,216 +32,135 @@ CREATE TABLE countries (
 -- Institutions table
 CREATE TABLE institutions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    
-    -- Unique identifier (4 chars base36: 0-9, A-Z)
     institution_code VARCHAR(4) NOT NULL UNIQUE,
-    
-    -- Basic info
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     email_verified BOOLEAN DEFAULT FALSE,
-    
-    -- Institution type
     type institution_type NOT NULL,
-    
-    -- Country
     country_id UUID REFERENCES countries(id),
     country_code VARCHAR(2) NOT NULL,
-    
-    -- Contact details
     website VARCHAR(255),
     phone VARCHAR(50),
     address TEXT,
-    
-    -- Legal info
     tax_id VARCHAR(100),
     registration_number VARCHAR(100),
-    
-    -- KYC
     kyc_status kyc_status DEFAULT 'incomplete',
     kyc_submitted_at TIMESTAMPTZ,
     kyc_reviewed_at TIMESTAMPTZ,
     kyc_reviewed_by UUID REFERENCES auth.users(id),
     kyc_rejection_reason TEXT,
-    
-    -- Documents (stored in Supabase Storage)
     legal_docs_url TEXT,
     accreditation_url TEXT,
     tax_certificate_url TEXT,
     ministerial_decree_url TEXT,
-    
-    -- Subscription
     subscription_plan subscription_plan DEFAULT 'free',
     subscription_currency currency_type DEFAULT 'USD',
     subscription_starts_at TIMESTAMPTZ,
     subscription_ends_at TIMESTAMPTZ,
-    
-    -- Stats
     documents_issued INTEGER DEFAULT 0,
     students_count INTEGER DEFAULT 0,
-    
-    -- Metadata
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     created_by UUID REFERENCES auth.users(id)
 );
 
+
 -- Students table
 CREATE TABLE students (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    
-    -- Institution relationship
     institution_id UUID NOT NULL REFERENCES institutions(id) ON DELETE CASCADE,
-    
-    -- Student info
     full_name VARCHAR(255) NOT NULL,
     email VARCHAR(255),
     phone VARCHAR(50),
-    
-    -- Student ID (internal to institution)
     student_number VARCHAR(100) NOT NULL,
-    
-    -- Program info
     program VARCHAR(255),
     field_of_study VARCHAR(255),
     enrollment_date DATE,
-    
-    -- Status
-    status VARCHAR(50) DEFAULT 'active', -- active, graduated, suspended
-    
-    -- Stats
+    status VARCHAR(50) DEFAULT 'active',
     documents_issued INTEGER DEFAULT 0,
-    
-    -- Metadata
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     created_by UUID REFERENCES auth.users(id),
-    
-    -- Unique constraint: one student number per institution
     UNIQUE(institution_id, student_number)
 );
 
 -- Documents table
 CREATE TABLE documents (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    
-    -- Unique document identifier (8 chars base36)
     document_code VARCHAR(8) NOT NULL UNIQUE,
-    
-    -- Full document ID: CD-UN-000E-02032024-0000A00
     document_id VARCHAR(50) NOT NULL UNIQUE,
-    
-    -- Relationships
     institution_id UUID NOT NULL REFERENCES institutions(id) ON DELETE CASCADE,
     student_id UUID NOT NULL REFERENCES students(id) ON DELETE CASCADE,
-    
-    -- Document type
-    degree_type VARCHAR(100) NOT NULL, -- Bachelor, Master, PhD, Certificate, etc.
+    degree_type VARCHAR(100) NOT NULL,
     field_of_study VARCHAR(255) NOT NULL,
-    
-    -- Dates
     issue_date DATE NOT NULL,
     graduation_date DATE NOT NULL,
-    
-    -- Blockchain info
-    tx_hash VARCHAR(255), -- Cardano transaction hash
-    asset_id VARCHAR(255), -- Cardano asset ID (policyId + assetName)
+    tx_hash VARCHAR(255),
+    asset_id VARCHAR(255),
     policy_id VARCHAR(255),
     asset_name VARCHAR(255),
-    
-    -- IPFS
-    ipfs_hash VARCHAR(255), -- Document image on IPFS
+    ipfs_hash VARCHAR(255),
     ipfs_url TEXT,
-    
-    -- Status
     status document_status DEFAULT 'draft',
     revoked_at TIMESTAMPTZ,
     revoked_by UUID REFERENCES auth.users(id),
     revocation_reason TEXT,
-    
-    -- Metadata
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     created_by UUID REFERENCES auth.users(id)
 );
 
--- Document verification logs
+-- Verification logs
 CREATE TABLE verification_logs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    
     document_id UUID REFERENCES documents(id) ON DELETE SET NULL,
     document_code VARCHAR(50),
-    
-    -- Verification result
     verified BOOLEAN NOT NULL,
-    verification_method VARCHAR(50), -- qr_code, manual_search, api
-    
-    -- IP and location (optional)
+    verification_method VARCHAR(50),
     ip_address INET,
     user_agent TEXT,
     country VARCHAR(2),
-    
-    -- Metadata
     verified_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- CSV Import logs
+-- Import logs
 CREATE TABLE import_logs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    
     institution_id UUID NOT NULL REFERENCES institutions(id) ON DELETE CASCADE,
-    
-    -- File info
     file_name VARCHAR(255) NOT NULL,
     file_size INTEGER,
-    
-    -- Import results
     total_rows INTEGER NOT NULL,
     successful_rows INTEGER DEFAULT 0,
     failed_rows INTEGER DEFAULT 0,
-    errors JSONB, -- Array of error messages
-    
-    -- Metadata
+    errors JSONB,
     imported_at TIMESTAMPTZ DEFAULT NOW(),
     imported_by UUID REFERENCES auth.users(id)
 );
 
--- Subscription plans (admin managed)
+-- Subscription plans
 CREATE TABLE subscription_plans (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    
     plan_name subscription_plan NOT NULL UNIQUE,
-    
-    -- Pricing
     price_usd DECIMAL(10, 2) NOT NULL,
     price_fc DECIMAL(10, 2) NOT NULL,
-    
-    -- Limits
-    max_documents INTEGER, -- NULL = unlimited
+    max_documents INTEGER,
     max_students INTEGER,
-    
-    -- Features
     features JSONB,
-    
-    -- Metadata
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Admin activity logs
+-- Admin logs
 CREATE TABLE admin_logs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    
     admin_id UUID NOT NULL REFERENCES auth.users(id),
-    
-    action VARCHAR(100) NOT NULL, -- kyc_approved, kyc_rejected, institution_suspended, etc.
-    target_type VARCHAR(50), -- institution, document, user
+    action VARCHAR(100) NOT NULL,
+    target_type VARCHAR(50),
     target_id UUID,
-    
     details JSONB,
-    
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
 
 -- ============================================================================
 -- INDEXES
@@ -269,7 +191,7 @@ CREATE INDEX idx_verification_logs_date ON verification_logs(verified_at);
 
 -- Generate unique institution code (4 chars base36)
 CREATE OR REPLACE FUNCTION generate_institution_code()
-RETURNS VARCHAR(4) AS $$
+RETURNS VARCHAR(4) AS $
 DECLARE
     chars TEXT := '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     result VARCHAR(4) := '';
@@ -278,22 +200,19 @@ BEGIN
     FOR i IN 1..4 LOOP
         result := result || substr(chars, floor(random() * 36 + 1)::int, 1);
     END LOOP;
-    
-    -- Check if exists, regenerate if needed
     WHILE EXISTS (SELECT 1 FROM institutions WHERE institution_code = result) LOOP
         result := '';
         FOR i IN 1..4 LOOP
             result := result || substr(chars, floor(random() * 36 + 1)::int, 1);
         END LOOP;
     END LOOP;
-    
     RETURN result;
 END;
-$$ LANGUAGE plpgsql;
+$ LANGUAGE plpgsql;
 
 -- Generate unique document code (8 chars base36)
 CREATE OR REPLACE FUNCTION generate_document_code()
-RETURNS VARCHAR(8) AS $$
+RETURNS VARCHAR(8) AS $
 DECLARE
     chars TEXT := '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     result VARCHAR(8) := '';
@@ -302,18 +221,15 @@ BEGIN
     FOR i IN 1..8 LOOP
         result := result || substr(chars, floor(random() * 36 + 1)::int, 1);
     END LOOP;
-    
-    -- Check if exists, regenerate if needed
     WHILE EXISTS (SELECT 1 FROM documents WHERE document_code = result) LOOP
         result := '';
         FOR i IN 1..8 LOOP
             result := result || substr(chars, floor(random() * 36 + 1)::int, 1);
         END LOOP;
     END LOOP;
-    
     RETURN result;
 END;
-$$ LANGUAGE plpgsql;
+$ LANGUAGE plpgsql;
 
 -- Generate full document ID
 CREATE OR REPLACE FUNCTION generate_document_id(
@@ -323,9 +239,8 @@ CREATE OR REPLACE FUNCTION generate_document_id(
     p_issue_date DATE,
     p_document_code VARCHAR(8)
 )
-RETURNS VARCHAR(50) AS $$
+RETURNS VARCHAR(50) AS $
 BEGIN
-    -- Format: CD-UN-000E-02032024-0000A00
     RETURN CONCAT(
         p_country_code, '-',
         p_institution_type::TEXT, '-',
@@ -334,22 +249,22 @@ BEGIN
         p_document_code
     );
 END;
-$$ LANGUAGE plpgsql;
+$ LANGUAGE plpgsql;
 
 -- Update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS $
 BEGIN
     NEW.updated_at = NOW();
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$ LANGUAGE plpgsql;
+
 
 -- ============================================================================
 -- TRIGGERS
 -- ============================================================================
 
--- Auto-update updated_at
 CREATE TRIGGER institutions_updated_at BEFORE UPDATE ON institutions
     FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
@@ -361,76 +276,64 @@ CREATE TRIGGER documents_updated_at BEFORE UPDATE ON documents
 
 -- Auto-generate institution code
 CREATE OR REPLACE FUNCTION auto_generate_institution_code()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS $
 BEGIN
     IF NEW.institution_code IS NULL OR NEW.institution_code = '' THEN
         NEW.institution_code := generate_institution_code();
     END IF;
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$ LANGUAGE plpgsql;
 
 CREATE TRIGGER institutions_auto_code BEFORE INSERT ON institutions
     FOR EACH ROW EXECUTE FUNCTION auto_generate_institution_code();
 
 -- Auto-generate document code and ID
 CREATE OR REPLACE FUNCTION auto_generate_document_codes()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS $
 DECLARE
     inst RECORD;
 BEGIN
-    -- Get institution details
-    SELECT country_code, type, institution_code 
-    INTO inst
-    FROM institutions 
-    WHERE id = NEW.institution_id;
+    SELECT country_code, type, institution_code INTO inst
+    FROM institutions WHERE id = NEW.institution_id;
     
-    -- Generate document code if not provided
     IF NEW.document_code IS NULL OR NEW.document_code = '' THEN
         NEW.document_code := generate_document_code();
     END IF;
     
-    -- Generate full document ID
     NEW.document_id := generate_document_id(
-        inst.country_code,
-        inst.type,
-        inst.institution_code,
-        NEW.issue_date,
-        NEW.document_code
+        inst.country_code, inst.type, inst.institution_code,
+        NEW.issue_date, NEW.document_code
     );
-    
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$ LANGUAGE plpgsql;
 
 CREATE TRIGGER documents_auto_codes BEFORE INSERT ON documents
     FOR EACH ROW EXECUTE FUNCTION auto_generate_document_codes();
 
--- Update institution stats on document insert
+-- Update institution stats
 CREATE OR REPLACE FUNCTION update_institution_stats()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS $
 BEGIN
     IF TG_OP = 'INSERT' THEN
-        UPDATE institutions 
-        SET documents_issued = documents_issued + 1
+        UPDATE institutions SET documents_issued = documents_issued + 1
         WHERE id = NEW.institution_id;
-        
-        UPDATE students
-        SET documents_issued = documents_issued + 1
+        UPDATE students SET documents_issued = documents_issued + 1
         WHERE id = NEW.student_id;
     END IF;
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$ LANGUAGE plpgsql;
 
 CREATE TRIGGER documents_update_stats AFTER INSERT ON documents
     FOR EACH ROW EXECUTE FUNCTION update_institution_stats();
+
 
 -- ============================================================================
 -- ROW LEVEL SECURITY (RLS)
 -- ============================================================================
 
--- Enable RLS
 ALTER TABLE institutions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE students ENABLE ROW LEVEL SECURITY;
 ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
@@ -438,120 +341,113 @@ ALTER TABLE verification_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE import_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_logs ENABLE ROW LEVEL SECURITY;
 
--- Helper function to check if user is admin
+-- Helper: Check if user is admin (by role OR email)
 CREATE OR REPLACE FUNCTION is_admin(user_id UUID)
-RETURNS BOOLEAN AS $$
+RETURNS BOOLEAN AS $
 BEGIN
     RETURN EXISTS (
         SELECT 1 FROM auth.users
         WHERE id = user_id
-        AND raw_user_meta_data->>'role' = 'admin'
+        AND (
+            raw_user_meta_data->>'role' = 'admin'
+            OR email = 'alainpaluku@proton.me'
+        )
     );
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Helper function to get user's institution
+-- Helper: Get user's institution
 CREATE OR REPLACE FUNCTION get_user_institution(user_id UUID)
-RETURNS UUID AS $$
+RETURNS UUID AS $
 BEGIN
-    RETURN (
-        SELECT id FROM institutions
-        WHERE created_by = user_id
-        LIMIT 1
-    );
+    RETURN (SELECT id FROM institutions WHERE created_by = user_id LIMIT 1);
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Institutions policies
+-- ============================================================================
+-- INSTITUTIONS POLICIES
+-- ============================================================================
+
 CREATE POLICY "Admins can view all institutions"
-    ON institutions FOR SELECT
-    USING (is_admin(auth.uid()));
+    ON institutions FOR SELECT USING (is_admin(auth.uid()));
+
+CREATE POLICY "Admins can update all institutions"
+    ON institutions FOR UPDATE USING (is_admin(auth.uid()));
 
 CREATE POLICY "Users can view their own institution"
-    ON institutions FOR SELECT
-    USING (created_by = auth.uid());
+    ON institutions FOR SELECT USING (created_by = auth.uid());
 
 CREATE POLICY "Users can update their own institution"
-    ON institutions FOR UPDATE
-    USING (created_by = auth.uid());
+    ON institutions FOR UPDATE USING (created_by = auth.uid());
 
 CREATE POLICY "Authenticated users can create institutions"
-    ON institutions FOR INSERT
-    WITH CHECK (auth.uid() IS NOT NULL);
+    ON institutions FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
 
--- Students policies
+-- ============================================================================
+-- STUDENTS POLICIES
+-- ============================================================================
+
 CREATE POLICY "Admins can view all students"
-    ON students FOR SELECT
-    USING (is_admin(auth.uid()));
+    ON students FOR SELECT USING (is_admin(auth.uid()));
 
 CREATE POLICY "Institutions can view their students"
-    ON students FOR SELECT
-    USING (institution_id = get_user_institution(auth.uid()));
+    ON students FOR SELECT USING (institution_id = get_user_institution(auth.uid()));
 
 CREATE POLICY "Institutions can manage their students"
-    ON students FOR ALL
-    USING (institution_id = get_user_institution(auth.uid()));
+    ON students FOR ALL USING (institution_id = get_user_institution(auth.uid()));
 
--- Documents policies
+-- ============================================================================
+-- DOCUMENTS POLICIES
+-- ============================================================================
+
 CREATE POLICY "Anyone can view issued documents"
-    ON documents FOR SELECT
-    USING (status = 'issued');
+    ON documents FOR SELECT USING (status = 'issued');
 
 CREATE POLICY "Admins can view all documents"
-    ON documents FOR SELECT
-    USING (is_admin(auth.uid()));
+    ON documents FOR SELECT USING (is_admin(auth.uid()));
 
 CREATE POLICY "Institutions can view their documents"
-    ON documents FOR SELECT
-    USING (institution_id = get_user_institution(auth.uid()));
+    ON documents FOR SELECT USING (institution_id = get_user_institution(auth.uid()));
 
 CREATE POLICY "Institutions can create documents"
-    ON documents FOR INSERT
-    WITH CHECK (
+    ON documents FOR INSERT WITH CHECK (
         institution_id = get_user_institution(auth.uid())
         AND EXISTS (
             SELECT 1 FROM institutions
-            WHERE id = institution_id
-            AND kyc_status = 'approved'
+            WHERE id = institution_id AND kyc_status = 'approved'
         )
     );
 
 CREATE POLICY "Institutions can update their documents"
-    ON documents FOR UPDATE
-    USING (institution_id = get_user_institution(auth.uid()));
+    ON documents FOR UPDATE USING (institution_id = get_user_institution(auth.uid()));
 
--- Verification logs policies
+-- ============================================================================
+-- OTHER POLICIES
+-- ============================================================================
+
 CREATE POLICY "Anyone can create verification logs"
-    ON verification_logs FOR INSERT
-    WITH CHECK (true);
+    ON verification_logs FOR INSERT WITH CHECK (true);
 
 CREATE POLICY "Admins can view all verification logs"
-    ON verification_logs FOR SELECT
-    USING (is_admin(auth.uid()));
+    ON verification_logs FOR SELECT USING (is_admin(auth.uid()));
 
--- Import logs policies
 CREATE POLICY "Institutions can view their import logs"
-    ON import_logs FOR SELECT
-    USING (institution_id = get_user_institution(auth.uid()));
+    ON import_logs FOR SELECT USING (institution_id = get_user_institution(auth.uid()));
 
 CREATE POLICY "Institutions can create import logs"
-    ON import_logs FOR INSERT
-    WITH CHECK (institution_id = get_user_institution(auth.uid()));
+    ON import_logs FOR INSERT WITH CHECK (institution_id = get_user_institution(auth.uid()));
 
--- Admin logs policies
 CREATE POLICY "Only admins can view admin logs"
-    ON admin_logs FOR SELECT
-    USING (is_admin(auth.uid()));
+    ON admin_logs FOR SELECT USING (is_admin(auth.uid()));
 
 CREATE POLICY "Only admins can create admin logs"
-    ON admin_logs FOR INSERT
-    WITH CHECK (is_admin(auth.uid()));
+    ON admin_logs FOR INSERT WITH CHECK (is_admin(auth.uid()));
+
 
 -- ============================================================================
--- SEED DATA
+-- SEED DATA: COUNTRIES
 -- ============================================================================
 
--- Insert African countries
 INSERT INTO countries (code, name) VALUES
     -- Afrique Centrale
     ('CD', 'République Démocratique du Congo'),
@@ -614,10 +510,20 @@ INSERT INTO countries (code, name) VALUES
     ('KM', 'Comores')
 ON CONFLICT (code) DO NOTHING;
 
--- Insert subscription plans
+-- ============================================================================
+-- SEED DATA: SUBSCRIPTION PLANS
+-- ============================================================================
+
 INSERT INTO subscription_plans (plan_name, price_usd, price_fc, max_documents, max_students, features) VALUES
     ('free', 0, 0, 10, 50, '{"support": "community", "api_access": false}'::jsonb),
     ('basic', 29.99, 75000, 100, 500, '{"support": "email", "api_access": true}'::jsonb),
     ('premium', 99.99, 250000, 1000, 5000, '{"support": "priority", "api_access": true, "custom_branding": true}'::jsonb),
     ('enterprise', 299.99, 750000, NULL, NULL, '{"support": "24/7", "api_access": true, "custom_branding": true, "dedicated_account": true}'::jsonb)
 ON CONFLICT (plan_name) DO NOTHING;
+
+-- ============================================================================
+-- ADMIN SETUP (run after user creation)
+-- ============================================================================
+-- UPDATE auth.users
+-- SET raw_user_meta_data = COALESCE(raw_user_meta_data, '{}'::jsonb) || '{"role": "admin"}'::jsonb
+-- WHERE email = 'alainpaluku@proton.me';

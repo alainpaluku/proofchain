@@ -2,6 +2,8 @@
   "name": "proofchain",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "author": "PROOFCHAIN Team",
   "description": "Cardano blockchain-based academic verification platform",
   "workspaces": [
     "apps/*",

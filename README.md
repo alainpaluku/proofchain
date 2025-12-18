@@ -58,7 +58,7 @@ npm run admin:dev
 | Frontend | Next.js 13, React 18, Tailwind CSS |
 | Language | TypeScript 5.3 |
 | Blockchain | Cardano, Lucid, Blockfrost API |
-| Wallets | Eternl, Eternl Mobile, Lace, Nami |
+| Wallets | Eternl, Yoroi, Lace, Nami, Flint, VESPR |
 | Storage | IPFS via Pinata |
 | Database | Supabase (PostgreSQL) |
 | Auth | Supabase Auth |
@@ -73,8 +73,12 @@ npm run admin:dev
 |--------|------|--------|
 | Eternl | Extension | ✅ Supporté |
 | Eternl Mobile | iOS/Android | ✅ Supporté |
+| Yoroi | Extension | ✅ Supporté |
+| Yoroi Mobile | iOS/Android | ✅ Supporté |
 | Lace | Extension | ✅ Supporté |
 | Nami | Extension | ✅ Supporté |
+| Flint | Extension | ✅ Supporté |
+| VESPR | Mobile | ✅ Supporté |
 
 Voir l'implémentation : [packages/ui/src/hooks/useWallet.ts](./packages/ui/src/hooks/useWallet.ts)
 
@@ -149,13 +153,13 @@ NEXT_PUBLIC_ADMIN_URL=https://proofchain-admin.vercel.app
 
 ### Administration ([Admin](./apps/admin))
 - ✅ Validation KYC des institutions
-- � Stfatistiques globales
+- 📊 Statistiques globales
 - 👥 Gestion des utilisateurs
 - 💳 Gestion des abonnements
 
 ---
 
-## � Sécuritdé
+## 🔒 Sécurité
 
 Voir [.gitignore](./.gitignore) - Fichiers exclus de Git :
 - `.env`, `.env.local`
@@ -166,4 +170,4 @@ Voir [.gitignore](./.gitignore) - Fichiers exclus de Git :
 
 ## 📄 License
 
-© 2024 PROOFCHAIN - Tous droits réservés
+MIT License - Voir [LICENSE](./LICENSE)
