@@ -86,6 +86,7 @@ function ThemeToggle({ theme, toggleTheme, isScrolled }: { theme: string; toggle
 const crisisImages = [
     { url: 'https://www.hrw.org/sites/default/files/styles/16x9_large/public/multimedia_images_2015/drcschools1015_reportcovermainr.jpg?itok=5AeXxSrb', caption: 'Écoles attaquées en RDC - Human Rights Watch' },
     { url: 'https://img.msf.org/AssetLink/6438mu458es74ym450tt22n4wni2647m.jpg', caption: 'Impact du conflit sur l\'éducation - MSF' },
+    { url: 'https://s.rfi.fr/media/display/6a5bfca0-e859-11ef-b717-005056a90284/w:1024/p:16x9/IMG_20250210_105821.jpg', caption: 'Situation en RDC - RFI' },
 ];
 
 // Statistiques du projet (réalistes pour un MVP/Hackathon)
@@ -592,9 +593,9 @@ export default function ProofchainsPage() {
                             <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-blue-500 to-green-500 hidden md:block" />
                             
                             {[
-                                { step: '01', title: 'Émission', description: 'L\'institution émet le diplôme sur la blockchain Cardano via notre plateforme Issuer. Un NFT unique est créé.', icon: Building2, color: 'purple' },
+                                { step: '01', title: 'Émission', description: 'L\'institution émet le diplôme sur la blockchain Cardano via notre plateforme Issuer. Un NFT unique est créé et un QR code est généré automatiquement pour être imprimé au verso du document physique.', icon: Building2, color: 'purple' },
                                 { step: '02', title: 'Stockage', description: 'Le document est stocké de manière décentralisée sur IPFS. Les métadonnées sont inscrites dans la blockchain.', icon: Shield, color: 'blue' },
-                                { step: '03', title: 'Vérification', description: 'N\'importe qui peut vérifier l\'authenticité du diplôme en quelques secondes via notre interface publique.', icon: CheckCircle, color: 'green' },
+                                { step: '03', title: 'Vérification', description: 'Scannez le QR code au verso du document ou entrez l\'identifiant sur notre interface. L\'authenticité est vérifiée instantanément sur la blockchain.', icon: CheckCircle, color: 'green' },
                             ].map((item, i) => (
                                 <div key={i} className="relative flex gap-8 mb-12 last:mb-0">
                                     <div className={`w-16 h-16 bg-${item.color}-100 dark:bg-${item.color}-900/30 rounded-2xl flex items-center justify-center flex-shrink-0 z-10 border-4 border-white dark:border-gray-950`}>
@@ -607,6 +608,21 @@ export default function ProofchainsPage() {
                                     </div>
                                 </div>
                             ))}
+                        </div>
+
+                        {/* CTA Issuer */}
+                        <div className="mt-16 text-center">
+                            <p className="text-gray-600 dark:text-gray-400 mb-6">
+                                Vous êtes une institution éducative ? Commencez à émettre des diplômes certifiés dès maintenant.
+                            </p>
+                            <a 
+                                href="/issuer" 
+                                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105"
+                            >
+                                <Building2 className="w-5 h-5" />
+                                Accéder à la plateforme Issuer
+                                <ArrowRight className="w-5 h-5" />
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -761,6 +777,17 @@ export default function ProofchainsPage() {
                                 <ProofchainsLogo size={24} className="text-cyan-400" />
                             </div>
                             <span className="font-bold text-lg">PROOF<span className="text-cyan-400">CHAINS</span></span>
+                        </div>
+
+                        <div className="flex items-center gap-4">
+                            <span className="text-gray-500 text-sm">Soumis à</span>
+                            <a href="https://cats.wada.org/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                                <img 
+                                    src="https://cats.wada.org/brand_assets/CAT-logo.svg" 
+                                    alt="Cardano Africa Summit" 
+                                    className="h-10"
+                                />
+                            </a>
                         </div>
                         
                         <p className="text-gray-400 text-sm text-center">
