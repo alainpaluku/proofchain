@@ -370,6 +370,11 @@ export default function ProofchainsPage() {
 
                         {/* CTA Buttons */}
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105">
+                                <Building2 className="w-5 h-5" />
+                                Accéder à la plateforme Issuer
+                                <ArrowRight className="w-5 h-5" />
+                            </a>
                             <a href="#features" className="group px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/20">
                                 <Play className="w-5 h-5" />
                                 Découvrir
@@ -616,7 +621,9 @@ export default function ProofchainsPage() {
                                 Vous êtes une institution éducative ? Commencez à émettre des diplômes certifiés dès maintenant.
                             </p>
                             <a 
-                                href="/issuer" 
+                                href="https://issuer.proofchains.org/" 
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105"
                             >
                                 <Building2 className="w-5 h-5" />
@@ -692,7 +699,9 @@ export default function ProofchainsPage() {
                             Processus simple, sécurisé et instantané.
                         </p>
                         <a 
-                            href="/issuer" 
+                            href="https://issuer.proofchains.org/" 
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40"
                         >
                             <Building2 className="w-5 h-5" />
