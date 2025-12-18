@@ -1,5 +1,5 @@
 'use client';
-
+// Issuer Dashboard - Proofchains v1.0
 import React, { useEffect, useState } from 'react';
 import { Coins, Users, FileCheck, Award, Clock, ExternalLink, QrCode } from 'lucide-react';
 import Link from 'next/link';
