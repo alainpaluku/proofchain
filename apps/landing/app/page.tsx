@@ -433,15 +433,14 @@ export default function ProofchainsPage() {
 
                     <div className="max-w-4xl mx-auto">
                         <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/20 border border-gray-200 dark:border-gray-800">
-                            <video 
-                                className="w-full h-full object-cover"
-                                controls
-                                poster=""
-                                preload="metadata"
-                            >
-                                <source src="https://za9oq2xeokse5plp.public.blob.vercel-storage.com/video1" type="video/mp4" />
-                                Votre navigateur ne supporte pas la lecture de vidéos.
-                            </video>
+                            <iframe
+                                className="w-full h-full"
+                                src="https://www.youtube.com/embed/WZUOnXIhghY"
+                                title="Présentation Proofchains"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen
+                            />
                         </div>
                     </div>
                 </div>
@@ -467,15 +466,14 @@ export default function ProofchainsPage() {
 
                     <div className="max-w-4xl mx-auto">
                         <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-green-500/20 border border-gray-200 dark:border-gray-800">
-                            <video 
-                                className="w-full h-full object-cover"
-                                controls
-                                poster=""
-                                preload="metadata"
-                            >
-                                <source src="https://za9oq2xeokse5plp.public.blob.vercel-storage.com/vid%C3%A9o%203.mp4" type="video/mp4" />
-                                Votre navigateur ne supporte pas la lecture de vidéos.
-                            </video>
+                            <iframe
+                                className="w-full h-full"
+                                src="https://www.youtube.com/embed/6DV1eMeAnC4"
+                                title="Démonstration Proofchains"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen
+                            />
                         </div>
                     </div>
                 </div>
