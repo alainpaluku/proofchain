@@ -64,9 +64,10 @@ export const issuerService = {
             const { data: { user } } = await supabase.auth.getUser();
             if (!user) return { success: false, error: 'Utilisateur non connecté' };
 
-            // AUTO-APPROVE KYC pour le mode test
-            // Les juristes peuvent créer un compte sans attendre la validation admin
-            const AUTO_APPROVE_KYC = true; // Mettre à false pour revenir au mode normal
+            // Mode de validation KYC
+            // false = validation manuelle par l'administrateur (mode production)
+            // true = auto-approbation (mode test uniquement)
+            const AUTO_APPROVE_KYC = false;
 
             const institutionData = {
                 name: data.institutionName,
