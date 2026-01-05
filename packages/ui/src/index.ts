@@ -34,6 +34,11 @@ export { Logo, type LogoProps } from './components/Logo';
 export { useWallet } from './hooks/useWallet';
 export { useTheme } from './hooks/useTheme';
 
+// i18n
+export { LanguageProvider, useTranslation } from './contexts/LanguageContext';
+export { LanguageSelector } from './components/LanguageSelector';
+export { translations, type Locale, type TranslationKey, type TranslationSubKey } from './i18n/translations';
+
 // Utilities
 export * from './lib/constants';
 export * from './lib/storage';

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { LanguageProvider } from '@proofchain/ui';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -18,9 +19,11 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="fr">
+        <html lang="fr" suppressHydrationWarning>
             <body className="antialiased">
-                {children}
+                <LanguageProvider>
+                    {children}
+                </LanguageProvider>
             </body>
         </html>
     );

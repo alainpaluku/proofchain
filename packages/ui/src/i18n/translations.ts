@@ -1,0 +1,333 @@
+// Traductions FR/EN pour toutes les applications PROOFCHAIN
+
+export type Locale = 'fr' | 'en';
+
+export const translations = {
+  // ============================================================================
+  // COMMON / SHARED
+  // ============================================================================
+  common: {
+    loading: { fr: 'Chargement...', en: 'Loading...' },
+    error: { fr: 'Erreur', en: 'Error' },
+    success: { fr: 'Succès', en: 'Success' },
+    save: { fr: 'Enregistrer', en: 'Save' },
+    cancel: { fr: 'Annuler', en: 'Cancel' },
+    delete: { fr: 'Supprimer', en: 'Delete' },
+    edit: { fr: 'Modifier', en: 'Edit' },
+    add: { fr: 'Ajouter', en: 'Add' },
+    search: { fr: 'Rechercher', en: 'Search' },
+    confirm: { fr: 'Confirmer', en: 'Confirm' },
+    close: { fr: 'Fermer', en: 'Close' },
+    yes: { fr: 'Oui', en: 'Yes' },
+    no: { fr: 'Non', en: 'No' },
+    total: { fr: 'Total', en: 'Total' },
+    actions: { fr: 'Actions', en: 'Actions' },
+    status: { fr: 'Statut', en: 'Status' },
+    date: { fr: 'Date', en: 'Date' },
+    name: { fr: 'Nom', en: 'Name' },
+    email: { fr: 'Email', en: 'Email' },
+    phone: { fr: 'Téléphone', en: 'Phone' },
+    refresh: { fr: 'Actualiser', en: 'Refresh' },
+    noData: { fr: 'Aucune donnée', en: 'No data' },
+    required: { fr: 'Requis', en: 'Required' },
+  },
+
+  // ============================================================================
+  // AUTH
+  // ============================================================================
+  auth: {
+    login: { fr: 'Connexion', en: 'Login' },
+    logout: { fr: 'Déconnexion', en: 'Logout' },
+    register: { fr: 'Inscription', en: 'Register' },
+    password: { fr: 'Mot de passe', en: 'Password' },
+    forgotPassword: { fr: 'Mot de passe oublié ?', en: 'Forgot password?' },
+    resetPassword: { fr: 'Réinitialiser le mot de passe', en: 'Reset password' },
+  },
+
+  // ============================================================================
+  // NAVIGATION
+  // ============================================================================
+  nav: {
+    home: { fr: 'Accueil', en: 'Home' },
+    dashboard: { fr: 'Tableau de bord', en: 'Dashboard' },
+    students: { fr: 'Étudiants', en: 'Students' },
+    documents: { fr: 'Documents', en: 'Documents' },
+    diplomas: { fr: 'Diplômes', en: 'Diplomas' },
+    mint: { fr: 'Émettre', en: 'Mint' },
+    settings: { fr: 'Paramètres', en: 'Settings' },
+    notifications: { fr: 'Notifications', en: 'Notifications' },
+    subscriptions: { fr: 'Abonnements', en: 'Subscriptions' },
+    institutions: { fr: 'Institutions', en: 'Institutions' },
+    kycValidation: { fr: 'Validation KYC', en: 'KYC Validation' },
+    statistics: { fr: 'Statistiques', en: 'Statistics' },
+    features: { fr: 'Fonctionnalités', en: 'Features' },
+    forWho: { fr: 'Pour qui ?', en: 'For whom?' },
+    faq: { fr: 'FAQ', en: 'FAQ' },
+    verify: { fr: 'Vérifier', en: 'Verify' },
+  },
+
+  // ============================================================================
+  // STUDENTS PAGE
+  // ============================================================================
+  students: {
+    title: { fr: 'Gestion des étudiants', en: 'Student Management' },
+    student: { fr: 'étudiant', en: 'student' },
+    students: { fr: 'étudiants', en: 'students' },
+    addStudent: { fr: 'Ajouter un étudiant', en: 'Add a student' },
+    searchPlaceholder: { fr: 'Rechercher un étudiant...', en: 'Search for a student...' },
+    fullName: { fr: 'Nom complet', en: 'Full name' },
+    studentNumber: { fr: 'Matricule', en: 'Student ID' },
+    program: { fr: 'Programme', en: 'Program' },
+    fieldOfStudy: { fr: 'Domaine d\'étude', en: 'Field of study' },
+    diplomasIssued: { fr: 'Diplômes émis', en: 'Diplomas issued' },
+    noStudents: { fr: 'Aucun étudiant', en: 'No students' },
+    addFirstStudent: { fr: 'Ajoutez votre premier étudiant pour commencer', en: 'Add your first student to get started' },
+    confirmDelete: { fr: 'Êtes-vous sûr de vouloir supprimer cet étudiant ?', en: 'Are you sure you want to delete this student?' },
+    fullNameRequired: { fr: 'Le nom complet est requis', en: 'Full name is required' },
+    studentNumberRequired: { fr: 'Le matricule est requis', en: 'Student ID is required' },
+    addError: { fr: 'Erreur lors de l\'ajout de l\'étudiant', en: 'Error adding student' },
+    deleteError: { fr: 'Erreur lors de la suppression', en: 'Error deleting' },
+    createInstitutionFirst: { fr: 'Veuillez d\'abord créer votre institution.', en: 'Please create your institution first.' },
+    loadError: { fr: 'Erreur lors du chargement.', en: 'Error loading data.' },
+    adding: { fr: 'Ajout...', en: 'Adding...' },
+    statusActive: { fr: 'Actif', en: 'Active' },
+    statusGraduated: { fr: 'Diplômé', en: 'Graduated' },
+    statusSuspended: { fr: 'Suspendu', en: 'Suspended' },
+  },
+
+  // ============================================================================
+  // DOCUMENTS PAGE
+  // ============================================================================
+  documents: {
+    title: { fr: 'Gestion des documents', en: 'Document Management' },
+    document: { fr: 'document', en: 'document' },
+    documents: { fr: 'documents', en: 'documents' },
+    addDocument: { fr: 'Ajouter un document', en: 'Add a document' },
+    documentType: { fr: 'Type de document', en: 'Document type' },
+    issueDate: { fr: 'Date d\'émission', en: 'Issue date' },
+    expiryDate: { fr: 'Date d\'expiration', en: 'Expiry date' },
+    noDocuments: { fr: 'Aucun document', en: 'No documents' },
+    diploma: { fr: 'Diplôme', en: 'Diploma' },
+    certificate: { fr: 'Certificat', en: 'Certificate' },
+    attestation: { fr: 'Attestation', en: 'Attestation' },
+    pending: { fr: 'En attente', en: 'Pending' },
+    minted: { fr: 'Minté', en: 'Minted' },
+    verified: { fr: 'Vérifié', en: 'Verified' },
+  },
+
+  // ============================================================================
+  // MINT PAGE
+  // ============================================================================
+  mint: {
+    title: { fr: 'Émettre un diplôme NFT', en: 'Mint NFT Diploma' },
+    selectStudent: { fr: 'Sélectionner un étudiant', en: 'Select a student' },
+    selectDocument: { fr: 'Sélectionner un document', en: 'Select a document' },
+    mintNow: { fr: 'Émettre maintenant', en: 'Mint now' },
+    minting: { fr: 'Émission en cours...', en: 'Minting...' },
+    mintSuccess: { fr: 'Diplôme émis avec succès !', en: 'Diploma minted successfully!' },
+    mintError: { fr: 'Erreur lors de l\'émission', en: 'Error during minting' },
+    connectWallet: { fr: 'Connecter le wallet', en: 'Connect wallet' },
+    walletConnected: { fr: 'Wallet connecté', en: 'Wallet connected' },
+  },
+
+  // ============================================================================
+  // ADMIN DASHBOARD
+  // ============================================================================
+  admin: {
+    dashboardTitle: { fr: 'Dashboard Admin', en: 'Admin Dashboard' },
+    platformOverview: { fr: 'Vue d\'ensemble de la plateforme PROOFCHAIN', en: 'PROOFCHAIN platform overview' },
+    registeredInstitutions: { fr: 'Institutions inscrites', en: 'Registered institutions' },
+    pendingKYC: { fr: 'KYC en attente', en: 'Pending KYC' },
+    issuedDiplomas: { fr: 'Diplômes émis', en: 'Diplomas issued' },
+    approved: { fr: 'approuvées', en: 'approved' },
+    pending: { fr: 'En attente', en: 'Pending' },
+    validateKYC: { fr: 'Valider KYC', en: 'Validate KYC' },
+    checkPendingRequests: { fr: 'Vérifier les demandes en attente', en: 'Check pending requests' },
+    manageInstitutions: { fr: 'Gérer institutions', en: 'Manage institutions' },
+    viewAllInstitutions: { fr: 'Voir toutes les institutions', en: 'View all institutions' },
+    managePlansAndPrices: { fr: 'Gérer les plans et prix', en: 'Manage plans and prices' },
+    recentActivity: { fr: 'Activité récente', en: 'Recent activity' },
+    noRecentActivity: { fr: 'Aucune activité récente', en: 'No recent activity' },
+    activitiesWillAppear: { fr: 'Les activités apparaîtront ici', en: 'Activities will appear here' },
+    monthlyRevenue: { fr: 'Revenus mensuels', en: 'Monthly revenue' },
+    growth: { fr: 'Croissance', en: 'Growth' },
+    chartComingSoon: { fr: 'Graphique à venir', en: 'Chart coming soon' },
+  },
+
+  // ============================================================================
+  // LANDING PAGE
+  // ============================================================================
+  landing: {
+    heroTitle: { fr: 'Diplômes numériques infalsifiables sur Cardano', en: 'Unforgeable digital diplomas on Cardano' },
+    heroSubtitle: { fr: 'Émettez des diplômes sous forme de NFT sur la blockchain Cardano. Vérifiables instantanément par n\'importe qui, n\'importe où.', en: 'Issue diplomas as NFTs on the Cardano blockchain. Instantly verifiable by anyone, anywhere.' },
+    hackathonProject: { fr: 'Projet Hackathon', en: 'Hackathon Project' },
+    verifyDiploma: { fr: 'Vérifier un diplôme', en: 'Verify a diploma' },
+    accessIssuerPlatform: { fr: 'Accéder à la plateforme Issuer', en: 'Access Issuer platform' },
+    discover: { fr: 'Découvrir', en: 'Discover' },
+    sourceCode: { fr: 'Code Source', en: 'Source Code' },
+    searchPlaceholder: { fr: 'ID du diplôme ou Asset ID blockchain...', en: 'Diploma ID or blockchain Asset ID...' },
+    searchExample: { fr: 'Ex: CD-UG-LICH-20240615-A1B2C3D4 ou asset1abc123...', en: 'Ex: CD-UG-LICH-20240615-A1B2C3D4 or asset1abc123...' },
+    unforgeable: { fr: 'Infalsifiable', en: 'Unforgeable' },
+    verification: { fr: 'Vérification', en: 'Verification' },
+    noIntermediary: { fr: 'Intermédiaire', en: 'Intermediary' },
+    available: { fr: 'Disponible', en: 'Available' },
+    // Features
+    immutable: { fr: 'Immuable', en: 'Immutable' },
+    immutableDesc: { fr: 'Une fois inscrit sur Cardano, le diplôme ne peut plus être modifié ni supprimé. La preuve existe pour toujours.', en: 'Once recorded on Cardano, the diploma cannot be modified or deleted. The proof exists forever.' },
+    universal: { fr: 'Universel', en: 'Universal' },
+    universalDesc: { fr: 'Accessible partout dans le monde sans intermédiaire. Un simple lien ou QR code suffit pour vérifier.', en: 'Accessible anywhere in the world without intermediary. A simple link or QR code is enough to verify.' },
+    unique: { fr: 'Unique', en: 'Unique' },
+    uniqueDesc: { fr: 'Chaque diplôme est un NFT unique avec son propre identifiant. Impossible à dupliquer ou falsifier.', en: 'Each diploma is a unique NFT with its own identifier. Impossible to duplicate or forge.' },
+    instant: { fr: 'Instantané', en: 'Instant' },
+    instantDesc: { fr: 'Vérification en temps réel directement sur la blockchain. Plus besoin d\'attendre des jours ou semaines.', en: 'Real-time verification directly on the blockchain. No more waiting days or weeks.' },
+    // Value props
+    graduates: { fr: 'Diplômés', en: 'Graduates' },
+    graduatesDesc: { fr: 'Partagez une preuve irréfutable de vos qualifications. Un lien unique que vous pouvez envoyer à n\'importe quel employeur.', en: 'Share irrefutable proof of your qualifications. A unique link you can send to any employer.' },
+    employers: { fr: 'Employeurs', en: 'Employers' },
+    employersDesc: { fr: 'Vérifiez instantanément l\'authenticité des diplômes de vos candidats. Gratuit et sans inscription.', en: 'Instantly verify the authenticity of your candidates\' diplomas. Free and no registration required.' },
+    institutionsDesc: { fr: 'Universités, écoles et centres de formation : émettez des diplômes numériques certifiés sur la blockchain.', en: 'Universities, schools and training centers: issue certified digital diplomas on the blockchain.' },
+    permanentProof: { fr: 'Preuve permanente', en: 'Permanent proof' },
+    easySharing: { fr: 'Partage facile', en: 'Easy sharing' },
+    internationalRecognition: { fr: 'Reconnaissance internationale', en: 'International recognition' },
+    freeVerification: { fr: 'Vérification gratuite', en: 'Free verification' },
+    immediateResult: { fr: 'Résultat immédiat', en: 'Immediate result' },
+    zeroPaperwork: { fr: 'Zéro paperasse', en: 'Zero paperwork' },
+    simpleProcess: { fr: 'Processus simple', en: 'Simple process' },
+    reducedCost: { fr: 'Coût réduit', en: 'Reduced cost' },
+    modernImage: { fr: 'Image moderne', en: 'Modern image' },
+    // Institution types
+    universities: { fr: 'Universités', en: 'Universities' },
+    universitiesDesc: { fr: 'Licences, Masters, Doctorats', en: 'Bachelor\'s, Master\'s, Doctorates' },
+    higherEducation: { fr: 'Écoles supérieures', en: 'Higher education' },
+    higherEducationDesc: { fr: 'Diplômes d\'ingénieur, commerce', en: 'Engineering, business degrees' },
+    trainingCenters: { fr: 'Centres de formation', en: 'Training centers' },
+    trainingCentersDesc: { fr: 'Certificats professionnels', en: 'Professional certificates' },
+    technicalInstitutes: { fr: 'Instituts techniques', en: 'Technical institutes' },
+    technicalInstitutesDesc: { fr: 'Brevets et qualifications', en: 'Patents and qualifications' },
+    // Video section
+    presentation: { fr: 'Présentation', en: 'Presentation' },
+    discoverInVideo: { fr: 'Découvrez Proofchains en vidéo', en: 'Discover Proofchains in video' },
+    videoDescription: { fr: 'Une présentation complète de notre solution de certification de diplômes sur la blockchain Cardano.', en: 'A complete presentation of our diploma certification solution on the Cardano blockchain.' },
+    // FAQ
+    faqTitle: { fr: 'Questions fréquentes', en: 'Frequently asked questions' },
+    whatIsProofchains: { fr: 'Qu\'est-ce que Proofchains ?', en: 'What is Proofchains?' },
+    whatIsProofchainsAnswer: { fr: 'Proofchains est une solution basée sur la blockchain Cardano, dont le principal objectif est de lutter contre la falsification des documents scolaires et académiques.', en: 'Proofchains is a solution based on the Cardano blockchain, whose main objective is to fight against the falsification of school and academic documents.' },
+    whatChallenges: { fr: 'À quels défis répondez-vous ?', en: 'What challenges do you address?' },
+    whatChallengesAnswer: { fr: 'Proofchains répond au défi de la numérisation des documents scolaires et académiques afin de prévenir la perte et la falsification des supports physiques.', en: 'Proofchains addresses the challenge of digitizing school and academic documents to prevent loss and falsification of physical media.' },
+    whyCardano: { fr: 'Pourquoi la blockchain Cardano ?', en: 'Why the Cardano blockchain?' },
+    whyCardanoAnswer: { fr: 'Nous avons choisi la blockchain Cardano car c\'est l\'une des plus décentralisées au monde. Grâce à elle, nous enregistrons chaque document comme un actif numérique unique (NFT) sur un registre immuable et infalsifiable.', en: 'We chose the Cardano blockchain because it is one of the most decentralized in the world. Thanks to it, we record each document as a unique digital asset (NFT) on an immutable and unforgeable ledger.' },
+    whatValue: { fr: 'Quelle est la valeur ajoutée pour l\'utilisateur ?', en: 'What is the added value for the user?' },
+    whatValueAnswer: { fr: 'Pour l\'étudiant : une garantie de sécurité et d\'accès à ses documents, même en cas de perte physique. Pour l\'employeur : la possibilité de vérifier rapidement et avec certitude l\'authenticité d\'un document.', en: 'For the student: a guarantee of security and access to their documents, even in case of physical loss. For the employer: the ability to quickly and certainly verify the authenticity of a document.' },
+    localImpact: { fr: 'Quel est l\'impact local de votre solution ?', en: 'What is the local impact of your solution?' },
+    // Video section (Demo)
+    demo: { fr: 'Démonstration', en: 'Demo' },
+    seeInAction: { fr: 'Voir l\'application en action', en: 'See the application in action' },
+    demoDesc: { fr: 'Découvrez comment émettre et vérifier des diplômes sur la blockchain Cardano.', en: 'Discover how to issue and verify diplomas on the Cardano blockchain.' },
+    
+    // Problem section
+    theProblem: { fr: 'Le problème', en: 'The problem' },
+    contextTitle: { fr: 'Un contexte qui exige des solutions durables', en: 'A context that demands sustainable solutions' },
+    contextDesc: { 
+      fr: 'En RD Congo, particulièrement à l\'Est du pays, la situation sécuritaire complexe a des conséquences dramatiques sur l\'éducation. Des écoles sont détruites, des archives brûlées, et les déplacements massifs de populations causent la perte définitive des documents scolaires.', 
+      en: 'In DR Congo, particularly in the East, the complex security situation has dramatic consequences on education. Schools are destroyed, archives burned, and massive population displacements cause the permanent loss of school documents.' 
+    },
+    educationCrisis: { fr: 'Crise de l\'éducation', en: 'Education crisis' },
+    challengesTitle: { fr: 'Les défis à relever', en: 'Challenges to address' },
+    // Challenges items
+    schoolsDestroyed: { fr: 'Écoles détruites', en: 'Destroyed schools' },
+    schoolsDestroyedDesc: { fr: 'Les conflits détruisent les établissements et leurs archives, effaçant toute trace des parcours scolaires', en: 'Conflicts destroy institutions and their archives, erasing all traces of academic records' },
+    documentsLost: { fr: 'Documents perdus', en: 'Lost documents' },
+    documentsLostDesc: { fr: 'Les déplacements forcés de population causent la perte définitive des diplômes physiques', en: 'Forced population displacements cause permanent loss of physical diplomas' },
+    forgery: { fr: 'Falsification', en: 'Forgery' },
+    forgeryDesc: { fr: 'Sans système de vérification fiable, les faux diplômes circulent facilement', en: 'Without a reliable verification system, fake diplomas circulate easily' },
+    impossibleReconstruction: { fr: 'Reconstruction impossible', en: 'Impossible reconstruction' },
+    impossibleReconstructionDesc: { fr: 'Quand l\'école n\'existe plus, obtenir un duplicata devient impossible', en: 'When the school no longer exists, obtaining a duplicate becomes impossible' },
+
+    // Solution section
+    theSolution: { fr: 'La solution', en: 'The solution' },
+    howItSolves: { fr: 'Comment Proofchains résout ce problème', en: 'How Proofchains solves this problem' },
+    solutionDesc: { fr: 'Chaque diplôme devient un NFT unique sur Cardano, avec une preuve cryptographique impossible à falsifier.', en: 'Each diploma becomes a unique NFT on Cardano, with cryptographic proof impossible to forge.' },
+
+    // For Who section
+    stakeholderSolution: { fr: 'Une solution pour tous les acteurs', en: 'A solution for all stakeholders' },
+    stakeholderDesc: { fr: 'Proofchains s\'adresse à l\'ensemble de l\'écosystème éducatif et professionnel.', en: 'Proofchains addresses the entire educational and professional ecosystem.' },
+
+    // How it works
+    howItWorks: { fr: 'Comment ça marche ?', en: 'How does it work?' },
+    simpleAs: { fr: 'Simple comme 1, 2, 3', en: 'Simple as 1, 2, 3' },
+    step: { fr: 'ÉTAPE', en: 'STEP' },
+    startIssuing: { fr: 'Vous êtes une institution éducative ? Commencez à émettre des diplômes certifiés dès maintenant.', en: 'Are you an educational institution? Start issuing certified diplomas now.' },
+    // Steps
+    step1Title: { fr: 'Émission', en: 'Issuance' },
+    step1Desc: { fr: 'L\'institution émet le diplôme sur la blockchain Cardano via notre plateforme Issuer. Un NFT unique est créé et un QR code est généré automatiquement pour être imprimé au verso du document physique.', en: 'The institution issues the diploma on the Cardano blockchain via our Issuer platform. A unique NFT is created and a QR code is automatically generated to be printed on the back of the physical document.' },
+    step2Title: { fr: 'Stockage', en: 'Storage' },
+    step2Desc: { fr: 'Le document est stocké de manière décentralisée sur IPFS. Les métadonnées sont inscrites dans la blockchain.', en: 'The document is stored in a decentralized manner on IPFS. The metadata is recorded on the blockchain.' },
+    step3Title: { fr: 'Vérification', en: 'Verification' },
+    step3Desc: { fr: 'Scannez le QR code au verso du document ou entrez l\'identifiant sur notre interface. L\'authenticité est vérifiée instantanément sur la blockchain.', en: 'Scan the QR code on the back of the document or enter the identifier on our interface. Authenticity is verified instantly on the blockchain.' },
+
+    // Tech Stack
+    techUsed: { fr: 'Technologies utilisées', en: 'Technologies used' },
+    techDesc: { fr: 'Construit avec les meilleures technologies pour garantir performance, sécurité et scalabilité.', en: 'Built with the best technologies to ensure performance, security and scalability.' },
+    // Tech Stack items descriptions
+    posBlockchain: { fr: 'Blockchain proof-of-stake', en: 'Proof-of-stake blockchain' },
+    decentralizedStorage: { fr: 'Stockage décentralisé', en: 'Decentralized storage' },
+    cardanoSdk: { fr: 'SDK Cardano', en: 'Cardano SDK' },
+    blockchainApi: { fr: 'API Blockchain', en: 'Blockchain API' },
+    
+    // Issuers section
+    issuancePlatform: { fr: 'Plateforme d\'émission', en: 'Issuance platform' },
+    reservedFor: { fr: 'Réservé aux institutions éducatives', en: 'Reserved for educational institutions' },
+    reservedDesc: { 
+      fr: 'L\'émission de diplômes sur Proofchains est exclusivement réservée aux établissements d\'enseignement accrédités : universités, écoles, centres de formation et instituts techniques.', 
+      en: 'Diploma issuance on Proofchains is exclusively reserved for accredited educational institutions: universities, schools, training centers and technical institutes.' 
+    },
+    areYouInstitution: { fr: 'Vous êtes une institution éducative ?', en: 'Are you an educational institution?' },
+    accessPlatformDesc: { 
+      fr: 'Accédez à notre plateforme Issuer pour émettre des diplômes certifiés sur la blockchain Cardano. Processus simple, sécurisé et instantané.', 
+      en: 'Access our Issuer platform to issue certified diplomas on the Cardano blockchain. Simple, secure and instant process.' 
+    },
+
+    // Verify CTA section
+    verifyNow: { fr: 'Vérifiez un diplôme maintenant', en: 'Verify a diploma now' },
+    verifyFreeDesc: { 
+      fr: 'La vérification est gratuite et accessible à tous. Entrez l\'identifiant du diplôme pour vérifier son authenticité.', 
+      en: 'Verification is free and accessible to everyone. Enter the diploma ID to verify its authenticity.' 
+    },
+
+    // Footer
+    submittedTo: { fr: 'Soumis à', en: 'Submitted to' },
+    projectDesc: { fr: 'Projet open-source pour le Cardano Africa Summit.', en: 'Open-source project for the Cardano Africa Summit.' },
+    allRightsReserved: { fr: 'Tous droits réservés', en: 'All rights reserved' },
+    madeWith: { fr: 'Fait avec', en: 'Made with' },
+    inDRC: { fr: 'en RDC', en: 'in DRC' },
+  },
+
+  // ============================================================================
+  // KYC
+  // ============================================================================
+  kyc: {
+    title: { fr: 'Vérification KYC', en: 'KYC Verification' },
+    status: { fr: 'Statut KYC', en: 'KYC Status' },
+    pending: { fr: 'En attente de vérification', en: 'Pending verification' },
+    approved: { fr: 'Approuvé', en: 'Approved' },
+    rejected: { fr: 'Rejeté', en: 'Rejected' },
+    submitDocuments: { fr: 'Soumettre les documents', en: 'Submit documents' },
+  },
+
+  // ============================================================================
+  // SETTINGS
+  // ============================================================================
+  settings: {
+    title: { fr: 'Paramètres', en: 'Settings' },
+    profile: { fr: 'Profil', en: 'Profile' },
+    security: { fr: 'Sécurité', en: 'Security' },
+    notifications: { fr: 'Notifications', en: 'Notifications' },
+    language: { fr: 'Langue', en: 'Language' },
+    theme: { fr: 'Thème', en: 'Theme' },
+    darkMode: { fr: 'Mode sombre', en: 'Dark mode' },
+    lightMode: { fr: 'Mode clair', en: 'Light mode' },
+  },
+} as const;
+
+export type TranslationKey = keyof typeof translations;
+export type TranslationSubKey<T extends TranslationKey> = keyof typeof translations[T];
