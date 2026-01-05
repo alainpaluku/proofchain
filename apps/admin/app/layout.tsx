@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { AuthWrapper } from '../components/AuthWrapper';
-import { ThemeScript } from '@proofchain/ui';
+import { ThemeScript, LanguageProvider } from '@proofchain/ui';
 
 export const metadata: Metadata = {
     title: 'PROOFCHAIN Admin',
@@ -34,9 +34,11 @@ export default function RootLayout({
                 <ThemeScript />
             </head>
             <body className="antialiased">
-                <AuthWrapper>
-                    {children}
-                </AuthWrapper>
+                <LanguageProvider>
+                    <AuthWrapper>
+                        {children}
+                    </AuthWrapper>
+                </LanguageProvider>
             </body>
         </html>
     );

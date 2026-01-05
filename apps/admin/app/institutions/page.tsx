@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Building2, Search, Eye, Ban, CheckCircle, Mail, Phone, Globe } from 'lucide-react';
-import { Card, EmptyState, Button, LoadingSpinner } from '@proofchain/ui';
+import { Card, EmptyState, Button, LoadingSpinner, useTranslation } from '@proofchain/ui';
 import { adminService } from '@proofchain/shared';
 
 interface InstitutionDisplay {
@@ -20,6 +20,7 @@ interface InstitutionDisplay {
 }
 
 export default function InstitutionsPage() {
+    const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState('');
     const [institutions, setInstitutions] = useState<InstitutionDisplay[]>([]);
     const [loading, setLoading] = useState(true);
@@ -49,7 +50,7 @@ export default function InstitutionsPage() {
             }));
             setInstitutions(mapped);
         } else {
-            setError(result.error || 'Erreur de chargement');
+            setError(result.error || t('common', 'error'));
         }
         setLoading(false);
     };
@@ -92,10 +93,10 @@ export default function InstitutionsPage() {
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                         <Building2 className="w-8 h-8 text-purple-600" />
-                        Gestion des institutions
+                        {t('nav', 'institutions')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
-                        {institutions.length} institution{institutions.length > 1 ? 's' : ''} inscrite{institutions.length > 1 ? 's' : ''}
+                        {institutions.length} institution{institutions.length > 1 ? 's' : ''}
                     </p>
                 </div>
             </div>
@@ -106,7 +107,7 @@ export default function InstitutionsPage() {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
                         type="text"
-                        placeholder="Rechercher une institution..."
+                        placeholder={t('students', 'searchPlaceholder')}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-600 focus:border-transparent"
@@ -132,8 +133,8 @@ export default function InstitutionsPage() {
             {!loading && filteredInstitutions.length === 0 ? (
                 <EmptyState
                     icon={Building2}
-                    title="Aucune institution"
-                    description="Les institutions inscrites apparaîtront ici"
+                    title={t('nav', 'institutions')}
+                    description={t('common', 'noData')}
                 />
             ) : (
                 <div className="grid grid-cols-1 gap-6">
@@ -168,7 +169,7 @@ export default function InstitutionsPage() {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(institution.status)}`}>
-                                        {institution.status === 'active' ? 'Actif' : institution.status === 'suspended' ? 'Suspendu' : 'En attente'}
+                                        {institution.status === 'active' ? t('status', 'active') : institution.status === 'suspended' ? t('status', 'suspended') : t('status', 'pending')}
                                     </span>
                                 </div>
                             </div>
@@ -177,34 +178,34 @@ export default function InstitutionsPage() {
                                 <div>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">KYC</p>
                                     <p className={`font-semibold ${getKYCStatusColor(institution.kycStatus || 'pending')}`}>
-                                        {institution.kycStatus === 'approved' ? 'Approuvé' : institution.kycStatus === 'pending' ? 'En attente' : 'Rejeté'}
+                                        {institution.kycStatus === 'approved' ? t('status', 'approved') : institution.kycStatus === 'pending' ? t('status', 'pending') : t('status', 'rejected')}
                                     </p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">Diplômes émis</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('admin', 'issuedDiplomas')}</p>
                                     <p className="font-semibold text-gray-900 dark:text-white">{institution.diplomasIssued}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">Abonnement</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('nav', 'subscriptions')}</p>
                                     <p className="font-semibold text-gray-900 dark:text-white">{institution.subscription}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">Inscrit le</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('common', 'date')}</p>
                                     <p className="font-semibold text-gray-900 dark:text-white">{institution.joinedDate}</p>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-2">
                                 <Button variant="outline" size="sm" icon={Eye}>
-                                    Détails
+                                    {t('common', 'details')}
                                 </Button>
                                 {institution.status === 'active' ? (
                                     <Button variant="ghost" size="sm" icon={Ban}>
-                                        Suspendre
+                                        {t('common', 'suspend')}
                                     </Button>
                                 ) : (
                                     <Button variant="ghost" size="sm" icon={CheckCircle}>
-                                        Activer
+                                        {t('common', 'activate')}
                                     </Button>
                                 )}
                             </div>

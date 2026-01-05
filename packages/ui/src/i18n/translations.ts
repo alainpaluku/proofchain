@@ -36,6 +36,9 @@ export const translations = {
     saving: { fr: 'Sauvegarde...', en: 'Saving...' },
     upload: { fr: 'Uploader', en: 'Upload' },
     clickToUpload: { fr: 'Cliquer pour uploader', en: 'Click to upload' },
+    details: { fr: 'Détails', en: 'Details' },
+    suspend: { fr: 'Suspendre', en: 'Suspend' },
+    activate: { fr: 'Activer', en: 'Activate' },
   },
 
   // ============================================================================
