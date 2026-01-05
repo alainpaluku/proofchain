@@ -96,7 +96,10 @@ export default function InstitutionsPage() {
                         {t('nav', 'institutions')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
-                        {institutions.length} institution{institutions.length > 1 ? 's' : ''}
+                        {t('admin', 'institutionsCount', { 
+                            count: institutions.length, 
+                            s: institutions.length > 1 ? 's' : '' 
+                        })}
                     </p>
                 </div>
             </div>

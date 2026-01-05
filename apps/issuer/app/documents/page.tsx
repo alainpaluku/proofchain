@@ -150,7 +150,10 @@ export default function DocumentsPage() {
                         {t('documents', 'title')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
-                        {t('documents', 'count').replace('{{count}}', String(documents.length)).replace('{{s}}', documents.length > 1 ? 's' : '')}
+                        {t('documents', 'count', { 
+                            count: documents.length,
+                            s: documents.length > 1 ? 's' : '' 
+                        })}
                     </p>
                 </div>
                 <button 
@@ -297,7 +300,7 @@ export default function DocumentsPage() {
                         </div>
                         
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                            {t('documents', 'revoke_warning').replace('{{id}}', revokeDoc.document_id || '')}
+                            {t('documents', 'revoke_warning', { id: revokeDoc.document_id || '' })}
                         </p>
                         
                         <div className="mb-4">

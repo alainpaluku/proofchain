@@ -3,7 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Bell, CheckCircle, AlertCircle, Info, ArrowLeft, Loader2, FileCheck, Building2, Users } from 'lucide-react';
+
 import { adminService } from '@proofchain/shared';
+import { useTranslation } from '@proofchain/ui';
 
 interface Notification {
     id: string;
@@ -16,12 +18,14 @@ interface Notification {
 
 export default function NotificationsPage() {
     const router = useRouter();
+    const { t } = useTranslation();
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true);
 
+
     useEffect(() => {
         loadNotifications();
-    }, []);
+    }, [t]);
 
     const loadNotifications = async () => {
         setLoading(true);
@@ -35,9 +39,9 @@ export default function NotificationsPage() {
                     notifs.push({
                         id: `kyc-${req.id}`,
                         type: 'warning',
-                        title: 'Nouvelle demande KYC',
-                        message: `${req.name} (${req.email}) a soumis une demande de vérification KYC.`,
-                        time: req.kycSubmittedAt ? new Date(req.kycSubmittedAt).toLocaleString('fr-FR') : 'Récemment',
+                        title: t('admin', 'newKYCRequest'),
+                        message: t('admin', 'kycRequestMessage', { name: req.name, email: req.email }),
+                        time: req.kycSubmittedAt ? new Date(req.kycSubmittedAt).toLocaleString() : t('admin', 'recently'),
                         read: index > 1,
                     });
                 });
@@ -52,9 +56,13 @@ export default function NotificationsPage() {
                     notifs.push({
                         id: 'stats-institutions',
                         type: 'info',
-                        title: 'Statistiques plateforme',
-                        message: `${stats.totalInstitutions} institution(s) enregistrée(s), ${stats.approvedKYC} approuvée(s), ${stats.totalDocuments} document(s) émis.`,
-                        time: new Date().toLocaleString('fr-FR'),
+                        title: t('admin', 'platformStats'),
+                        message: t('admin', 'platformStatsMessage', { 
+                            institutions: stats.totalInstitutions, 
+                            approved: stats.approvedKYC, 
+                            documents: stats.totalDocuments 
+                        }),
+                        time: new Date().toLocaleString(),
                         read: true,
                     });
                 }
@@ -63,9 +71,9 @@ export default function NotificationsPage() {
                     notifs.unshift({
                         id: 'pending-kyc-alert',
                         type: 'warning',
-                        title: 'KYC en attente',
-                        message: `${stats.pendingKYC} demande(s) KYC en attente de validation.`,
-                        time: 'Maintenant',
+                        title: t('admin', 'pendingKYCAlert'),
+                        message: t('admin', 'pendingKYCMessage', { count: stats.pendingKYC }),
+                        time: t('admin', 'now'),
                         read: false,
                     });
                 }
@@ -80,9 +88,9 @@ export default function NotificationsPage() {
                         notifs.push({
                             id: `inst-approved-${inst.id}`,
                             type: 'success',
-                            title: 'Institution approuvée',
-                            message: `${inst.name} a été approuvée et peut maintenant émettre des diplômes.`,
-                            time: inst.kyc_reviewed_at ? new Date(inst.kyc_reviewed_at).toLocaleString('fr-FR') : 'Récemment',
+                            title: t('admin', 'institutionApproved'),
+                            message: t('admin', 'institutionApprovedMessage', { name: inst.name }),
+                            time: inst.kyc_reviewed_at ? new Date(inst.kyc_reviewed_at).toLocaleString() : t('admin', 'recently'),
                             read: true,
                         });
                     }
@@ -137,14 +145,14 @@ export default function NotificationsPage() {
                             <div>
                                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                                     <Bell className="w-6 h-6 text-purple-600" />
-                                    Notifications Admin
+                                    {t('admin', 'notificationsTitle')}
                                 </h1>
-                                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{unreadCount} non lue{unreadCount > 1 ? 's' : ''}</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{t('admin', 'unreadCount', { count: unreadCount })}</p>
                             </div>
                         </div>
                         {unreadCount > 0 && (
                             <button onClick={markAllAsRead} className="text-sm text-purple-600 hover:text-purple-700 dark:text-purple-400 font-medium px-4 py-2 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors">
-                                Tout marquer comme lu
+                                {t('admin', 'markAllAsRead')}
                             </button>
                         )}
                     </div>
@@ -157,8 +165,8 @@ export default function NotificationsPage() {
                         <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
                             <Bell className="w-10 h-10 text-gray-400" />
                         </div>
-                        <p className="text-gray-600 dark:text-gray-400 font-medium text-lg">Aucune notification</p>
-                        <p className="text-sm text-gray-500 mt-2">Tout est à jour !</p>
+                        <p className="text-gray-600 dark:text-gray-400 font-medium text-lg">{t('admin', 'noNotifications')}</p>
+                        <p className="text-sm text-gray-500 mt-2">{t('admin', 'allUpToDate')}</p>
                     </div>
                 ) : (
                     <div className="space-y-3">

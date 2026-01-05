@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Lock, Eye, EyeOff, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { updatePassword } from '@proofchain/shared';
+import { useTranslation } from '@proofchain/ui';
 
 export default function ResetPasswordPage() {
     const router = useRouter();
+    const { t } = useTranslation();
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -20,12 +22,12 @@ export default function ResetPasswordPage() {
         setError('');
 
         if (password.length < 6) {
-            setError('Le mot de passe doit contenir au moins 6 caractères');
+            setError(t('admin', 'auth_error_passwordLength'));
             return;
         }
 
         if (password !== confirmPassword) {
-            setError('Les mots de passe ne correspondent pas');
+            setError(t('admin', 'auth_error_passwordMismatch'));
             return;
         }
 
@@ -36,7 +38,7 @@ export default function ResetPasswordPage() {
             setSuccess(true);
             setTimeout(() => router.push('/login'), 3000);
         } else {
-            setError(result.error?.message || 'Erreur lors de la mise à jour');
+            setError(result.error?.message || t('admin', 'auth_error_updateError'));
         }
         setLoading(false);
     };
@@ -48,8 +50,8 @@ export default function ResetPasswordPage() {
                     <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                         <CheckCircle className="w-8 h-8 text-green-600" />
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Mot de passe mis à jour !</h1>
-                    <p className="text-gray-600 dark:text-gray-400">Redirection vers la connexion...</p>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('admin', 'auth_passwordUpdated')}</h1>
+                    <p className="text-gray-600 dark:text-gray-400">{t('admin', 'auth_redirecting')}</p>
                 </div>
             </div>
         );
@@ -62,8 +64,8 @@ export default function ResetPasswordPage() {
                     <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                         <Lock className="w-8 h-8 text-purple-600" />
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Nouveau mot de passe</h1>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">Entrez votre nouveau mot de passe admin</p>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('admin', 'auth_resetPasswordTitle')}</h1>
+                    <p className="text-gray-600 dark:text-gray-400 mt-2">{t('admin', 'auth_resetPasswordSubtitle')}</p>
                 </div>
 
                 {error && (
@@ -75,7 +77,7 @@ export default function ResetPasswordPage() {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nouveau mot de passe</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('admin', 'auth_newPasswordLabel')}</label>
                         <div className="relative">
                             <input
                                 type={showPassword ? 'text' : 'password'}
@@ -92,7 +94,7 @@ export default function ResetPasswordPage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirmer le mot de passe</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('admin', 'auth_confirmPasswordLabel')}</label>
                         <div className="relative">
                             <input
                                 type={showConfirmPassword ? 'text' : 'password'}
@@ -113,7 +115,7 @@ export default function ResetPasswordPage() {
                         disabled={loading}
                         className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                     >
-                        {loading ? <><Loader2 className="w-5 h-5 animate-spin" /> Mise à jour...</> : 'Mettre à jour le mot de passe'}
+                        {loading ? <><Loader2 className="w-5 h-5 animate-spin" /> {t('admin', 'auth_updating')}</> : t('admin', 'auth_updatePasswordButton')}
                     </button>
                 </form>
             </div>

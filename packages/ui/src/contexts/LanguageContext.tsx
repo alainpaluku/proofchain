@@ -6,7 +6,7 @@ import { translations, Locale, TranslationKey, TranslationSubKey } from '../i18n
 interface LanguageContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: <T extends TranslationKey>(section: T, key: TranslationSubKey<T>) => string;
+  t: <T extends TranslationKey>(section: T, key: TranslationSubKey<T>, params?: Record<string, string | number>) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -36,22 +36,39 @@ export function LanguageProvider({ children, defaultLocale = 'fr' }: { children:
     localStorage.setItem(STORAGE_KEY, newLocale);
   }, []);
 
-  const t = useCallback(<T extends TranslationKey>(section: T, key: TranslationSubKey<T>): string => {
+  const t = useCallback(<T extends TranslationKey>(section: T, key: TranslationSubKey<T>, params?: Record<string, string | number>): string => {
     const sectionData = translations[section];
     if (!sectionData) return `${String(section)}.${String(key)}`;
     const entry = sectionData[key as keyof typeof sectionData] as { fr: string; en: string } | undefined;
     if (!entry) return `${String(section)}.${String(key)}`;
-    return entry[locale] || entry.fr;
+    
+    let text = entry[locale] || entry.fr;
+    
+    if (params) {
+        Object.entries(params).forEach(([paramKey, paramValue]) => {
+            text = text.replace(new RegExp(`{{${paramKey}}}`, 'g'), String(paramValue));
+        });
+    }
+    
+    return text;
   }, [locale]);
 
   if (!mounted) {
     // SSR: return default locale translations
-    const ssrT = <T extends TranslationKey>(section: T, key: TranslationSubKey<T>): string => {
+    const ssrT = <T extends TranslationKey>(section: T, key: TranslationSubKey<T>, params?: Record<string, string | number>): string => {
       const sectionData = translations[section];
       if (!sectionData) return `${String(section)}.${String(key)}`;
       const entry = sectionData[key as keyof typeof sectionData] as { fr: string; en: string } | undefined;
       if (!entry) return `${String(section)}.${String(key)}`;
-      return entry[defaultLocale] || entry.fr;
+      
+      let text = entry[defaultLocale] || entry.fr;
+      
+      if (params) {
+          Object.entries(params).forEach(([paramKey, paramValue]) => {
+              text = text.replace(new RegExp(`{{${paramKey}}}`, 'g'), String(paramValue));
+          });
+      }
+      return text;
     };
     return (
       <LanguageContext.Provider value={{ locale: defaultLocale, setLocale, t: ssrT }}>

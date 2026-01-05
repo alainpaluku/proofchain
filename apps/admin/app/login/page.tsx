@@ -2,12 +2,13 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { AuthForm, AuthFormData, Logo } from '@proofchain/ui';
+import { AuthForm, AuthFormData, Logo, useTranslation } from '@proofchain/ui';
 import { useAuth } from '@proofchain/shared';
 
 export default function LoginPage() {
     const router = useRouter();
     const { signIn, signUp, resetPassword } = useAuth();
+    const { t } = useTranslation();
 
     const handleSubmit = async (data: AuthFormData) => {
         let result;
@@ -29,7 +30,7 @@ export default function LoginPage() {
                 return result;
 
             default:
-                return { success: false, error: { message: 'Mode non supporté' } };
+                return { success: false, error: { message: t('auth', 'modeNotSupported') } };
         }
     };
 

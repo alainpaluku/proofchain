@@ -150,7 +150,10 @@ export default function StudentsPage() {
                         {t('students', 'title')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
-                        {t('students', 'count').replace('{{count}}', String(students.length)).replace('{{s}}', students.length > 1 ? 's' : '')}
+                        {t('students', 'count', { 
+                            count: students.length, 
+                            s: students.length > 1 ? 's' : '' 
+                        })}
                     </p>
                 </div>
                 <div className="flex gap-2">

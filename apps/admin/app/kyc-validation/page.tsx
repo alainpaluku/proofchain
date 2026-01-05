@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { FileCheck, CheckCircle, XCircle, Building2, Mail, Phone, Globe, Loader2, X, ThumbsUp, ThumbsDown } from 'lucide-react';
-import { Card, EmptyState, LoadingSpinner } from '@proofchain/ui';
+import { Card, EmptyState, LoadingSpinner, useTranslation } from '@proofchain/ui';
 import { adminService, type KYCPendingRequest } from '@proofchain/shared';
 
 interface KYCRequest {
@@ -23,6 +23,7 @@ interface KYCRequest {
 }
 
 export default function KYCValidationPage() {
+    const { t } = useTranslation();
     const [requests, setRequests] = useState<KYCRequest[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -61,7 +62,7 @@ export default function KYCValidationPage() {
             }));
             setRequests(mapped);
         } else {
-            setError(result.error || 'Erreur de chargement');
+            setError(result.error || t('common', 'error'));
         }
         setLoading(false);
     };
@@ -88,11 +89,11 @@ export default function KYCValidationPage() {
         const result = await adminService.approveKYC(selectedRequest.id);
         if (result.success) {
             setRequests(prev => prev.filter(r => r.id !== selectedRequest.id));
-            setSuccessMessage(`${selectedRequest.institutionName} a été approuvée !`);
+            setSuccessMessage(t('admin', 'approveSuccess', { name: selectedRequest.institutionName }));
             closeModal();
             setTimeout(() => setSuccessMessage(null), 5000);
         } else {
-            setError(result.error || 'Erreur lors de l\'approbation');
+            setError(result.error || t('admin', 'approveError'));
         }
         setActionLoading(false);
     };
@@ -100,7 +101,7 @@ export default function KYCValidationPage() {
     const handleReject = async () => {
         if (!selectedRequest) return;
         if (!rejectReason.trim()) {
-            alert('Veuillez fournir une raison pour le rejet');
+            alert(t('admin', 'provideRejectReason'));
             return;
         }
         
@@ -110,19 +111,21 @@ export default function KYCValidationPage() {
         const result = await adminService.rejectKYC(selectedRequest.id, rejectReason);
         if (result.success) {
             setRequests(prev => prev.filter(r => r.id !== selectedRequest.id));
-            setSuccessMessage(`${selectedRequest.institutionName} a été rejetée.`);
+            setSuccessMessage(t('admin', 'rejectSuccess', { name: selectedRequest.institutionName }));
             closeModal();
             setTimeout(() => setSuccessMessage(null), 5000);
         } else {
-            setError(result.error || 'Erreur lors du rejet');
+            setError(result.error || t('admin', 'rejectError'));
         }
         setActionLoading(false);
     };
 
     const getTypeLabel = (type: string) => {
         const types: Record<string, string> = {
-            'UN': 'Université', 'IS': 'Institut Supérieur',
-            'LC': 'Lycée/Collège', 'CF': 'Centre de Formation',
+            'UN': t('kyc', 'type_UN'),
+            'IS': t('kyc', 'type_IS'),
+            'LC': t('kyc', 'type_LC'),
+            'CF': t('kyc', 'type_CF'),
         };
         return types[type] || type;
     };
@@ -132,10 +135,10 @@ export default function KYCValidationPage() {
             <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                     <FileCheck className="w-8 h-8 text-purple-600" />
-                    Validation KYC
+                    {t('admin', 'kycValidationTitle')}
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400 mt-1">
-                    {requests.length} demande{requests.length > 1 ? 's' : ''} en attente
+                    {t('admin', 'pendingRequestsCount', { count: requests.length })}
                 </p>
             </div>
 
@@ -160,7 +163,7 @@ export default function KYCValidationPage() {
             )}
 
             {!loading && requests.length === 0 ? (
-                <EmptyState icon={FileCheck} title="Aucune demande KYC" description="Les demandes apparaîtront ici" />
+                <EmptyState icon={FileCheck} title={t('admin', 'noKYCRequests')} description={t('admin', 'requestsWillAppear')} />
             ) : (
                 <div className="grid grid-cols-1 gap-6">
                     {requests.map((request) => (
@@ -180,13 +183,13 @@ export default function KYCValidationPage() {
                                         </div>
                                     </div>
                                 </div>
-                                <span className="px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">En attente</span>
+                                <span className="px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">{t('status', 'pending')}</span>
                             </div>
 
                             <div className="grid grid-cols-3 gap-4 mb-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-                                <div><p className="text-sm text-gray-500">Pays</p><p className="font-semibold text-gray-900 dark:text-white">{request.country}</p></div>
-                                <div><p className="text-sm text-gray-500">N° Enregistrement</p><p className="font-semibold text-gray-900 dark:text-white">{request.registrationNumber || 'N/A'}</p></div>
-                                <div><p className="text-sm text-gray-500">Soumis le</p><p className="font-semibold text-gray-900 dark:text-white">{request.submittedDate}</p></div>
+                                <div><p className="text-sm text-gray-500">{t('admin', 'country')}</p><p className="font-semibold text-gray-900 dark:text-white">{request.country}</p></div>
+                                <div><p className="text-sm text-gray-500">{t('admin', 'registrationNumber')}</p><p className="font-semibold text-gray-900 dark:text-white">{request.registrationNumber || 'N/A'}</p></div>
+                                <div><p className="text-sm text-gray-500">{t('admin', 'submittedOn')}</p><p className="font-semibold text-gray-900 dark:text-white">{request.submittedDate}</p></div>
                             </div>
 
                             <button
@@ -194,7 +197,7 @@ export default function KYCValidationPage() {
                                 className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold"
                             >
                                 <FileCheck className="w-5 h-5" />
-                                Valider cette institution
+                                {t('admin', 'validateThisInstitution')}
                             </button>
                         </Card>
                     ))}
@@ -206,7 +209,7 @@ export default function KYCValidationPage() {
                     <div className="absolute inset-0 bg-black/60" onClick={closeModal} />
                     <div className="relative w-full max-w-lg mx-4 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl">
                         <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Valider l&apos;institution</h2>
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin', 'validateInstitutionTitle')}</h2>
                             <button onClick={closeModal} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
                                 <X className="w-5 h-5 text-gray-500" />
                             </button>
@@ -224,7 +227,7 @@ export default function KYCValidationPage() {
                             {!showRejectForm ? (
                                 <>
                                     <p className="text-center text-gray-700 dark:text-gray-300 mb-6">
-                                        Voulez-vous approuver cette institution ?
+                                        {t('admin', 'approveQuestion')}
                                     </p>
                                     <div className="grid grid-cols-2 gap-4">
                                         <button
@@ -233,7 +236,7 @@ export default function KYCValidationPage() {
                                             className="flex flex-col items-center gap-3 p-6 bg-green-50 hover:bg-green-100 border-2 border-green-500 rounded-xl disabled:opacity-50"
                                         >
                                             {actionLoading ? <Loader2 className="w-10 h-10 text-green-600 animate-spin" /> : <ThumbsUp className="w-10 h-10 text-green-600" />}
-                                            <span className="text-lg font-bold text-green-700">OUI</span>
+                                            <span className="text-lg font-bold text-green-700">{t('common', 'yes')}</span>
                                         </button>
                                         <button
                                             onClick={() => setShowRejectForm(true)}
@@ -241,23 +244,23 @@ export default function KYCValidationPage() {
                                             className="flex flex-col items-center gap-3 p-6 bg-red-50 hover:bg-red-100 border-2 border-red-500 rounded-xl disabled:opacity-50"
                                         >
                                             <ThumbsDown className="w-10 h-10 text-red-600" />
-                                            <span className="text-lg font-bold text-red-700">NON</span>
+                                            <span className="text-lg font-bold text-red-700">{t('common', 'no')}</span>
                                         </button>
                                     </div>
                                 </>
                             ) : (
                                 <>
-                                    <p className="text-center text-gray-700 dark:text-gray-300 mb-4">Raison du rejet :</p>
+                                    <p className="text-center text-gray-700 dark:text-gray-300 mb-4">{t('admin', 'rejectReason')}</p>
                                     <textarea
                                         value={rejectReason}
                                         onChange={(e) => setRejectReason(e.target.value)}
-                                        placeholder="Expliquez pourquoi..."
+                                        placeholder={t('admin', 'rejectReasonPlaceholder')}
                                         rows={3}
                                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white mb-4"
                                     />
                                     <div className="flex gap-3">
                                         <button onClick={() => setShowRejectForm(false)} className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium">
-                                            Retour
+                                            {t('admin', 'back')}
                                         </button>
                                         <button
                                             onClick={handleReject}
@@ -265,7 +268,7 @@ export default function KYCValidationPage() {
                                             className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white rounded-xl font-medium"
                                         >
                                             {actionLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <XCircle className="w-5 h-5" />}
-                                            Rejeter
+                                            {t('admin', 'reject')}
                                         </button>
                                     </div>
                                 </>

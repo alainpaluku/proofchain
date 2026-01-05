@@ -296,7 +296,7 @@ export default function MintPage() {
                                 <div className="space-y-3 bg-white dark:bg-gray-800 rounded-lg p-4">
                                     <div>
                                         <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
-                                            Document ID (pour vérification):
+                                            {t('mint', 'documentIdLabel')}
                                         </p>
                                         <code className="bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded font-mono text-sm block break-all">
                                             {documentId}
@@ -304,7 +304,7 @@ export default function MintPage() {
                                     </div>
                                     <div>
                                         <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
-                                            Transaction Hash:
+                                            {t('mint', 'transactionHash')}
                                         </p>
                                         <a
                                             href={`${explorerUrl}/transaction/${mintResult.txHash}`}
@@ -322,7 +322,7 @@ export default function MintPage() {
                                     <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-800 rounded-lg p-4">
                                         <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3 flex items-center gap-2">
                                             <QrCode className="w-4 h-4" />
-                                            QR Code
+                                            {t('mint', 'qrCode')}
                                         </p>
                                         <img src={qrCodeUrl} alt="QR Code" className="w-40 h-40 rounded-lg" />
                                         <a
@@ -413,11 +413,11 @@ export default function MintPage() {
                                             {selectedStudent.full_name}
                                         </p>
                                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                                            Matricule: {selectedStudent.student_number}
+                                            {t('mint', 'matricule')} {selectedStudent.student_number}
                                         </p>
                                         {selectedStudent.program && (
                                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                                                Programme: {selectedStudent.program}
+                                                {t('mint', 'program')} {selectedStudent.program}
                                             </p>
                                         )}
                                     </div>
@@ -443,12 +443,12 @@ export default function MintPage() {
                                     required
                                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600"
                                 >
-                                    <option value="">Sélectionner</option>
-                                    <option value="Licence">Licence</option>
-                                    <option value="Master">Master</option>
-                                    <option value="Doctorat">Doctorat</option>
-                                    <option value="Diplôme">Diplôme</option>
-                                    <option value="Certificat">Certificat</option>
+                                    <option value="">{t('mint', 'selectOption')}</option>
+                                    <option value="Licence">{t('mint', 'degree_Licence')}</option>
+                                    <option value="Master">{t('mint', 'degree_Master')}</option>
+                                    <option value="Doctorat">{t('mint', 'degree_Doctorat')}</option>
+                                    <option value="Diplôme">{t('mint', 'degree_Diplome')}</option>
+                                    <option value="Certificat">{t('mint', 'degree_Certificat')}</option>
                                 </select>
                             </div>
 
@@ -505,7 +505,7 @@ export default function MintPage() {
                                 }`}
                             >
                                 {imagePreview ? (
-                                    <img src={imagePreview} alt="Aperçu" className="max-h-48 rounded-lg mb-2" />
+                                    <img src={imagePreview} alt={t('mint', 'preview')} className="max-h-48 rounded-lg mb-2" />
                                 ) : (
                                     <Upload className="w-10 h-10 text-gray-400 mb-2" />
                                 )}

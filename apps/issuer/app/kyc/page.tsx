@@ -18,12 +18,7 @@ interface KYCFormData {
     registrationNumber: string;
 }
 
-const INSTITUTION_TYPES: { value: InstitutionType; label: string }[] = [
-    { value: 'UN', label: 'Université' },
-    { value: 'IS', label: 'Institut Supérieur' },
-    { value: 'LC', label: 'Lycée / Collège' },
-    { value: 'CF', label: 'Centre de Formation' },
-];
+// INSTITUTION_TYPES moved inside component for translation
 
 export default function KYCPage() {
     const { t } = useTranslation();
@@ -44,6 +39,13 @@ export default function KYCPage() {
         legalDocs: null as File | null, accreditation: null as File | null,
         taxCertificate: null as File | null, ministerialDecree: null as File | null,
     });
+
+    const INSTITUTION_TYPES: { value: InstitutionType; label: string }[] = [
+        { value: 'UN', label: t('kyc', 'type_UN') },
+        { value: 'IS', label: t('kyc', 'type_IS') },
+        { value: 'LC', label: t('kyc', 'type_LC') },
+        { value: 'CF', label: t('kyc', 'type_CF') },
+    ];
 
     useEffect(() => { loadData(); }, []);
 
@@ -177,7 +179,7 @@ export default function KYCPage() {
                         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2"><FileText className="w-6 h-6 text-purple-600" />{t('kyc', 'documents_title')}</h2>
                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{t('kyc', 'documents_subtitle')}</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {[{ key: 'legalDocs', label: 'Documents légaux' }, { key: 'accreditation', label: 'Accréditation' }, { key: 'taxCertificate', label: 'Attestation fiscale' }, { key: 'ministerialDecree', label: 'Arrêté ministériel' }].map((doc) => (
+                            {[{ key: 'legalDocs', label: t('kyc', 'documents_legalDocs') }, { key: 'accreditation', label: t('kyc', 'documents_accreditation') }, { key: 'taxCertificate', label: t('kyc', 'documents_taxCertificate') }, { key: 'ministerialDecree', label: t('kyc', 'documents_ministerialDecree') }].map((doc) => (
                                 <div key={doc.key} className="p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl hover:border-purple-400 transition-colors">
                                     <label className="block cursor-pointer">
                                         <div className="flex items-center justify-between mb-2">

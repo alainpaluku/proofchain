@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { CreditCard, Edit, Plus, DollarSign } from 'lucide-react';
-import { Card, CardHeader, Button, InputField } from '@proofchain/ui';
+import { Card, CardHeader, Button, InputField, useTranslation } from '@proofchain/ui';
 
 interface SubscriptionPlan {
     id: string;
@@ -15,6 +15,7 @@ interface SubscriptionPlan {
 }
 
 export default function SubscriptionsPage() {
+    const { t } = useTranslation();
     const [plans] = useState<SubscriptionPlan[]>([
         {
             id: '1',
@@ -54,14 +55,14 @@ export default function SubscriptionsPage() {
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                         <CreditCard className="w-8 h-8 text-purple-600" />
-                        Gestion des abonnements
+                        {t('admin', 'subscriptionsManagement')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
-                        Définir les plans et tarifs pour les institutions
+                        {t('admin', 'definePlansAndPricing')}
                     </p>
                 </div>
                 <Button variant="primary" icon={Plus}>
-                    Nouveau plan
+                    {t('admin', 'newPlan')}
                 </Button>
             </div>
 
@@ -78,10 +79,10 @@ export default function SubscriptionsPage() {
                                     <span className="text-4xl font-bold text-purple-600 dark:text-purple-400">
                                         ${plan.priceUSD}
                                     </span>
-                                    <span className="text-gray-600 dark:text-gray-400">/mois</span>
+                                    <span className="text-gray-600 dark:text-gray-400">{t('admin', 'perMonth')}</span>
                                 </div>
                                 <div className="text-sm text-gray-600 dark:text-gray-400">
-                                    {plan.priceCDF.toLocaleString()} FC/mois
+                                    {plan.priceCDF.toLocaleString()} FC{t('admin', 'perMonth')}
                                 </div>
                             </div>
                         </div>
@@ -101,14 +102,14 @@ export default function SubscriptionsPage() {
 
                         <div className="flex items-center gap-2">
                             <Button variant="outline" size="sm" icon={Edit} fullWidth>
-                                Modifier
+                                {t('admin', 'modify')}
                             </Button>
                             <Button 
                                 variant={plan.active ? 'ghost' : 'primary'} 
                                 size="sm" 
                                 fullWidth
                             >
-                                {plan.active ? 'Désactiver' : 'Activer'}
+                                {plan.active ? t('admin', 'deactivate') : t('admin', 'activate')}
                             </Button>
                         </div>
                     </Card>
@@ -118,27 +119,27 @@ export default function SubscriptionsPage() {
             {/* Edit Form */}
             {editingPlan && (
                 <Card>
-                    <CardHeader title="Modifier le plan" />
+                    <CardHeader title={t('admin', 'modifyPlan')} />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <InputField
-                            label="Nom du plan"
+                            label={t('admin', 'planName')}
                             value={editingPlan.name}
                             onChange={(e) => setEditingPlan({ ...editingPlan, name: e.target.value })}
                         />
                         <InputField
-                            label="Prix USD"
+                            label={t('admin', 'priceUSD')}
                             type="number"
                             value={editingPlan.priceUSD}
                             onChange={(e) => setEditingPlan({ ...editingPlan, priceUSD: Number(e.target.value) })}
                         />
                         <InputField
-                            label="Prix CDF"
+                            label={t('admin', 'priceCDF')}
                             type="number"
                             value={editingPlan.priceCDF}
                             onChange={(e) => setEditingPlan({ ...editingPlan, priceCDF: Number(e.target.value) })}
                         />
                         <InputField
-                            label="Diplômes par mois"
+                            label={t('admin', 'plan_diplomasPerMonth')}
                             type="number"
                             value={editingPlan.diplomasPerMonth}
                             onChange={(e) => setEditingPlan({ ...editingPlan, diplomasPerMonth: Number(e.target.value) })}
@@ -146,10 +147,10 @@ export default function SubscriptionsPage() {
                     </div>
                     <div className="flex items-center gap-2 mt-6">
                         <Button variant="primary">
-                            Enregistrer
+                            {t('admin', 'save')}
                         </Button>
                         <Button variant="ghost" onClick={() => setEditingPlan(null)}>
-                            Annuler
+                            {t('admin', 'cancel')}
                         </Button>
                     </div>
                 </Card>
@@ -159,20 +160,20 @@ export default function SubscriptionsPage() {
             <Card>
                 <CardHeader 
                     icon={DollarSign}
-                    title="Statistiques des abonnements" 
+                    title={t('admin', 'subscriptionStats')} 
                 />
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="text-center p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Revenus mensuels</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('admin', 'monthlyRevenue')}</p>
                         <p className="text-3xl font-bold text-purple-600 dark:text-purple-400">$0</p>
                         <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">0 FC</p>
                     </div>
                     <div className="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Abonnements actifs</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('admin', 'activeSubscriptionsCount')}</p>
                         <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">0</p>
                     </div>
                     <div className="text-center p-6 bg-green-50 dark:bg-green-900/20 rounded-xl">
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Taux de conversion</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('admin', 'conversionRate')}</p>
                         <p className="text-3xl font-bold text-green-600 dark:text-green-400">0%</p>
                     </div>
                 </div>
