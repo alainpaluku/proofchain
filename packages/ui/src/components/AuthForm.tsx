@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Mail, Lock, User, Eye, EyeOff, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
+import { useTranslation } from '../contexts/LanguageContext';
 
 export type AuthMode = 'login' | 'register' | 'forgot-password';
 
@@ -31,6 +32,7 @@ export function AuthForm({
     title,
     subtitle
 }: AuthFormProps) {
+    const { t } = useTranslation();
     const [mode, setMode] = useState<AuthMode>(initialMode);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -62,13 +64,13 @@ export function AuthForm({
                 setError(result.error.message);
             } else if (result.success) {
                 if (mode === 'register') {
-                    setSuccess('Compte créé ! Vérifiez votre email pour confirmer votre inscription.');
+                    setSuccess(t('common', 'success'));
                 } else if (mode === 'forgot-password') {
-                    setSuccess('Email de réinitialisation envoyé ! Vérifiez votre boîte de réception.');
+                    setSuccess(t('common', 'success'));
                 }
             }
         } catch (err) {
-            setError('Une erreur est survenue. Veuillez réessayer.');
+            setError(t('common', 'error'));
         } finally {
             setLoading(false);
         }
@@ -77,18 +79,18 @@ export function AuthForm({
     const getTitle = () => {
         if (title) return title;
         switch (mode) {
-            case 'login': return 'Connexion';
-            case 'register': return 'Créer un compte';
-            case 'forgot-password': return 'Mot de passe oublié';
+            case 'login': return t('auth', 'login');
+            case 'register': return t('auth', 'register');
+            case 'forgot-password': return t('auth', 'forgotPassword');
         }
     };
 
     const getSubtitle = () => {
         if (subtitle) return subtitle;
         switch (mode) {
-            case 'login': return 'Connectez-vous à votre compte';
-            case 'register': return 'Créez votre compte pour commencer';
-            case 'forgot-password': return 'Entrez votre email pour réinitialiser votre mot de passe';
+            case 'login': return t('auth', 'login'); // Using just key as placeholder if specific subtitle missing
+            case 'register': return t('auth', 'register');
+            case 'forgot-password': return t('auth', 'forgotPassword');
         }
     };
 
@@ -136,7 +138,7 @@ export function AuthForm({
                         {mode === 'register' && (
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Nom complet
+                                    {t('common', 'name')}
                                 </label>
                                 <div className="relative">
                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -155,7 +157,7 @@ export function AuthForm({
                         {/* Email Field */}
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Email
+                                {t('common', 'email')}
                             </label>
                             <div className="relative">
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -175,7 +177,7 @@ export function AuthForm({
                         {mode !== 'forgot-password' && (
                             <div>
                                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Mot de passe
+                                    {t('auth', 'password')}
                                 </label>
                                 <div className="relative">
                                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -193,14 +195,14 @@ export function AuthForm({
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
                                         className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                                        aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+                                        aria-label={showPassword ? 'Masquer' : 'Afficher'}
                                     >
                                         {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                     </button>
                                 </div>
                                 {mode === 'register' && (
                                     <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                                        Minimum 6 caractères
+                                        Min. 6 chars
                                     </p>
                                 )}
                             </div>
@@ -214,7 +216,7 @@ export function AuthForm({
                                     onClick={() => handleModeChange('forgot-password')}
                                     className="text-sm text-purple-600 dark:text-purple-400 hover:underline"
                                 >
-                                    Mot de passe oublié ?
+                                    {t('auth', 'forgotPassword')}
                                 </button>
                             </div>
                         )}
@@ -228,13 +230,13 @@ export function AuthForm({
                             {isLoading ? (
                                 <>
                                     <Loader2 className="w-5 h-5 animate-spin" />
-                                    Chargement...
+                                    {t('common', 'loading')}
                                 </>
                             ) : (
                                 <>
-                                    {mode === 'login' && 'Se connecter'}
-                                    {mode === 'register' && 'Créer mon compte'}
-                                    {mode === 'forgot-password' && 'Envoyer le lien'}
+                                    {mode === 'login' && t('auth', 'login')}
+                                    {mode === 'register' && t('auth', 'register')}
+                                    {mode === 'forgot-password' && t('common', 'confirm')}
                                 </>
                             )}
                         </button>
@@ -244,23 +246,21 @@ export function AuthForm({
                     <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
                         {mode === 'login' && (
                             <>
-                                Pas encore de compte ?{' '}
                                 <button
                                     onClick={() => handleModeChange('register')}
                                     className="text-purple-600 dark:text-purple-400 font-semibold hover:underline"
                                 >
-                                    S'inscrire
+                                    {t('auth', 'register')}
                                 </button>
                             </>
                         )}
                         {mode === 'register' && (
                             <>
-                                Déjà un compte ?{' '}
                                 <button
                                     onClick={() => handleModeChange('login')}
                                     className="text-purple-600 dark:text-purple-400 font-semibold hover:underline"
                                 >
-                                    Se connecter
+                                    {t('auth', 'login')}
                                 </button>
                             </>
                         )}
@@ -269,7 +269,7 @@ export function AuthForm({
                                 onClick={() => handleModeChange('login')}
                                 className="text-purple-600 dark:text-purple-400 font-semibold hover:underline"
                             >
-                                Retour à la connexion
+                                {t('auth', 'login')}
                             </button>
                         )}
                     </div>

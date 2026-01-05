@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { AppLayout as SharedAppLayout, type SidebarItem, Logo } from '@proofchain/ui';
+import { AppLayout as SharedAppLayout, type SidebarItem, Logo, useTranslation } from '@proofchain/ui';
 import { useAuth } from '@proofchain/shared';
 import { Coins, Users, FileCheck, Settings, CreditCard, Home } from 'lucide-react';
 
@@ -12,15 +12,16 @@ interface LayoutProps {
 
 export default function AppLayout({ children }: LayoutProps) {
     const { user, signOut } = useAuth();
+    const { t } = useTranslation();
     const router = useRouter();
     
     const menuItems: SidebarItem[] = [
-        { label: 'Tableau de bord', icon: Home, href: '/' },
-        { label: 'Émettre', icon: Coins, href: '/mint' },
-        { label: 'Étudiants', icon: Users, href: '/students' },
-        { label: 'Validation KYC', icon: FileCheck, href: '/kyc' },
-        { label: 'Abonnements', icon: CreditCard, href: '/subscriptions' },
-        { label: 'Paramètres', icon: Settings, href: '/settings' },
+        { label: t('nav', 'dashboard'), icon: Home, href: '/' },
+        { label: t('nav', 'mint'), icon: Coins, href: '/mint' },
+        { label: t('nav', 'students'), icon: Users, href: '/students' },
+        { label: t('nav', 'kycValidation'), icon: FileCheck, href: '/kyc' },
+        { label: t('nav', 'subscriptions'), icon: CreditCard, href: '/subscriptions' },
+        { label: t('nav', 'settings'), icon: Settings, href: '/settings' },
     ];
 
     const handleSignOut = async () => {

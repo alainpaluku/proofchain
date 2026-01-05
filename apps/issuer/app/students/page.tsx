@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { Users, Search, Plus, Trash2, Mail, Award, X, Loader2, RefreshCw } from 'lucide-react';
-import { LoadingSpinner } from '@proofchain/ui';
+import { LoadingSpinner, useTranslation } from '@proofchain/ui';
 import { studentService, issuerService } from '@proofchain/shared';
 import type { Student } from '@proofchain/shared';
 
 export default function StudentsPage() {
+    const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState('');
     const [students, setStudents] = useState<Student[]>([]);
     const [loading, setLoading] = useState(true);
@@ -31,10 +32,10 @@ export default function StudentsPage() {
                     setStudents(studentsResult.data);
                 }
             } else {
-                setError('Veuillez d\'abord créer votre institution.');
+                setError(t('students', 'createInstitutionFirst'));
             }
         } catch { 
-            setError('Erreur lors du chargement.'); 
+            setError(t('students', 'loadError')); 
         }
         setLoading(false);
     }, []);
@@ -57,11 +58,11 @@ export default function StudentsPage() {
         
         // Validation
         if (!formData.fullName.trim()) {
-            setFormError('Le nom complet est requis');
+            setFormError(t('students', 'fullNameRequired'));
             return;
         }
         if (!formData.studentNumber.trim()) {
-            setFormError('Le matricule est requis');
+            setFormError(t('students', 'studentNumberRequired'));
             return;
         }
         
@@ -84,22 +85,22 @@ export default function StudentsPage() {
                 setShowModal(false);
                 resetForm();
             } else { 
-                setFormError(result.error || 'Erreur lors de l\'ajout de l\'étudiant'); 
+                setFormError(result.error || t('students', 'addError')); 
             }
         } catch (err: any) {
-            setFormError(err.message || 'Une erreur est survenue');
+            setFormError(err.message || t('common', 'error'));
         }
         setSaving(false);
     };
 
     const handleDelete = async (studentId: string) => {
-        if (!confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?')) return;
+        if (!confirm(t('students', 'confirmDelete'))) return;
         
         const result = await studentService.delete(studentId);
         if (result.success) { 
             setStudents(prev => prev.filter(s => s.id !== studentId)); 
         } else { 
-            alert(result.error || 'Erreur lors de la suppression'); 
+            alert(result.error || t('students', 'deleteError')); 
         }
     };
 
@@ -125,10 +126,10 @@ export default function StudentsPage() {
 
     const getStatusLabel = (status: string | null) => {
         switch (status) {
-            case 'active': return 'Actif';
-            case 'graduated': return 'Diplômé';
-            case 'suspended': return 'Suspendu';
-            default: return 'Actif';
+            case 'active': return t('status', 'active');
+            case 'graduated': return t('status', 'graduated');
+            case 'suspended': return t('status', 'suspended');
+            default: return t('status', 'active');
         }
     };
 
@@ -146,10 +147,10 @@ export default function StudentsPage() {
                 <div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                         <Users className="w-7 h-7 sm:w-8 sm:h-8 text-purple-600" />
-                        Gestion des étudiants
+                        {t('students', 'title')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
-                        {students.length} étudiant{students.length > 1 ? 's' : ''}
+                        {t('students', 'count').replace('{{count}}', String(students.length)).replace('{{s}}', students.length > 1 ? 's' : '')}
                     </p>
                 </div>
                 <div className="flex gap-2">
@@ -162,7 +163,7 @@ export default function StudentsPage() {
                     </button>
                     <button onClick={() => setShowModal(true)} className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-medium transition-all shadow-lg">
                         <Plus className="w-5 h-5" />
-                        <span className="sm:inline">Ajouter</span>
+                        <span className="sm:inline">{t('common', 'add')}</span>
                     </button>
                 </div>
             </div>
@@ -176,7 +177,7 @@ export default function StudentsPage() {
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Rechercher un étudiant..." className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:border-transparent" />
+                    <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder={t('students', 'searchPlaceholder')} className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:border-transparent" />
                 </div>
             </div>
 
@@ -203,7 +204,7 @@ export default function StudentsPage() {
                         </div>
                         <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                             <div className="flex items-center justify-between mb-3">
-                                <span className="text-sm text-gray-600 dark:text-gray-400">Diplômes émis</span>
+                                <span className="text-sm text-gray-600 dark:text-gray-400">{t('students', 'diplomasIssued')}</span>
                                 <span className="text-lg font-bold text-purple-600 dark:text-purple-400">{student.documents_issued || 0}</span>
                             </div>
                             <div className="flex gap-2">
@@ -219,11 +220,11 @@ export default function StudentsPage() {
             {filteredStudents.length === 0 && !loading && (
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-12 text-center">
                     <Users className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Aucun étudiant</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">Ajoutez votre premier étudiant pour commencer</p>
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{t('students', 'noStudents')}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">{t('students', 'addFirstStudent')}</p>
                     <button onClick={() => setShowModal(true)} className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium">
                         <Plus className="w-5 h-5" />
-                        Ajouter un étudiant
+                        {t('students', 'addStudent')}
                     </button>
                 </div>
             )}
@@ -232,7 +233,7 @@ export default function StudentsPage() {
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
                     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
                         <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Ajouter un étudiant</h2>
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('students', 'formTitle')}</h2>
                             <button onClick={handleCloseModal} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><X className="w-5 h-5" /></button>
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
@@ -242,25 +243,25 @@ export default function StudentsPage() {
                                 </div>
                             )}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nom complet *</label>
-                                <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required placeholder="Jean Dupont" className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('students', 'fullName')} *</label>
+                                <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required placeholder={t('students', 'namePlaceholder')} className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Matricule *</label>
-                                <input type="text" name="studentNumber" value={formData.studentNumber} onChange={handleInputChange} required placeholder="STU-2024-001" className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('students', 'studentNumber')} *</label>
+                                <input type="text" name="studentNumber" value={formData.studentNumber} onChange={handleInputChange} required placeholder={t('students', 'idPlaceholder')} className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
-                                <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="jean@example.com" className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('common', 'email')}</label>
+                                <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder={t('students', 'emailPlaceholder')} className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Programme</label>
-                                <input type="text" name="program" value={formData.program} onChange={handleInputChange} placeholder="Licence Informatique" className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('students', 'program')}</label>
+                                <input type="text" name="program" value={formData.program} onChange={handleInputChange} placeholder={t('students', 'programPlaceholder')} className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                             </div>
                             <div className="flex gap-3 pt-4">
-                                <button type="button" onClick={handleCloseModal} className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700">Annuler</button>
+                                <button type="button" onClick={handleCloseModal} className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700">{t('common', 'cancel')}</button>
                                 <button type="submit" disabled={saving} className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white rounded-xl font-medium">
-                                    {saving ? (<><Loader2 className="w-5 h-5 animate-spin" />Ajout...</>) : (<><Plus className="w-5 h-5" />Ajouter</>)}
+                                    {saving ? (<><Loader2 className="w-5 h-5 animate-spin" />{t('students', 'adding')}</>) : (<><Plus className="w-5 h-5" />{t('common', 'add')}</>)}
                                 </button>
                             </div>
                         </form>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { FileCheck, Upload, CheckCircle, XCircle, Clock, AlertCircle, Building2, FileText, Send, Loader2 } from 'lucide-react';
-import { LoadingSpinner } from '@proofchain/ui';
+import { LoadingSpinner, useTranslation } from '@proofchain/ui';
 import { issuerService, adminService } from '@proofchain/shared';
 import type { InstitutionType, KYCStatus } from '@proofchain/shared';
 
@@ -26,6 +26,7 @@ const INSTITUTION_TYPES: { value: InstitutionType; label: string }[] = [
 ];
 
 export default function KYCPage() {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [kycStatus, setKycStatus] = useState<KYCStatus | null>(null);
@@ -91,7 +92,7 @@ export default function KYCPage() {
         setSuccess(null);
         try {
             if (!formData.institutionName || !formData.email) {
-                throw new Error('Le nom et l\'email sont obligatoires');
+                throw new Error(t('kyc', 'errors_nameEmailRequired'));
             }
             const result = await issuerService.submitKYC({
                 institutionName: formData.institutionName, institutionType: formData.institutionType,
@@ -102,19 +103,19 @@ export default function KYCPage() {
             });
             if (result.success) {
                 setKycStatus('pending');
-                setSuccess('Demande KYC soumise avec succès ! Elle sera examinée sous 24-48h.');
-            } else { throw new Error(result.error || 'Erreur lors de la soumission'); }
+                setSuccess(t('kyc', 'success'));
+            } else { throw new Error(result.error || t('kyc', 'errors_submitError')); }
         } catch (err: any) {
-            setError(err.message || 'Erreur lors de la soumission');
+            setError(err.message || t('kyc', 'errors_submitError'));
         } finally { setIsSubmitting(false); }
     };
 
     const getStatusBadge = () => {
         switch (kycStatus) {
-            case 'approved': return (<div className="flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-xl"><CheckCircle className="w-5 h-5" /><span className="font-medium">KYC Approuvé</span></div>);
-            case 'pending': return (<div className="flex items-center gap-2 px-4 py-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 rounded-xl"><Clock className="w-5 h-5" /><span className="font-medium">En cours de validation</span></div>);
-            case 'rejected': return (<div className="flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-xl"><XCircle className="w-5 h-5" /><span className="font-medium">Rejeté</span></div>);
-            default: return (<div className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl"><AlertCircle className="w-5 h-5" /><span className="font-medium">Non soumis</span></div>);
+            case 'approved': return (<div className="flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-xl"><CheckCircle className="w-5 h-5" /><span className="font-medium">{t('kyc', 'approved')}</span></div>);
+            case 'pending': return (<div className="flex items-center gap-2 px-4 py-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 rounded-xl"><Clock className="w-5 h-5" /><span className="font-medium">{t('kyc', 'pending')}</span></div>);
+            case 'rejected': return (<div className="flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-xl"><XCircle className="w-5 h-5" /><span className="font-medium">{t('kyc', 'rejected')}</span></div>);
+            default: return (<div className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl"><AlertCircle className="w-5 h-5" /><span className="font-medium">{t('kyc', 'notSubmitted')}</span></div>);
         }
     };
 
@@ -126,55 +127,55 @@ export default function KYCPage() {
                 <div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                         <FileCheck className="w-7 h-7 sm:w-8 sm:h-8 text-purple-600" />
-                        Vérification KYC
+                        {t('kyc', 'title')}
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 mt-1">Soumettez votre demande de vérification institutionnelle</p>
+                    <p className="text-gray-600 dark:text-gray-400 mt-1">{t('kyc', 'subtitle')}</p>
                 </div>
                 {getStatusBadge()}
             </div>
 
-            {success && (<div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-2xl p-6"><div className="flex items-start gap-4"><CheckCircle className="w-8 h-8 text-green-600 flex-shrink-0" /><div><h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-2">Succès !</h3><p className="text-green-600 dark:text-green-500">{success}</p></div></div></div>)}
-            {error && (<div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 rounded-2xl p-6"><div className="flex items-start gap-4"><XCircle className="w-8 h-8 text-red-600 flex-shrink-0" /><div><h3 className="text-lg font-bold text-red-700 dark:text-red-400 mb-2">Erreur</h3><p className="text-red-600 dark:text-red-500">{error}</p></div></div></div>)}
+            {success && (<div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-2xl p-6"><div className="flex items-start gap-4"><CheckCircle className="w-8 h-8 text-green-600 flex-shrink-0" /><div><h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-2">{t('common', 'success')} !</h3><p className="text-green-600 dark:text-green-500">{success}</p></div></div></div>)}
+            {error && (<div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 rounded-2xl p-6"><div className="flex items-start gap-4"><XCircle className="w-8 h-8 text-red-600 flex-shrink-0" /><div><h3 className="text-lg font-bold text-red-700 dark:text-red-400 mb-2">{t('common', 'error')}</h3><p className="text-red-600 dark:text-red-500">{error}</p></div></div></div>)}
 
-            {kycStatus === 'approved' && (<div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-2xl p-6"><div className="flex items-start gap-4"><CheckCircle className="w-8 h-8 text-green-600 flex-shrink-0" /><div><h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-2">Institution vérifiée ✓</h3><p className="text-green-600 dark:text-green-500">Vous pouvez maintenant émettre des diplômes NFT.</p></div></div></div>)}
-            {kycStatus === 'pending' && (<div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 rounded-2xl p-6"><div className="flex items-start gap-4"><Clock className="w-8 h-8 text-yellow-600 flex-shrink-0" /><div><h3 className="text-lg font-bold text-yellow-700 dark:text-yellow-400 mb-2">En cours de validation</h3><p className="text-yellow-600 dark:text-yellow-500">Votre demande est en cours de traitement. Délai estimé : 24-48h.</p></div></div></div>)}
-            {kycStatus === 'rejected' && (<div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 rounded-2xl p-6"><div className="flex items-start gap-4"><XCircle className="w-8 h-8 text-red-600 flex-shrink-0" /><div><h3 className="text-lg font-bold text-red-700 dark:text-red-400 mb-2">Demande rejetée</h3><p className="text-red-600 dark:text-red-500 mb-2">{rejectionReason || 'Votre demande a été rejetée.'}</p></div></div></div>)}
+            {kycStatus === 'approved' && (<div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-2xl p-6"><div className="flex items-start gap-4"><CheckCircle className="w-8 h-8 text-green-600 flex-shrink-0" /><div><h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-2">{t('kyc', 'verified')} ✓</h3><p className="text-green-600 dark:text-green-500">{t('kyc', 'approvedDesc')}</p></div></div></div>)}
+            {kycStatus === 'pending' && (<div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 rounded-2xl p-6"><div className="flex items-start gap-4"><Clock className="w-8 h-8 text-yellow-600 flex-shrink-0" /><div><h3 className="text-lg font-bold text-yellow-700 dark:text-yellow-400 mb-2">{t('kyc', 'pending')}</h3><p className="text-yellow-600 dark:text-yellow-500">{t('kyc', 'pendingDesc')}</p></div></div></div>)}
+            {kycStatus === 'rejected' && (<div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 rounded-2xl p-6"><div className="flex items-start gap-4"><XCircle className="w-8 h-8 text-red-600 flex-shrink-0" /><div><h3 className="text-lg font-bold text-red-700 dark:text-red-400 mb-2">{t('kyc', 'rejected')}</h3><p className="text-red-600 dark:text-red-500 mb-2">{rejectionReason || t('kyc', 'rejectedDesc')}</p></div></div></div>)}
 
             {(kycStatus === null || kycStatus === 'incomplete' || kycStatus === 'rejected') && (
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><Building2 className="w-6 h-6 text-purple-600" />Informations de l'institution</h2>
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><Building2 className="w-6 h-6 text-purple-600" />{t('kyc', 'institutionInfo')}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nom de l'institution *</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_institutionName')} *</label>
                                 <input type="text" name="institutionName" value={formData.institutionName} onChange={handleInputChange} required placeholder="Ex: Université de Kinshasa" className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Type d'institution *</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_institutionType')} *</label>
                                 <select name="institutionType" value={formData.institutionType} onChange={handleInputChange} required className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600">
                                     {INSTITUTION_TYPES.map(type => (<option key={type.value} value={type.value}>{type.label}</option>))}
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Pays *</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_country')} *</label>
                                 <select name="countryCode" value={formData.countryCode} onChange={handleInputChange} required className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600">
                                     {countries.map(country => (<option key={country.code} value={country.code}>{country.name}</option>))}
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email officiel *</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_email')} *</label>
                                 <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="contact@institution.cd" className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Téléphone</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_phone')}</label>
                                 <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="+243 XXX XXX XXX" className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                             </div>
                         </div>
                     </div>
 
                     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2"><FileText className="w-6 h-6 text-purple-600" />Documents (optionnel)</h2>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Les documents peuvent accélérer la validation de votre demande.</p>
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2"><FileText className="w-6 h-6 text-purple-600" />{t('kyc', 'documents_title')}</h2>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{t('kyc', 'documents_subtitle')}</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {[{ key: 'legalDocs', label: 'Documents légaux' }, { key: 'accreditation', label: 'Accréditation' }, { key: 'taxCertificate', label: 'Attestation fiscale' }, { key: 'ministerialDecree', label: 'Arrêté ministériel' }].map((doc) => (
                                 <div key={doc.key} className="p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl hover:border-purple-400 transition-colors">
@@ -186,7 +187,7 @@ export default function KYCPage() {
                                         <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileChange(doc.key as keyof typeof documents)} className="hidden" />
                                         <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                             <Upload className="w-4 h-4" />
-                                            <span>{documents[doc.key as keyof typeof documents] ? documents[doc.key as keyof typeof documents]!.name : 'Cliquer pour uploader'}</span>
+                                            <span>{documents[doc.key as keyof typeof documents] ? documents[doc.key as keyof typeof documents]!.name : t('common', 'clickToUpload')}</span>
                                         </div>
                                     </label>
                                 </div>
@@ -196,7 +197,7 @@ export default function KYCPage() {
 
                     <div className="flex justify-end">
                         <button type="submit" disabled={isSubmitting} className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-xl font-semibold transition-all shadow-lg disabled:cursor-not-allowed">
-                            {isSubmitting ? (<><Loader2 className="w-5 h-5 animate-spin" />Soumission en cours...</>) : (<><Send className="w-5 h-5" />Soumettre la demande</>)}
+                            {isSubmitting ? (<><Loader2 className="w-5 h-5 animate-spin" />{t('common', 'submitting')}</>) : (<><Send className="w-5 h-5" />{t('kyc', 'form_submitButton')}</>)}
                         </button>
                     </div>
                 </form>

@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, Building2, Bell, Shield, Save, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { issuerService, getCurrentUser, type Institution } from '@proofchain/shared';
+import { useTranslation } from '@proofchain/ui';
 
 export default function SettingsPage() {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
@@ -54,7 +56,7 @@ export default function SettingsPage() {
             }
         } catch (err) {
             console.error('Erreur chargement:', err);
-            setError('Erreur lors du chargement des données');
+            setError(t('students', 'loadError'));
         }
         setLoading(false);
     };
@@ -76,13 +78,13 @@ export default function SettingsPage() {
             });
 
             if (result.success) {
-                setSuccess('Paramètres sauvegardés avec succès');
+                setSuccess(t('settings', 'saveSuccess'));
                 setInstitution(result.data || null);
             } else {
-                setError(result.error || 'Erreur lors de la sauvegarde');
+                setError(result.error || t('settings', 'saveError'));
             }
         } catch (err) {
-            setError('Erreur lors de la sauvegarde');
+            setError(t('settings', 'saveError'));
         }
         setSaving(false);
     };
@@ -100,9 +102,9 @@ export default function SettingsPage() {
             <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                     <Settings className="w-8 h-8 text-purple-600" />
-                    Paramètres
+                    {t('settings', 'title')}
                 </h1>
-                <p className="text-gray-600 dark:text-gray-400 mt-1">Configurez votre institution</p>
+                <p className="text-gray-600 dark:text-gray-400 mt-1">{t('settings', 'subtitle')}</p>
             </div>
 
             {error && (
@@ -122,15 +124,15 @@ export default function SettingsPage() {
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
                     <Building2 className="w-6 h-6 text-purple-600" />
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">Institution</h2>
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('settings', 'institution')}</h2>
                 </div>
 
                 {institution && (
                     <div className="mb-6 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
                         <p className="text-sm text-purple-700 dark:text-purple-300">
-                            Code: <span className="font-mono font-bold">{institution.institution_code}</span> | 
+                            {t('settings', 'code')}: <span className="font-mono font-bold">{institution.institution_code}</span> | 
                             KYC: <span className={institution.kyc_status === 'approved' ? 'text-green-600' : 'text-yellow-600'}>
-                                {institution.kyc_status === 'approved' ? 'Approuvé' : institution.kyc_status === 'pending' ? 'En attente' : 'Incomplet'}
+                                {institution.kyc_status === 'approved' ? t('kyc', 'approved') : institution.kyc_status === 'pending' ? t('kyc', 'pending') : t('kyc', 'notSubmitted')}
                             </span>
                         </p>
                     </div>
@@ -138,29 +140,29 @@ export default function SettingsPage() {
 
                 <div className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nom</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_institutionName')}</label>
                         <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_email')}</label>
                             <input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Téléphone</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_phone')}</label>
                             <input type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                         </div>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Site web</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_website')}</label>
                         <input type="url" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" placeholder="https://" />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Adresse</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_address')}</label>
                         <textarea value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} rows={2}
                             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600" />
                     </div>
@@ -170,25 +172,25 @@ export default function SettingsPage() {
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
                     <Shield className="w-6 h-6 text-purple-600" />
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">Compte</h2>
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('settings', 'account')}</h2>
                 </div>
                 <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Email du compte</p>
-                    <p className="font-medium text-gray-900 dark:text-white">{userEmail || 'Non connecté'}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{t('settings', 'accountEmail')}</p>
+                    <p className="font-medium text-gray-900 dark:text-white">{userEmail || t('settings', 'notConnected')}</p>
                 </div>
             </div>
 
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
                     <Bell className="w-6 h-6 text-purple-600" />
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">Notifications</h2>
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('settings', 'notifications_title')}</h2>
                 </div>
                 <div className="space-y-4">
                     {[
-                        { key: 'email', label: 'Notifications par email' },
-                        { key: 'diploma', label: 'Émission de diplômes' },
-                        { key: 'kyc', label: 'Validation KYC' },
-                        { key: 'system', label: 'Mises à jour système' },
+                        { key: 'email', label: t('settings', 'notifications_email') },
+                        { key: 'diploma', label: t('settings', 'notifications_diploma') },
+                        { key: 'kyc', label: t('settings', 'notifications_kyc') },
+                        { key: 'system', label: t('settings', 'notifications_system') },
                     ].map((item) => (
                         <div key={item.key} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
                             <p className="font-medium text-gray-900 dark:text-white">{item.label}</p>
@@ -208,7 +210,7 @@ export default function SettingsPage() {
                 <button onClick={handleSave} disabled={saving}
                     className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold disabled:opacity-50">
                     {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
-                    {saving ? 'Sauvegarde...' : 'Sauvegarder'}
+                    {saving ? t('common', 'saving') : t('common', 'save')}
                 </button>
             </div>
         </div>

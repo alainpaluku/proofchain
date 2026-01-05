@@ -6,6 +6,7 @@ import { Sidebar, type SidebarItem } from './Sidebar';
 import { NotificationButton } from './NotificationButton';
 import { ThemeToggle } from './ThemeToggle';
 import { UserMenu } from './UserMenu';
+import { LanguageSelector } from './LanguageSelector';
 
 export interface AppLayoutProps {
     children: React.ReactNode;
@@ -126,6 +127,7 @@ export function AppLayout({
                         </div>
 
                         <div className="flex items-center gap-2 md:gap-3">
+                            <LanguageSelector variant="minimal" />
                             <ThemeToggle />
                             {showNotifications && <NotificationButton />}
                             {user && onSignOut && (

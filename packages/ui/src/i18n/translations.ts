@@ -1,4 +1,5 @@
-// Traductions FR/EN pour toutes les applications PROOFCHAIN
+ 
+// Wait, the original file had types at the bottom. I need to include them.
 
 export type Locale = 'fr' | 'en';
 
@@ -30,6 +31,11 @@ export const translations = {
     refresh: { fr: 'Actualiser', en: 'Refresh' },
     noData: { fr: 'Aucune donnée', en: 'No data' },
     required: { fr: 'Requis', en: 'Required' },
+    submit: { fr: 'Soumettre', en: 'Submit' },
+    submitting: { fr: 'Soumission...', en: 'Submitting...' },
+    saving: { fr: 'Sauvegarde...', en: 'Saving...' },
+    upload: { fr: 'Uploader', en: 'Upload' },
+    clickToUpload: { fr: 'Cliquer pour uploader', en: 'Click to upload' },
   },
 
   // ============================================================================
@@ -67,12 +73,30 @@ export const translations = {
   },
 
   // ============================================================================
+  // STATUS
+  // ============================================================================
+  status: {
+    active: { fr: 'Actif', en: 'Active' },
+    graduated: { fr: 'Diplômé', en: 'Graduated' },
+    suspended: { fr: 'Suspendu', en: 'Suspended' },
+    issued: { fr: 'Émis', en: 'Issued' },
+    draft: { fr: 'Brouillon', en: 'Draft' },
+    revoked: { fr: 'Révoqué', en: 'Revoked' },
+    pending: { fr: 'En attente', en: 'Pending' },
+    approved: { fr: 'Approuvé', en: 'Approved' },
+    rejected: { fr: 'Rejeté', en: 'Rejected' },
+    incomplete: { fr: 'Incomplet', en: 'Incomplete' },
+    unknown: { fr: 'Inconnu', en: 'Unknown' },
+  },
+
+  // ============================================================================
   // STUDENTS PAGE
   // ============================================================================
   students: {
     title: { fr: 'Gestion des étudiants', en: 'Student Management' },
     student: { fr: 'étudiant', en: 'student' },
     students: { fr: 'étudiants', en: 'students' },
+    count: { fr: '{{count}} étudiant{{s}}', en: '{{count}} student{{s}}' },
     addStudent: { fr: 'Ajouter un étudiant', en: 'Add a student' },
     searchPlaceholder: { fr: 'Rechercher un étudiant...', en: 'Search for a student...' },
     fullName: { fr: 'Nom complet', en: 'Full name' },
@@ -93,26 +117,48 @@ export const translations = {
     statusActive: { fr: 'Actif', en: 'Active' },
     statusGraduated: { fr: 'Diplômé', en: 'Graduated' },
     statusSuspended: { fr: 'Suspendu', en: 'Suspended' },
+    formTitle: { fr: 'Ajouter un étudiant', en: 'Add a student' },
+    emailPlaceholder: { fr: 'jean@example.com', en: 'jean@example.com' },
+    namePlaceholder: { fr: 'Jean Dupont', en: 'John Doe' },
+    idPlaceholder: { fr: 'STU-2024-001', en: 'STU-2024-001' },
+    programPlaceholder: { fr: 'Licence Informatique', en: 'Bachelor Computer Science' },
   },
 
   // ============================================================================
   // DOCUMENTS PAGE
   // ============================================================================
   documents: {
-    title: { fr: 'Gestion des documents', en: 'Document Management' },
+    title: { fr: 'Documents émis', en: 'Issued Documents' },
     document: { fr: 'document', en: 'document' },
     documents: { fr: 'documents', en: 'documents' },
+    count: { fr: '{{count}} document{{s}}', en: '{{count}} document{{s}}' },
     addDocument: { fr: 'Ajouter un document', en: 'Add a document' },
     documentType: { fr: 'Type de document', en: 'Document type' },
     issueDate: { fr: 'Date d\'émission', en: 'Issue date' },
     expiryDate: { fr: 'Date d\'expiration', en: 'Expiry date' },
-    noDocuments: { fr: 'Aucun document', en: 'No documents' },
+    noDocuments: { fr: 'Aucun document trouvé', en: 'No documents found' },
     diploma: { fr: 'Diplôme', en: 'Diploma' },
     certificate: { fr: 'Certificat', en: 'Certificate' },
     attestation: { fr: 'Attestation', en: 'Attestation' },
     pending: { fr: 'En attente', en: 'Pending' },
     minted: { fr: 'Minté', en: 'Minted' },
     verified: { fr: 'Vérifié', en: 'Verified' },
+    filters_all: { fr: 'Tous', en: 'All' },
+    filters_issued: { fr: 'Émis', en: 'Issued' },
+    filters_draft: { fr: 'Brouillons', en: 'Drafts' },
+    filters_revoked: { fr: 'Révoqués', en: 'Revoked' },
+    revoke_title: { fr: 'Révoquer le document', en: 'Revoke document' },
+    revoke_button: { fr: 'Révoquer', en: 'Revoke' },
+    revoke_reason: { fr: 'Raison de la révocation', en: 'Revocation reason' },
+    revoke_reasonPlaceholder: { fr: 'Expliquez pourquoi ce document est révoqué...', en: 'Explain why this document is being revoked...' },
+    revoke_warning: { fr: 'Vous êtes sur le point de révoquer le document {{id}}. Cette action est irréversible.', en: 'You are about to revoke document {{id}}. This action is irreversible.' },
+    revoke_revocationInProgress: { fr: 'Révocation...', en: 'Revoking...' },
+    deleteDraft_confirm: { fr: 'Êtes-vous sûr de vouloir supprimer ce brouillon ?', en: 'Are you sure you want to delete this draft?' },
+    deleteDraft_error: { fr: 'Seuls les brouillons peuvent être supprimés', en: 'Only drafts can be deleted' },
+    viewExplorer: { fr: "Voir sur l'explorateur", en: 'View on explorer' },
+    verify: { fr: 'Vérifier', en: 'Verify' },
+    student: { fr: 'Étudiant', en: 'Student' },
+    id: { fr: 'ID', en: 'ID' },
   },
 
   // ============================================================================
@@ -120,14 +166,107 @@ export const translations = {
   // ============================================================================
   mint: {
     title: { fr: 'Émettre un diplôme NFT', en: 'Mint NFT Diploma' },
+    subtitle: { fr: 'Créez et inscrivez un diplôme sur la blockchain Cardano', en: 'Create and register a diploma on the Cardano blockchain' },
     selectStudent: { fr: 'Sélectionner un étudiant', en: 'Select a student' },
     selectDocument: { fr: 'Sélectionner un document', en: 'Select a document' },
-    mintNow: { fr: 'Émettre maintenant', en: 'Mint now' },
+    mintNow: { fr: 'Émettre le diplôme', en: 'Mint diploma' },
     minting: { fr: 'Émission en cours...', en: 'Minting...' },
     mintSuccess: { fr: 'Diplôme émis avec succès !', en: 'Diploma minted successfully!' },
     mintError: { fr: 'Erreur lors de l\'émission', en: 'Error during minting' },
     connectWallet: { fr: 'Connecter le wallet', en: 'Connect wallet' },
     walletConnected: { fr: 'Wallet connecté', en: 'Wallet connected' },
+    studentInfo: { fr: 'Informations de l\'étudiant', en: 'Student Information' },
+    diplomaDetails: { fr: 'Détails du diplôme', en: 'Diploma Details' },
+    visual: { fr: 'Visuel du diplôme', en: 'Diploma Visual' },
+    uploadImage: { fr: 'Image du diplôme', en: 'Diploma Image' },
+    uploadHint: { fr: 'PNG, JPG jusqu\'à 10MB', en: 'PNG, JPG up to 10MB' },
+    preview: { fr: 'Aperçu', en: 'Preview' },
+    degreeType: { fr: 'Type de diplôme', en: 'Degree Type' },
+    graduationDate: { fr: 'Date d\'obtention', en: 'Graduation Date' },
+    honors: { fr: 'Mention', en: 'Honors' },
+    mintingProcess_title: { fr: 'Émission en cours', en: 'Minting in progress' },
+    mintingProcess_uploading: { fr: 'Envoi sur IPFS...', en: 'Uploading to IPFS...' },
+    mintingProcess_minting: { fr: 'Inscription sur Cardano...', en: 'Registering on Cardano...' },
+    mintingProcess_confirming: { fr: 'Confirmation de la transaction...', en: 'Confirming transaction...' },
+    mintingProcess_doNotClose: { fr: 'Ne fermez pas cette fenêtre.', en: 'Do not close this window.' },
+    successModal_title: { fr: 'Diplôme émis avec succès !', en: 'Diploma minted successfully!' },
+    successModal_viewExplorer: { fr: 'Voir sur CardanoScan', en: 'View on CardanoScan' },
+    successModal_downloadQR: { fr: 'Télécharger le QR Code', en: 'Download QR Code' },
+    successModal_issueAnother: { fr: 'Émettre un autre diplôme', en: 'Issue another diploma' },
+    errors_kycRequired: { fr: 'Votre institution doit être validée (KYC approuvé) pour émettre des diplômes.', en: 'Your institution must be validated (KYC approved) to issue diplomas.' },
+    errors_createInstitution: { fr: 'Vous devez d\'abord créer votre institution et compléter le KYC.', en: 'You must first create your institution and complete KYC.' },
+    errors_connectWallet: { fr: 'Veuillez connecter votre wallet', en: 'Please connect your wallet' },
+    errors_institutionNotFound: { fr: 'Institution non trouvée', en: 'Institution not found' },
+    errors_allFieldsRequired: { fr: 'Veuillez remplir tous les champs obligatoires.', en: 'Please fill in all required fields.' },
+    errors_imageRequired: { fr: 'Veuillez sélectionner une image pour le diplôme.', en: 'Please select an image for the diploma.' },
+    errors_invalidImage: { fr: 'Seuls les fichiers PNG et JPG sont acceptés.', en: 'Only PNG and JPG files are accepted.' },
+    errors_imageTooBig: { fr: 'L\'image est trop volumineuse (max 10 MB).', en: 'Image is too large (max 10 MB).' },
+  },
+
+  // ============================================================================
+  // KYC PAGE
+  // ============================================================================
+  kyc: {
+    title: { fr: 'Vérification KYC', en: 'KYC Verification' },
+    subtitle: { fr: 'Soumettez votre demande de vérification institutionnelle', en: 'Submit your institutional verification request' },
+    status: { fr: 'Statut KYC', en: 'KYC Status' },
+    pending: { fr: 'En cours de validation', en: 'Pending validation' },
+    pendingDesc: { fr: 'Votre demande est en cours de traitement. Délai estimé : 24-48h.', en: 'Your request is being processed. Estimated time: 24-48h.' },
+    approved: { fr: 'KYC Approuvé', en: 'KYC Approved' },
+    approvedDesc: { fr: 'Vous pouvez maintenant émettre des diplômes NFT.', en: 'You can now issue NFT diplomas.' },
+    verified: { fr: 'Institution vérifiée', en: 'Verified institution' },
+    rejected: { fr: 'Rejeté', en: 'Rejected' },
+    rejectedDesc: { fr: 'Votre demande a été rejetée.', en: 'Your request has been rejected.' },
+    notSubmitted: { fr: 'Non soumis', en: 'Not submitted' },
+    submitDocuments: { fr: 'Soumettre les documents', en: 'Submit documents' },
+    institutionInfo: { fr: 'Informations de l\'institution', en: 'Institution Information' },
+    documents_title: { fr: 'Documents (optionnel)', en: 'Documents (optional)' },
+    documents_subtitle: { fr: 'Les documents peuvent accélérer la validation de votre demande.', en: 'Documents can speed up your request validation.' },
+    documents_legalDocs: { fr: 'Documents légaux', en: 'Legal documents' },
+    documents_accreditation: { fr: 'Accréditation', en: 'Accreditation' },
+    documents_taxCertificate: { fr: 'Attestation fiscale', en: 'Tax certificate' },
+    documents_ministerialDecree: { fr: 'Arrêté ministériel', en: 'Ministerial decree' },
+    form_institutionName: { fr: 'Nom de l\'institution', en: 'Institution name' },
+    form_institutionType: { fr: 'Type d\'institution', en: 'Institution type' },
+    form_country: { fr: 'Pays', en: 'Country' },
+    form_email: { fr: 'Email officiel', en: 'Official email' },
+    form_phone: { fr: 'Téléphone', en: 'Phone' },
+    form_website: { fr: 'Site web', en: 'Website' },
+    form_address: { fr: 'Adresse', en: 'Address' },
+    form_taxId: { fr: 'Numéro fiscal (ID Nat)', en: 'Tax ID' },
+    form_registrationNumber: { fr: 'Numéro d\'agrément', en: 'Registration number' },
+    form_submitButton: { fr: 'Soumettre la demande', en: 'Submit request' },
+    types_university: { fr: 'Université', en: 'University' },
+    types_higherInstitute: { fr: 'Institut Supérieur', en: 'Higher Institute' },
+    types_highSchool: { fr: 'Lycée / Collège', en: 'High School / College' },
+    types_trainingCenter: { fr: 'Centre de Formation', en: 'Training Center' },
+    success: { fr: 'Demande KYC soumise avec succès ! Elle sera examinée sous 24-48h.', en: 'KYC request submitted successfully! It will be reviewed within 24-48h.' },
+    errors_nameEmailRequired: { fr: 'Le nom et l\'email sont obligatoires', en: 'Name and email are required' },
+    errors_submitError: { fr: 'Erreur lors de la soumission', en: 'Error during submission' },
+  },
+
+  // ============================================================================
+  // SETTINGS PAGE
+  // ============================================================================
+  settings: {
+    title: { fr: 'Paramètres', en: 'Settings' },
+    subtitle: { fr: 'Configurez votre institution', en: 'Configure your institution' },
+    institution: { fr: 'Institution', en: 'Institution' },
+    account: { fr: 'Compte', en: 'Account' },
+    accountEmail: { fr: 'Email du compte', en: 'Account email' },
+    notConnected: { fr: 'Non connecté', en: 'Not connected' },
+    code: { fr: 'Code', en: 'Code' },
+    notifications_title: { fr: 'Notifications', en: 'Notifications' },
+    notifications_email: { fr: 'Notifications par email', en: 'Email notifications' },
+    notifications_diploma: { fr: 'Émission de diplômes', en: 'Diploma issuance' },
+    notifications_kyc: { fr: 'Validation KYC', en: 'KYC Validation' },
+    notifications_system: { fr: 'Mises à jour système', en: 'System updates' },
+    language: { fr: 'Langue', en: 'Language' },
+    theme: { fr: 'Thème', en: 'Theme' },
+    darkMode: { fr: 'Mode sombre', en: 'Dark mode' },
+    lightMode: { fr: 'Mode clair', en: 'Light mode' },
+    saveSuccess: { fr: 'Paramètres sauvegardés avec succès', en: 'Settings saved successfully' },
+    saveError: { fr: 'Erreur lors de la sauvegarde', en: 'Error saving settings' },
   },
 
   // ============================================================================
@@ -300,32 +439,6 @@ export const translations = {
     allRightsReserved: { fr: 'Tous droits réservés', en: 'All rights reserved' },
     madeWith: { fr: 'Fait avec', en: 'Made with' },
     inDRC: { fr: 'en RDC', en: 'in DRC' },
-  },
-
-  // ============================================================================
-  // KYC
-  // ============================================================================
-  kyc: {
-    title: { fr: 'Vérification KYC', en: 'KYC Verification' },
-    status: { fr: 'Statut KYC', en: 'KYC Status' },
-    pending: { fr: 'En attente de vérification', en: 'Pending verification' },
-    approved: { fr: 'Approuvé', en: 'Approved' },
-    rejected: { fr: 'Rejeté', en: 'Rejected' },
-    submitDocuments: { fr: 'Soumettre les documents', en: 'Submit documents' },
-  },
-
-  // ============================================================================
-  // SETTINGS
-  // ============================================================================
-  settings: {
-    title: { fr: 'Paramètres', en: 'Settings' },
-    profile: { fr: 'Profil', en: 'Profile' },
-    security: { fr: 'Sécurité', en: 'Security' },
-    notifications: { fr: 'Notifications', en: 'Notifications' },
-    language: { fr: 'Langue', en: 'Language' },
-    theme: { fr: 'Thème', en: 'Theme' },
-    darkMode: { fr: 'Mode sombre', en: 'Dark mode' },
-    lightMode: { fr: 'Mode clair', en: 'Light mode' },
   },
 } as const;
 

@@ -5,7 +5,7 @@ import {
     FileText, Search, RefreshCw, ExternalLink, QrCode, Trash2, XCircle,
     CheckCircle2, Clock, AlertTriangle, Filter, Loader2, X
 } from 'lucide-react';
-import { LoadingSpinner } from '@proofchain/ui';
+import { LoadingSpinner, useTranslation } from '@proofchain/ui';
 import { documentService, issuerService, getCurrentUser } from '@proofchain/shared';
 import type { Document, Student } from '@proofchain/shared';
 
@@ -16,6 +16,7 @@ interface DocumentWithStudent extends Document {
 type FilterStatus = 'all' | 'issued' | 'draft' | 'revoked';
 
 export default function DocumentsPage() {
+    const { t } = useTranslation();
     const [documents, setDocuments] = useState<DocumentWithStudent[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -42,10 +43,10 @@ export default function DocumentsPage() {
                     setDocuments(docsResult.data);
                 }
             } else {
-                setError('Veuillez d\'abord créer votre institution.');
+                setError(t('students', 'createInstitutionFirst'));
             }
         } catch {
-            setError('Erreur lors du chargement des documents.');
+            setError(t('students', 'loadError'));
         }
         setLoading(false);
     }, []);
@@ -63,10 +64,10 @@ export default function DocumentsPage() {
 
     const getStatusLabel = (status: string | null) => {
         switch (status) {
-            case 'issued': return 'Émis';
-            case 'draft': return 'Brouillon';
-            case 'revoked': return 'Révoqué';
-            default: return 'Inconnu';
+            case 'issued': return t('status', 'issued');
+            case 'draft': return t('status', 'draft');
+            case 'revoked': return t('status', 'revoked');
+            default: return t('status', 'unknown');
         }
     };
 
@@ -96,26 +97,27 @@ export default function DocumentsPage() {
                 setRevokeDoc(null);
                 setRevokeReason('');
             } else {
-                alert(result.error || 'Erreur lors de la révocation');
+
+                alert(result.error || t('common', 'error'));
             }
         } catch {
-            alert('Erreur lors de la révocation');
+            alert(t('common', 'error'));
         }
         setRevoking(false);
     };
 
     const handleDelete = async (doc: DocumentWithStudent) => {
         if (doc.status !== 'draft') {
-            alert('Seuls les brouillons peuvent être supprimés');
+            alert(t('documents', 'deleteDraft_error'));
             return;
         }
-        if (!confirm('Êtes-vous sûr de vouloir supprimer ce brouillon ?')) return;
+        if (!confirm(t('documents', 'deleteDraft_confirm'))) return;
         
         const result = await documentService.deleteDraft(doc.id);
         if (result.success) {
             setDocuments(prev => prev.filter(d => d.id !== doc.id));
         } else {
-            alert(result.error || 'Erreur lors de la suppression');
+            alert(result.error || t('students', 'deleteError'));
         }
     };
 
@@ -145,10 +147,10 @@ export default function DocumentsPage() {
                 <div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                         <FileText className="w-7 h-7 sm:w-8 sm:h-8 text-purple-600" />
-                        Documents émis
+                        {t('documents', 'title')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
-                        {documents.length} document{documents.length > 1 ? 's' : ''}
+                        {t('documents', 'count').replace('{{count}}', String(documents.length)).replace('{{s}}', documents.length > 1 ? 's' : '')}
                     </p>
                 </div>
                 <button 
@@ -157,7 +159,7 @@ export default function DocumentsPage() {
                     className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
                 >
                     <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-                    Actualiser
+                    {t('common', 'refresh')}
                 </button>
             </div>
 
@@ -176,7 +178,7 @@ export default function DocumentsPage() {
                             type="text" 
                             value={searchQuery} 
                             onChange={(e) => setSearchQuery(e.target.value)} 
-                            placeholder="Rechercher un document..." 
+                            placeholder={t('common', 'search')} 
                             className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:border-transparent" 
                         />
                     </div>
@@ -187,10 +189,10 @@ export default function DocumentsPage() {
                             onChange={(e) => setFilterStatus(e.target.value as FilterStatus)}
                             className="px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600"
                         >
-                            <option value="all">Tous</option>
-                            <option value="issued">Émis</option>
-                            <option value="draft">Brouillons</option>
-                            <option value="revoked">Révoqués</option>
+                            <option value="all">{t('documents', 'filters_all')}</option>
+                            <option value="issued">{t('documents', 'filters_issued')}</option>
+                            <option value="draft">{t('documents', 'filters_draft')}</option>
+                            <option value="revoked">{t('documents', 'filters_revoked')}</option>
                         </select>
                     </div>
                 </div>
@@ -201,7 +203,7 @@ export default function DocumentsPage() {
                 {filteredDocuments.length === 0 ? (
                     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-12 text-center">
                         <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                        <p className="text-gray-600 dark:text-gray-400">Aucun document trouvé</p>
+                        <p className="text-gray-600 dark:text-gray-400">{t('documents', 'noDocuments')}</p>
                     </div>
                 ) : (
                     filteredDocuments.map((doc) => (
@@ -220,13 +222,13 @@ export default function DocumentsPage() {
                                     
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-400">
                                         <div>
-                                            <span className="font-medium">Étudiant:</span> {doc.student?.full_name || 'N/A'}
+                                            <span className="font-medium">{t('documents', 'student')}:</span> {doc.student?.full_name || 'N/A'}
                                         </div>
                                         <div>
-                                            <span className="font-medium">ID:</span> {doc.document_id || 'N/A'}
+                                            <span className="font-medium">{t('documents', 'id')}:</span> {doc.document_id || 'N/A'}
                                         </div>
                                         <div>
-                                            <span className="font-medium">Date:</span> {doc.issue_date ? new Date(doc.issue_date).toLocaleDateString('fr-FR') : 'N/A'}
+                                            <span className="font-medium">{t('common', 'date')}:</span> {doc.issue_date ? new Date(doc.issue_date).toLocaleDateString('fr-FR') : 'N/A'}
                                         </div>
                                     </div>
                                 </div>
@@ -239,7 +241,7 @@ export default function DocumentsPage() {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="p-2 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-colors"
-                                                title="Vérifier"
+                                                title={t('documents', 'verify')}
                                             >
                                                 <QrCode className="w-5 h-5" />
                                             </a>
@@ -249,7 +251,8 @@ export default function DocumentsPage() {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
-                                                    title="Voir sur l'explorateur"
+
+                                                    title={t('documents', 'viewExplorer')}
                                                 >
                                                     <ExternalLink className="w-5 h-5" />
                                                 </a>
@@ -257,7 +260,7 @@ export default function DocumentsPage() {
                                             <button
                                                 onClick={() => { setRevokeDoc(doc); setShowRevokeModal(true); }}
                                                 className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                                                title="Révoquer"
+                                                title={t('documents', 'revoke_button')}
                                             >
                                                 <XCircle className="w-5 h-5" />
                                             </button>
@@ -267,7 +270,7 @@ export default function DocumentsPage() {
                                         <button
                                             onClick={() => handleDelete(doc)}
                                             className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                                            title="Supprimer le brouillon"
+                                            title={t('common', 'delete')}
                                         >
                                             <Trash2 className="w-5 h-5" />
                                         </button>
@@ -284,7 +287,7 @@ export default function DocumentsPage() {
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
                     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full p-6">
                         <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-bold text-gray-900 dark:text-white">Révoquer le document</h3>
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('documents', 'revoke_title')}</h3>
                             <button
                                 onClick={() => { setShowRevokeModal(false); setRevokeDoc(null); setRevokeReason(''); }}
                                 className="p-1 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -294,17 +297,17 @@ export default function DocumentsPage() {
                         </div>
                         
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                            Vous êtes sur le point de révoquer le document <strong>{revokeDoc.document_id}</strong>. Cette action est irréversible.
+                            {t('documents', 'revoke_warning').replace('{{id}}', revokeDoc.document_id || '')}
                         </p>
                         
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Raison de la révocation *
+                                {t('documents', 'revoke_reason')} *
                             </label>
                             <textarea
                                 value={revokeReason}
                                 onChange={(e) => setRevokeReason(e.target.value)}
-                                placeholder="Expliquez pourquoi ce document est révoqué..."
+                                placeholder={t('documents', 'revoke_reasonPlaceholder')}
                                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-600 focus:border-transparent resize-none"
                                 rows={3}
                             />
@@ -315,7 +318,7 @@ export default function DocumentsPage() {
                                 onClick={() => { setShowRevokeModal(false); setRevokeDoc(null); setRevokeReason(''); }}
                                 className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
                             >
-                                Annuler
+                                {t('common', 'cancel')}
                             </button>
                             <button
                                 onClick={handleRevoke}
@@ -325,10 +328,10 @@ export default function DocumentsPage() {
                                 {revoking ? (
                                     <>
                                         <Loader2 className="w-5 h-5 animate-spin" />
-                                        Révocation...
+                                        {t('documents', 'revoke_revocationInProgress')}
                                     </>
                                 ) : (
-                                    'Révoquer'
+                                    t('documents', 'revoke_button')
                                 )}
                             </button>
                         </div>

@@ -12,7 +12,7 @@ import {
     Download,
     QrCode
 } from 'lucide-react';
-import { useWallet, ConnectWalletButton } from '@proofchain/ui';
+import { useWallet, ConnectWalletButton, useTranslation } from '@proofchain/ui';
 import { 
     documentService, 
     studentService, 
@@ -41,6 +41,7 @@ type IPFSResult = {
 const LANDING_URL = process.env.NEXT_PUBLIC_LANDING_URL || 'https://proofchains.org';
 
 export default function MintPage() {
+    const { t } = useTranslation();
     const { walletApi, connected } = useWallet();
     const dataLoadedRef = useRef(false);
 
@@ -95,7 +96,7 @@ export default function MintPage() {
                 setInstitutionId(instResult.data.id);
                 
                 if (instResult.data.kyc_status !== 'approved') {
-                    setError('⚠️ Votre institution doit être validée (KYC approuvé) pour émettre des diplômes.');
+                    setError(t('mint', 'errors_kycRequired'));
                     setLoadingStudents(false);
                     return;
                 }
@@ -105,11 +106,11 @@ export default function MintPage() {
                     setStudents(studentsResult.data);
                 }
             } else {
-                setError('⚠️ Vous devez d\'abord créer votre institution et compléter le KYC.');
+                setError(t('mint', 'errors_createInstitution'));
             }
         } catch (err) {
             console.error('Erreur chargement données:', err);
-            setError('Erreur lors du chargement des données.');
+            setError(t('students', 'loadError'));
         }
         setLoadingStudents(false);
         dataLoadedRef.current = true;
@@ -145,13 +146,13 @@ export default function MintPage() {
 
         const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
         if (!validTypes.includes(file.type)) {
-            setError('⚠️ Seuls les fichiers PNG et JPG sont acceptés.');
+            setError(t('mint', 'errors_invalidImage'));
             e.target.value = '';
             return;
         }
 
         if (file.size > 10 * 1024 * 1024) {
-            setError('⚠️ L\'image est trop volumineuse (max 10 MB).');
+            setError(t('mint', 'errors_imageTooBig'));
             e.target.value = '';
             return;
         }
@@ -165,22 +166,22 @@ export default function MintPage() {
         e.preventDefault();
 
         if (!connected || !walletApi) {
-            setError('⚠️ Veuillez connecter votre wallet');
+            setError(t('mint', 'errors_connectWallet'));
             return;
         }
 
         if (!institutionId) {
-            setError('⚠️ Institution non trouvée');
+            setError(t('mint', 'errors_institutionNotFound'));
             return;
         }
 
         if (!formData.studentId || !formData.degreeType || !formData.fieldOfStudy || !formData.graduationDate) {
-            setError('⚠️ Veuillez remplir tous les champs obligatoires');
+            setError(t('mint', 'errors_allFieldsRequired'));
             return;
         }
 
         if (!imageFile) {
-            setError('⚠️ Veuillez uploader une image du diplôme');
+            setError(t('mint', 'errors_imageRequired'));
             return;
         }
 
@@ -254,11 +255,11 @@ export default function MintPage() {
                 setImageFile(null);
                 setImagePreview(null);
             } else {
-                setError(result.error || 'Échec du minting');
+                setError(result.error || t('mint', 'mintError'));
             }
         } catch (err: any) {
             console.error('❌ Erreur:', err);
-            setError(err.message || 'Une erreur est survenue');
+            setError(err.message || t('common', 'error'));
         } finally {
             setIsUploading(false);
             setIsMinting(false);
@@ -273,10 +274,10 @@ export default function MintPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                        Émettre un diplôme
+                        {t('mint', 'title')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400">
-                        Créez un nouveau diplôme NFT sur la blockchain
+                        {t('mint', 'subtitle')}
                     </p>
                 </div>
                 <ConnectWalletButton showBalance={true} />
@@ -288,11 +289,8 @@ export default function MintPage() {
                         <CheckCircle2 className="w-10 h-10 text-green-600 flex-shrink-0" />
                         <div className="flex-1">
                             <h3 className="text-xl font-bold text-green-700 dark:text-green-400 mb-2">
-                                ✅ Diplôme émis avec succès !
+                                ✅ {t('mint', 'successModal_title')}
                             </h3>
-                            <p className="text-green-600 dark:text-green-500 mb-4">
-                                Le diplôme NFT a été créé sur la blockchain Cardano.
-                            </p>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-3 bg-white dark:bg-gray-800 rounded-lg p-4">
@@ -324,7 +322,7 @@ export default function MintPage() {
                                     <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-800 rounded-lg p-4">
                                         <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3 flex items-center gap-2">
                                             <QrCode className="w-4 h-4" />
-                                            QR Code de vérification
+                                            QR Code
                                         </p>
                                         <img src={qrCodeUrl} alt="QR Code" className="w-40 h-40 rounded-lg" />
                                         <a
@@ -333,7 +331,7 @@ export default function MintPage() {
                                             className="mt-3 flex items-center gap-2 text-sm text-purple-600 hover:text-purple-700"
                                         >
                                             <Download className="w-4 h-4" />
-                                            Télécharger QR
+                                            {t('mint', 'successModal_downloadQR')}
                                         </a>
                                     </div>
                                 )}
@@ -346,13 +344,13 @@ export default function MintPage() {
                                 rel="noopener noreferrer"
                                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium"
                             >
-                                Vérifier le Document
+                                {t('nav', 'verify')}
                             </a>
                                 <button
                                     onClick={() => { setMintResult(null); setQrCodeUrl(null); }}
                                     className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg text-sm font-medium"
                                 >
-                                    Émettre un autre diplôme
+                                    {t('mint', 'successModal_issueAnother')}
                                 </button>
                             </div>
                         </div>
@@ -374,22 +372,22 @@ export default function MintPage() {
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                             <Users className="w-6 h-6 text-purple-600" />
-                            Nom de l&apos;étudiant
+                            {t('mint', 'selectStudent')}
                         </h2>
 
                         {loadingStudents ? (
                             <div className="flex items-center gap-2 text-gray-500">
                                 <Loader2 className="w-5 h-5 animate-spin" />
-                                Chargement des étudiants...
+                                {t('common', 'loading')}
                             </div>
                         ) : students.length === 0 ? (
                             <div className="text-center py-8">
                                 <Users className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                                 <p className="text-gray-600 dark:text-gray-400 mb-4">
-                                    Aucun étudiant enregistré
+                                    {t('students', 'noStudents')}
                                 </p>
                                 <a href="/students" className="text-purple-600 hover:text-purple-700 font-medium">
-                                    Ajouter des étudiants →
+                                    {t('students', 'addStudent')} →
                                 </a>
                             </div>
                         ) : (
@@ -401,7 +399,7 @@ export default function MintPage() {
                                     required
                                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600"
                                 >
-                                    <option value="">Sélectionner un étudiant</option>
+                                    <option value="">{t('mint', 'selectStudent')}</option>
                                     {students.map(student => (
                                         <option key={student.id} value={student.id}>
                                             {student.full_name} - {student.student_number}
@@ -430,13 +428,13 @@ export default function MintPage() {
 
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                            Type de diplôme
+                            {t('mint', 'diplomaDetails')}
                         </h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Type de diplôme *
+                                    {t('mint', 'degreeType')} *
                                 </label>
                                 <select
                                     name="degreeType"
@@ -456,7 +454,7 @@ export default function MintPage() {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Domaine d&apos;études *
+                                    {t('students', 'fieldOfStudy')} *
                                 </label>
                                 <input
                                     type="text"
@@ -471,7 +469,7 @@ export default function MintPage() {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Date de graduation *
+                                    {t('mint', 'graduationDate')} *
                                 </label>
                                 <input
                                     type="date"
@@ -487,7 +485,7 @@ export default function MintPage() {
 
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                            Image du diplôme
+                            {t('mint', 'uploadImage')}
                         </h2>
 
                         <div>
@@ -512,7 +510,7 @@ export default function MintPage() {
                                     <Upload className="w-10 h-10 text-gray-400 mb-2" />
                                 )}
                                 <span className="text-sm text-gray-600 dark:text-gray-400">
-                                    {imageFile ? imageFile.name : 'Cliquer pour uploader (PNG ou JPG, max 10 MB)'}
+                                    {imageFile ? imageFile.name : t('mint', 'uploadHint')}
                                 </span>
                             </label>
                         </div>
@@ -526,17 +524,17 @@ export default function MintPage() {
                         {isUploading ? (
                             <>
                                 <Loader2 className="w-6 h-6 animate-spin" />
-                                Upload en cours...
+                                {t('mint', 'mintingProcess_uploading')}
                             </>
                         ) : isMinting ? (
                             <>
                                 <Loader2 className="w-6 h-6 animate-spin" />
-                                Minting en cours...
+                                {t('mint', 'mintingProcess_minting')}
                             </>
                         ) : (
                             <>
                                 <Coins className="w-6 h-6" />
-                                Émettre le diplôme
+                                {t('mint', 'mintNow')}
                             </>
                         )}
                     </button>
