@@ -37,6 +37,8 @@ export const translations = {
     upload: { fr: 'Uploader', en: 'Upload' },
     clickToUpload: { fr: 'Cliquer pour uploader', en: 'Click to upload' },
     details: { fr: 'Détails', en: 'Details' },
+    show: { fr: 'Afficher', en: 'Show' },
+    hide: { fr: 'Masquer', en: 'Hide' },
     suspend: { fr: 'Suspendre', en: 'Suspend' },
     activate: { fr: 'Activer', en: 'Activate' },
     pageNotFound: { fr: 'Page non trouvée', en: 'Page not found' },
@@ -57,6 +59,11 @@ export const translations = {
     noAdminRights: { fr: "Vous n'avez pas les droits d'accès à l'interface d'administration.", en: 'You do not have access rights to the admin interface.' },
     goToIssuer: { fr: 'Aller vers Issuer', en: 'Go to Issuer' },
     modeNotSupported: { fr: 'Mode non supporté', en: 'Mode not supported' },
+    noAccount: { fr: 'Pas encore de compte ?', en: 'No account yet?' },
+    alreadyRegistered: { fr: 'Déjà inscrit ?', en: 'Already registered?' },
+    backTo: { fr: 'Retourner à', en: 'Back to' },
+    emailPlaceholder: { fr: 'vous@exemple.com', en: 'you@example.com' },
+    namePlaceholder: { fr: 'Jean Dupont', en: 'John Doe' },
   },
 
   // ============================================================================

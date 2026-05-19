@@ -11,7 +11,7 @@ export function Footer() {
             <div className="container mx-auto px-4 lg:px-8">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-purple-900/50 rounded-xl">
+                        <div className="p-2 bg-primary-900/50 rounded-2xl">
                             <ProofchainsLogo size={24} className="text-cyan-400" />
                         </div>
                         <span className="font-bold text-lg">PROOF<span className="text-cyan-400">CHAINS</span></span>

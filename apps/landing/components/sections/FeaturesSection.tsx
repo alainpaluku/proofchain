@@ -6,7 +6,7 @@ export function FeaturesSection() {
     const { t } = useTranslation();
 
     const features = [
-        { icon: Shield, title: t('landing', 'immutable'), description: t('landing', 'immutableDesc'), color: 'from-purple-500 to-indigo-600' },
+        { icon: Shield, title: t('landing', 'immutable'), description: t('landing', 'immutableDesc'), color: 'from-primary-500 to-primary-600' },
         { icon: Globe, title: t('landing', 'universal'), description: t('landing', 'universalDesc'), color: 'from-blue-500 to-cyan-600' },
         { icon: Lock, title: t('landing', 'unique'), description: t('landing', 'uniqueDesc'), color: 'from-green-500 to-emerald-600' },
         { icon: Zap, title: t('landing', 'instant'), description: t('landing', 'instantDesc'), color: 'from-orange-500 to-red-600' },
@@ -29,8 +29,8 @@ export function FeaturesSection() {
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {features.map((f, i) => (
-                        <div key={i} className="group relative bg-gray-50 dark:bg-gray-900 rounded-2xl p-8 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 hover:-translate-y-2 border border-gray-100 dark:border-gray-800">
-                            <div className={`w-14 h-14 bg-gradient-to-br ${f.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <div key={i} className="group relative bg-gray-50 dark:bg-gray-900 rounded-2xl p-8 hover:shadow-2xl hover:shadow-primary-500/10 transition-all duration-500 hover:-translate-y-2 border border-gray-100 dark:border-gray-800">
+                            <div className={`w-14 h-14 bg-gradient-to-br ${f.color} rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300`}>
                                 <f.icon className="w-7 h-7 text-white" />
                             </div>
                             <h3 className="text-xl font-bold mb-3">{f.title}</h3>

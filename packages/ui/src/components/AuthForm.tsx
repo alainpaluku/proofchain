@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Mail, Lock, User, Eye, EyeOff, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
+import { EnvelopeIcon, LockClosedIcon, UserIcon, EyeIcon, EyeSlashIcon, ArrowPathIcon, ExclamationTriangleIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
 import { useTranslation } from '../contexts/LanguageContext';
+import { Button } from './Button';
+import { Card } from './Card';
 
 export type AuthMode = 'login' | 'register' | 'forgot-password';
 
@@ -88,67 +90,67 @@ export function AuthForm({
     const getSubtitle = () => {
         if (subtitle) return subtitle;
         switch (mode) {
-            case 'login': return t('auth', 'login'); // Using just key as placeholder if specific subtitle missing
+            case 'login': return t('auth', 'login');
             case 'register': return t('auth', 'register');
             case 'forgot-password': return t('auth', 'forgotPassword');
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
+        <div className="min-h-screen flex items-center justify-center bg-auralis-surface dark:bg-auralis-inverse-surface p-4">
             <div className="w-full max-w-md">
                 {/* Logo */}
                 {logo && (
-                    <div className="flex justify-center mb-8">
+                    <div className="flex justify-center mb-10">
                         {logo}
                     </div>
                 )}
 
-                {/* Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-200 dark:border-gray-700">
+                {/* Auralis Card */}
+                <Card variant="default" padding="xl" className="shadow-sm">
                     {/* Header */}
-                    <div className="text-center mb-8">
-                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    <div className="text-center mb-10">
+                        <h1 className="text-3xl font-bold text-auralis-on-surface dark:text-white mb-3">
                             {getTitle()}
                         </h1>
-                        <p className="text-gray-600 dark:text-gray-400">
+                        <p className="body-md text-auralis-on-surface-variant dark:text-gray-400">
                             {getSubtitle()}
                         </p>
                     </div>
 
                     {/* Error Message */}
                     {error && (
-                        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start gap-3">
-                            <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
-                            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+                        <div className="mb-6 p-4 bg-error-container/30 border border-error/20 rounded-lg flex items-start gap-3">
+                            <ExclamationTriangleIcon className="w-5 h-5 text-error flex-shrink-0 mt-0.5" />
+                            <p className="text-sm text-error font-medium">{error}</p>
                         </div>
                     )}
 
                     {/* Success Message */}
                     {success && (
-                        <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-start gap-3">
-                            <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-                            <p className="text-sm text-green-600 dark:text-green-400">{success}</p>
+                        <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-start gap-3">
+                            <CheckCircleIcon className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                            <p className="text-sm text-green-700 dark:text-green-400 font-medium">{success}</p>
                         </div>
                     )}
 
                     {/* Form */}
-                    <form onSubmit={handleSubmit} className="space-y-5">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Name Field (Register only) */}
                         {mode === 'register' && (
                             <div>
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label htmlFor="name" className="label-caps block text-auralis-on-surface-variant dark:text-gray-300 mb-2.5">
                                     {t('common', 'name')}
                                 </label>
-                                <div className="relative">
-                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                <div className="relative group">
+                                    <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-auralis-outline group-focus-within:text-primary-600 transition-colors" />
                                     <input
                                         id="name"
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        placeholder="Jean Dupont"
-                                        className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-gray-900 dark:text-white placeholder-gray-400"
+                                        placeholder={t('auth', 'namePlaceholder')}
+                                        className="w-full pl-12 pr-4 py-3 bg-auralis-surface-container-low dark:bg-white/5 border border-auralis-outline-variant dark:border-auralis-on-surface-variant rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-auralis-on-surface dark:text-white placeholder-auralis-outline"
                                     />
                                 </div>
                             </div>
@@ -156,19 +158,19 @@ export function AuthForm({
 
                         {/* Email Field */}
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <label htmlFor="email" className="label-caps block text-auralis-on-surface-variant dark:text-gray-300 mb-2.5">
                                 {t('common', 'email')}
                             </label>
-                            <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                            <div className="relative group">
+                                <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-auralis-outline group-focus-within:text-primary-600 transition-colors" />
                                 <input
                                     id="email"
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="vous@exemple.com"
+                                    placeholder={t('auth', 'emailPlaceholder')}
                                     required
-                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-gray-900 dark:text-white placeholder-gray-400"
+                                    className="w-full pl-12 pr-4 py-3 bg-auralis-surface-container-low dark:bg-white/5 border border-auralis-outline-variant dark:border-auralis-on-surface-variant rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-auralis-on-surface dark:text-white placeholder-auralis-outline"
                                 />
                             </div>
                         </div>
@@ -176,11 +178,11 @@ export function AuthForm({
                         {/* Password Field (Not for forgot-password) */}
                         {mode !== 'forgot-password' && (
                             <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label htmlFor="password" className="label-caps block text-auralis-on-surface-variant dark:text-gray-300 mb-2.5">
                                     {t('auth', 'password')}
                                 </label>
-                                <div className="relative">
-                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                <div className="relative group">
+                                    <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-auralis-outline group-focus-within:text-primary-600 transition-colors" />
                                     <input
                                         id="password"
                                         type={showPassword ? 'text' : 'password'}
@@ -189,22 +191,17 @@ export function AuthForm({
                                         placeholder="••••••••"
                                         required
                                         minLength={6}
-                                        className="w-full pl-12 pr-12 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-gray-900 dark:text-white placeholder-gray-400"
+                                        className="w-full pl-12 pr-12 py-3 bg-auralis-surface-container-low dark:bg-white/5 border border-auralis-outline-variant dark:border-auralis-on-surface-variant rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-auralis-on-surface dark:text-white placeholder-auralis-outline"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                                        aria-label={showPassword ? 'Masquer' : 'Afficher'}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-auralis-outline hover:text-auralis-on-surface dark:hover:text-white transition-colors"
+                                        aria-label={showPassword ? t('common', 'hide') : t('common', 'show')}
                                     >
-                                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                        {showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
                                     </button>
                                 </div>
-                                {mode === 'register' && (
-                                    <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                                        Min. 6 chars
-                                    </p>
-                                )}
                             </div>
                         )}
 
@@ -214,7 +211,7 @@ export function AuthForm({
                                 <button
                                     type="button"
                                     onClick={() => handleModeChange('forgot-password')}
-                                    className="text-sm text-purple-600 dark:text-purple-400 hover:underline"
+                                    className="text-sm font-semibold text-primary-600 dark:text-primary-400 hover:underline"
                                 >
                                     {t('auth', 'forgotPassword')}
                                 </button>
@@ -222,58 +219,39 @@ export function AuthForm({
                         )}
 
                         {/* Submit Button */}
-                        <button
+                        <Button
                             type="submit"
-                            disabled={isLoading}
-                            className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            loading={isLoading}
+                            fullWidth
+                            variant="primary"
+                            size="lg"
                         >
-                            {isLoading ? (
-                                <>
-                                    <Loader2 className="w-5 h-5 animate-spin" />
-                                    {t('common', 'loading')}
-                                </>
-                            ) : (
-                                <>
-                                    {mode === 'login' && t('auth', 'login')}
-                                    {mode === 'register' && t('auth', 'register')}
-                                    {mode === 'forgot-password' && t('common', 'confirm')}
-                                </>
-                            )}
-                        </button>
+                            {mode === 'login' && t('auth', 'login')}
+                            {mode === 'register' && t('auth', 'register')}
+                            {mode === 'forgot-password' && t('common', 'confirm')}
+                        </Button>
                     </form>
 
                     {/* Mode Switch */}
-                    <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-                        {mode === 'login' && (
-                            <>
-                                <button
-                                    onClick={() => handleModeChange('register')}
-                                    className="text-purple-600 dark:text-purple-400 font-semibold hover:underline"
-                                >
-                                    {t('auth', 'register')}
-                                </button>
-                            </>
-                        )}
-                        {mode === 'register' && (
-                            <>
-                                <button
-                                    onClick={() => handleModeChange('login')}
-                                    className="text-purple-600 dark:text-purple-400 font-semibold hover:underline"
-                                >
-                                    {t('auth', 'login')}
-                                </button>
-                            </>
-                        )}
-                        {mode === 'forgot-password' && (
-                            <button
-                                onClick={() => handleModeChange('login')}
-                                className="text-purple-600 dark:text-purple-400 font-semibold hover:underline"
-                            >
-                                {t('auth', 'login')}
-                            </button>
-                        )}
+                    <div className="mt-8 text-center text-sm">
+                        <span className="text-auralis-on-surface-variant dark:text-gray-400">
+                            {mode === 'login' && `${t('auth', 'noAccount')} `}
+                            {mode === 'register' && `${t('auth', 'alreadyRegistered')} `}
+                            {mode === 'forgot-password' && `${t('auth', 'backTo')} `}
+                        </span>
+                        <button
+                            onClick={() => {
+                                if (mode === 'login') handleModeChange('register');
+                                else handleModeChange('login');
+                            }}
+                            className="text-primary-600 dark:text-primary-400 font-bold hover:underline"
+                        >
+                            {mode === 'login' && t('auth', 'register')}
+                            {mode === 'register' && t('auth', 'login')}
+                            {mode === 'forgot-password' && t('auth', 'login')}
+                        </button>
                     </div>
-                </div>
+                </Card>
             </div>
         </div>
     );

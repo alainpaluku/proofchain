@@ -1,12 +1,13 @@
 /**
  * PROOFCHAIN - Institution Card Component
- * Display diploma/NFT information
+ * Display diploma/NFT information with Auralis System style
  */
 
 'use client';
 
 import React from 'react';
-import { GraduationCap, Calendar, Award, Building2, CheckCircle2, ExternalLink, FileText } from 'lucide-react';
+import { AcademicCapIcon, CalendarIcon, AwardIcon, BuildingLibraryIcon, CheckBadgeIcon, ArrowTopRightOnSquareIcon, DocumentTextIcon } from '@heroicons/react/24/solid';
+import { Card } from './Card';
 
 // Données complètes du diplôme (depuis Supabase)
 interface DiplomaData {
@@ -40,93 +41,98 @@ export function InstitutionCard({
     const explorerUrl = process.env.NEXT_PUBLIC_CARDANO_EXPLORER || 'https://preprod.cardanoscan.io';
 
     return (
-        <div
-            className={`
-                relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700
-                bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all
-                ${onClick ? 'cursor-pointer hover:scale-[1.02]' : ''}
-                ${className}
-            `}
+        <Card
+            padding="none"
+            className={`overflow-hidden group ${onClick ? 'cursor-pointer' : ''} ${className}`}
             onClick={onClick}
+            hover
         >
-            {/* Gradient header */}
-            <div className="h-32 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-600 relative">
-                <div className="absolute inset-0 bg-black/10" />
+            {/* Soft Industrial header with gradient glow */}
+            <div className="h-28 bg-primary-900 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-600/40 to-transparent" />
+                <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary-400/10 rounded-full blur-3xl group-hover:bg-primary-400/20 transition-all duration-700" />
+
                 {verified && (
-                    <div className="absolute top-4 right-4 flex items-center gap-1 px-3 py-1 bg-green-500 text-white text-sm font-medium rounded-full">
-                        <CheckCircle2 className="w-4 h-4" />
-                        Verified
+                    <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 bg-white/10 backdrop-blur-md text-white text-xs font-bold rounded-full border border-white/20">
+                        <CheckBadgeIcon className="w-4 h-4 text-primary-400" />
+                        VERIFIED
                     </div>
                 )}
+
+                <div className="absolute bottom-4 left-6">
+                    <div className="p-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/10">
+                        <AcademicCapIcon className="w-6 h-6 text-white" />
+                    </div>
+                </div>
             </div>
 
             {/* Content */}
-            <div className="p-6 space-y-4">
+            <div className="p-6 space-y-5">
                 {/* Student name or Document ID */}
                 <div>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    <h3 className="text-xl font-bold text-auralis-on-surface dark:text-white leading-tight mb-1">
                         {data.studentName || 'Document Vérifié'}
                     </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                        <FileText className="w-3 h-3" />
-                        {data.studentId || data.documentId}
-                    </p>
+                    <div className="flex items-center gap-1.5 text-auralis-on-surface-variant dark:text-gray-400">
+                        <DocumentTextIcon className="w-4 h-4 opacity-50" />
+                        <span className="text-xs font-mono">{data.studentId || data.documentId}</span>
+                    </div>
                 </div>
 
-                {/* Degree info */}
-                <div className="space-y-2">
+                {/* Degree info with clean typography */}
+                <div className="space-y-3">
                     {data.degree && (
-                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                            <GraduationCap className="w-5 h-5 text-purple-600" />
-                            <span className="font-medium">{data.degree}</span>
+                        <div className="flex items-center gap-3 text-auralis-on-surface dark:text-gray-200">
+                            <AcademicCapIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+                            <span className="text-sm font-semibold">{data.degree}</span>
                         </div>
                     )}
 
                     {data.field && (
-                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                            <Award className="w-5 h-5 text-blue-600" />
-                            <span>{data.field}</span>
+                        <div className="flex items-center gap-3 text-auralis-on-surface-variant dark:text-gray-300">
+                            <AwardIcon className="w-5 h-5 text-auralis-outline" />
+                            <span className="text-sm">{data.field}</span>
                         </div>
                     )}
 
                     {data.institution && (
-                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                            <Building2 className="w-5 h-5 text-indigo-600" />
-                            <span>{data.institution}</span>
+                        <div className="flex items-center gap-3 text-auralis-on-surface-variant dark:text-gray-300">
+                            <BuildingLibraryIcon className="w-5 h-5 text-auralis-outline" />
+                            <span className="text-sm">{data.institution}</span>
                         </div>
                     )}
 
                     {data.graduationDate && (
-                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                            <Calendar className="w-5 h-5 text-green-600" />
-                            <span>{new Date(data.graduationDate).toLocaleDateString()}</span>
+                        <div className="flex items-center gap-3 text-auralis-on-surface-variant dark:text-gray-400">
+                            <CalendarIcon className="w-5 h-5 text-auralis-outline" />
+                            <span className="text-xs font-medium">{new Date(data.graduationDate).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                         </div>
                     )}
                 </div>
 
-                {/* Transaction link */}
+                {/* Transaction link with Auralis editorial style */}
                 {txHash && (
-                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <div className="pt-4 border-t border-auralis-surface-highest dark:border-auralis-on-surface-variant">
                         <a
                             href={`${explorerUrl}/transaction/${txHash}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-sm text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300"
+                            className="inline-flex items-center gap-2 label-caps text-primary-600 hover:text-primary-700 dark:text-primary-400 transition-colors"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <ExternalLink className="w-4 h-4" />
-                            View on Cardano Explorer
+                            <ArrowTopRightOnSquareIcon className="w-3.5 h-3.5" />
+                            Cardano Explorer
                         </a>
                     </div>
                 )}
 
-                {/* Asset ID */}
+                {/* Asset ID footer */}
                 {assetId && (
-                    <div className="text-xs text-gray-500 dark:text-gray-500 font-mono break-all">
-                        {assetId}
+                    <div className="text-[10px] text-auralis-outline font-mono truncate bg-auralis-surface-container-low dark:bg-black/20 p-2 rounded border border-auralis-surface-highest/50">
+                        ASSET: {assetId}
                     </div>
                 )}
             </div>
-        </div>
+        </Card>
     );
 }

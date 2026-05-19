@@ -18,7 +18,7 @@ export function FaqSection() {
             <div className="container mx-auto px-4 lg:px-8">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-16">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-sm font-medium mb-6">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium mb-6">
                             <BookOpen className="w-4 h-4" />
                             {t('landing', 'faqTitle')}
                         </div>
@@ -30,7 +30,7 @@ export function FaqSection() {
                         {faqs.map((faq, i) => (
                             <div key={i} className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-100 dark:border-gray-800">
                                 <h3 className="text-lg font-bold mb-3 flex items-start gap-3">
-                                    <span className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-purple-600 dark:text-purple-400 text-sm font-bold">
+                                    <span className="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-primary-600 dark:text-primary-400 text-sm font-bold">
                                         {i + 1}
                                     </span>
                                     {faq.question}

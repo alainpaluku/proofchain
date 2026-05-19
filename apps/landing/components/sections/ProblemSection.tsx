@@ -35,7 +35,7 @@ export function ProblemSection() {
                     </div>
 
                     {/* Crisis Carousel */}
-                    <div className="relative max-w-4xl mx-auto mb-12 rounded-2xl overflow-hidden shadow-xl">
+                    <div className="relative max-w-4xl mx-auto mb-12 rounded-2xl overflow-hidden shadow-md">
                         <div className="relative aspect-video">
                             {crisisImages.map((img, i) => (
                                 <div key={i} className={`absolute inset-0 transition-opacity duration-500 ${i === currentSlide ? 'opacity-100' : 'opacity-0'}`}>

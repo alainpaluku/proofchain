@@ -8,6 +8,7 @@ export { WalletSelector } from './components/WalletSelector';
 export { InstitutionCard } from './components/InstitutionCard';
 export { Sidebar } from './components/Sidebar';
 export { ThemeToggle } from './components/ThemeToggle';
+export { Navbar } from './components/Navbar';
 export { IPFSImage } from './components/IPFSImage';
 export { NotificationButton } from './components/NotificationButton';
 export { AppLayout } from './components/AppLayout';

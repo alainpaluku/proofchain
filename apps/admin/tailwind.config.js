@@ -6,6 +6,7 @@ module.exports = {
     '../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   darkMode: 'class',
+  presets: [require('../../packages/ui/tailwind-preset.js')],
   theme: {
     extend: {},
   },

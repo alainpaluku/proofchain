@@ -30,7 +30,7 @@ function UnauthorizedComponent() {
                 </p>
                 <a
                     href="http://localhost:3001"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all"
                 >
                     {t('auth', 'goToIssuer')}
                 </a>

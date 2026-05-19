@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { LanguageProvider } from '@proofchain/ui';
+import { LanguageProvider, ThemeScript } from '@proofchain/ui';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -20,6 +20,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="fr" suppressHydrationWarning>
+            <head>
+                <ThemeScript />
+            </head>
             <body className="antialiased">
                 <LanguageProvider>
                     {children}

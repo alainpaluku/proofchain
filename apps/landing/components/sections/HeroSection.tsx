@@ -20,9 +20,9 @@ export function HeroSection() {
 
     return (
         <header id="accueil" className="relative min-h-screen flex items-center overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-violet-800 to-indigo-900" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900" />
             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-30" />
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/30 rounded-full blur-3xl animate-pulse" />
             <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
             
             <div className="relative container mx-auto px-4 lg:px-8 py-32">
@@ -47,11 +47,11 @@ export function HeroSection() {
                         PROOF<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">CHAINS</span>
                     </h1>
 
-                    <p className="text-xl lg:text-2xl text-purple-100 mb-4 font-light">
+                    <p className="text-xl lg:text-2xl text-primary-100 mb-4 font-light">
                         {t('landing', 'heroTitle')}
                     </p>
 
-                    <p className="text-base lg:text-lg text-purple-200/70 mb-10 max-w-2xl mx-auto">
+                    <p className="text-base lg:text-lg text-primary-200/70 mb-10 max-w-2xl mx-auto">
                         {t('landing', 'heroSubtitle')}
                     </p>
 
@@ -72,7 +72,7 @@ export function HeroSection() {
                                 <button 
                                     type="submit" 
                                     disabled={!query.trim() || isSearching}
-                                    className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 min-w-[160px]"
+                                    className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-sm shadow-green-500/25 hover:shadow-green-500/40 min-w-[160px]"
                                 >
                                     {isSearching ? (
                                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -84,23 +84,23 @@ export function HeroSection() {
                                     )}
                                 </button>
                             </div>
-                            <p className="text-sm text-purple-200/60 mt-3">{t('landing', 'searchExample')}</p>
+                            <p className="text-sm text-primary-200/60 mt-3">{t('landing', 'searchExample')}</p>
                         </form>
                     </div>
 
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105">
+                        <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-sm shadow-primary-500/25 hover:shadow-primary-500/40 hover:scale-105">
                             <Building2 className="w-5 h-5" />
                             {t('landing', 'accessIssuerPlatform')}
                             <ArrowRight className="w-5 h-5" />
                         </a>
-                        <a href="#features" className="group px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/20">
+                        <a href="#features" className="group px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/20">
                             <Play className="w-5 h-5" />
                             {t('landing', 'discover')}
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </a>
-                        <a href="https://github.com/alainpaluku/proofchains" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-gray-900/50 hover:bg-gray-900/70 backdrop-blur-sm text-white font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10">
+                        <a href="https://github.com/alainpaluku/proofchains" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-gray-900/50 hover:bg-gray-900/70 backdrop-blur-sm text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10">
                             <Github className="w-5 h-5" /> {t('landing', 'sourceCode')}
                         </a>
                     </div>
