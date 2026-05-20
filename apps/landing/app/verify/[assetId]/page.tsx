@@ -121,7 +121,7 @@ export default function VerifyPage() {
             <div className="container mx-auto px-4 py-12">
                 <button
                     onClick={() => router.push('/')}
-                    className="flex items-center gap-2 text-purple-600 hover:text-purple-700 mb-8 transition-colors"
+                    className="flex items-center gap-2 text-primary-600 hover:text-purple-700 mb-8 transition-colors"
                 >
                     <ArrowLeft className="w-5 h-5" />
                     Retour
@@ -129,7 +129,7 @@ export default function VerifyPage() {
 
                 {isLoading ? (
                     <div className="flex flex-col items-center justify-center py-20">
-                        <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mb-4" />
+                        <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mb-4" />
                         <p className="text-lg text-gray-600">Vérification en cours...</p>
                     </div>
                 ) : verification?.valid && verification.document ? (
@@ -147,8 +147,8 @@ export default function VerifyPage() {
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                            <div className="h-40 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-600 relative">
+                        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                            <div className="h-40 bg-gradient-to-br from-primary-600 via-blue-600 to-indigo-600 relative">
                                 <div className="absolute bottom-4 left-6">
                                     <h3 className="text-3xl font-bold text-white">{verification.document.studentName}</h3>
                                 </div>
@@ -158,7 +158,7 @@ export default function VerifyPage() {
                                 {verification.document.ipfsUrl && (
                                     <div className="mb-6">
                                         <p className="text-sm font-medium text-gray-600 mb-3">📄 Image du diplôme:</p>
-                                        <div className="relative rounded-xl overflow-hidden border-2 border-purple-200 shadow-lg bg-gray-50 min-h-[300px]">
+                                        <div className="relative rounded-xl overflow-hidden border-2 border-purple-200 shadow-sm bg-gray-50 min-h-[300px]">
                                             <img
                                                 src={getIPFSGatewayUrl(verification.document.ipfsUrl)}
                                                 alt={verification.document.studentName}
@@ -186,7 +186,7 @@ export default function VerifyPage() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="flex items-start gap-3">
-                                        <GraduationCap className="w-6 h-6 text-purple-600 mt-1" />
+                                        <GraduationCap className="w-6 h-6 text-primary-600 mt-1" />
                                         <div>
                                             <p className="text-sm text-gray-500">Diplôme</p>
                                             <p className="text-lg font-semibold text-gray-900">{verification.document.degree}</p>
@@ -227,7 +227,7 @@ export default function VerifyPage() {
                                             href={getIPFSGatewayUrl(verification.document.ipfsUrl)}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium"
+                                            className="flex items-center gap-2 text-primary-600 hover:text-purple-700 font-medium"
                                         >
                                             <Download className="w-5 h-5" />
                                             Télécharger le document
@@ -259,7 +259,7 @@ export default function VerifyPage() {
                                             href={`${explorerUrl}/transaction/${verification.document.txHash || verification.blockchain?.txHash}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-2 text-purple-600 hover:text-purple-700 font-mono break-all"
+                                            className="flex items-center gap-2 text-primary-600 hover:text-purple-700 font-mono break-all"
                                         >
                                             {verification.document.txHash || verification.blockchain?.txHash}
                                             <ExternalLink className="w-4 h-4 flex-shrink-0" />

@@ -40,7 +40,7 @@ export function LoadingSpinner({
                 aria-label="Chargement"
             />
             {message && (
-                <p className="label-caps text-auralis-on-surface-variant dark:text-gray-400 animate-pulse">
+                <p className="label-caps text-auralis-on-surface-variant dark:text-gray-400 ">
                     {message}
                 </p>
             )}

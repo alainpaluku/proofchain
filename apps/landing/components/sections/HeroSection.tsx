@@ -20,31 +20,26 @@ export function HeroSection() {
 
     return (
         <header id="accueil" className="relative min-h-screen flex items-center overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900" />
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-30" />
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/30 rounded-full blur-3xl animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+            <div className="absolute inset-0 bg-primary-950" />
+            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
             
             <div className="relative container mx-auto px-4 lg:px-8 py-32">
                 <div className="text-center max-w-5xl mx-auto">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm mb-8 border border-white/20">
-                        <Sparkles className="w-4 h-4 text-yellow-400" />
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full text-white/90 text-sm mb-12 border border-white/10">
+                        <Sparkles className="w-4 h-4 text-primary-400" />
                         <span>{t('landing', 'hackathonProject')}</span>
-                        <span className="w-1 h-1 bg-white/50 rounded-full" />
-                        <a href="https://cats.wada.org/" target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-cyan-400 transition-colors flex items-center gap-1">
+                        <span className="w-1 h-1 bg-white/30 rounded-full" />
+                        <a href="https://cats.wada.org/" target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-primary-400 transition-colors flex items-center gap-1">
                             Cardano Africa Summit <ExternalLink className="w-3 h-3" />
                         </a>
                     </div>
 
-                    <div className="flex justify-center mb-8">
-                        <div className="relative">
-                            <div className="absolute inset-0 bg-cyan-400/20 rounded-full blur-2xl animate-pulse" />
-                            <ProofchainsLogo size={100} className="text-cyan-400 relative animate-float" />
-                        </div>
+                    <div className="flex justify-center mb-10">
+                        <ProofchainsLogo size={120} className="text-primary-400" />
                     </div>
 
-                    <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-6 tracking-tight">
-                        PROOF<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">CHAINS</span>
+                    <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-8 tracking-tight">
+                        PROOF<span className="text-primary-500">CHAINS</span>
                     </h1>
 
                     <p className="text-xl lg:text-2xl text-primary-100 mb-4 font-light">
@@ -58,7 +53,7 @@ export function HeroSection() {
                     {/* Search Form */}
                     <div id="verify" className="max-w-2xl mx-auto mb-12">
                         <form onSubmit={handleVerify} className="relative">
-                            <div className="flex flex-col sm:flex-row gap-3 p-2 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
+                            <div className="flex flex-col sm:flex-row gap-3 p-2 bg-white/5 rounded-2xl border border-white/10">
                                 <div className="flex-1 relative">
                                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50" />
                                     <input 
@@ -72,7 +67,7 @@ export function HeroSection() {
                                 <button 
                                     type="submit" 
                                     disabled={!query.trim() || isSearching}
-                                    className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-sm shadow-green-500/25 hover:shadow-green-500/40 min-w-[160px]"
+                                    className="px-8 py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-sm min-w-[160px]"
                                 >
                                     {isSearching ? (
                                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -90,25 +85,25 @@ export function HeroSection() {
 
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-sm shadow-primary-500/25 hover:shadow-primary-500/40 hover:scale-105">
+                        <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-sm ">
                             <Building2 className="w-5 h-5" />
                             {t('landing', 'accessIssuerPlatform')}
                             <ArrowRight className="w-5 h-5" />
                         </a>
-                        <a href="#features" className="group px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/20">
+                        <a href="#features" className="group px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10">
                             <Play className="w-5 h-5" />
                             {t('landing', 'discover')}
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </a>
-                        <a href="https://github.com/alainpaluku/proofchains" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-gray-900/50 hover:bg-gray-900/70 backdrop-blur-sm text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10">
+                        <a href="https://github.com/alainpaluku/proofchains" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10">
                             <Github className="w-5 h-5" /> {t('landing', 'sourceCode')}
                         </a>
                     </div>
                 </div>
 
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 ">
                     <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
-                        <div className="w-1.5 h-3 bg-white/50 rounded-full animate-pulse" />
+                        <div className="w-1.5 h-3 bg-white/50 rounded-full " />
                     </div>
                 </div>
             </div>

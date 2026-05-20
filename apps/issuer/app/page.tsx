@@ -58,8 +58,8 @@ export default function HomePage() {
             value: loading ? '...' : String(statsData.issued),
             change: `${statsData.total} ${t('common', 'total')}`,
             icon: Award,
-            bgClass: 'bg-purple-100 dark:bg-purple-900/30',
-            iconClass: 'text-purple-600 dark:text-purple-400'
+            bgClass: 'bg-purple-100 dark:bg-primary-900/30',
+            iconClass: 'text-primary-600 dark:text-primary-400'
         },
         {
             label: t('nav', 'students'),
@@ -118,7 +118,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Link
                     href="/mint"
-                    className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl p-6 text-white hover:shadow-xl transition-all hover:-translate-y-1"
+                    className="bg-primary-950 rounded-2xl p-6 text-white hover:shadow-sm transition-all "
                 >
                     <Coins className="w-8 h-8 mb-3" />
                     <h3 className="text-xl font-bold mb-2">{t('nav', 'mint')}</h3>
@@ -127,7 +127,7 @@ export default function HomePage() {
 
                 <Link
                     href="/students"
-                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all hover:-translate-y-1"
+                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:shadow-sm transition-all "
                 >
                     <Users className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('nav', 'students')}</h3>
@@ -136,7 +136,7 @@ export default function HomePage() {
 
                 <Link
                     href="/kyc"
-                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all hover:-translate-y-1"
+                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:shadow-sm transition-all "
                 >
                     <FileCheck className="w-8 h-8 text-green-600 dark:text-green-400 mb-3" />
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('nav', 'kycValidation')}</h3>
@@ -151,7 +151,7 @@ export default function HomePage() {
                         <div className="text-center py-8">
                             <Award className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
                             <p className="text-gray-600 dark:text-gray-400">{t('documents', 'noDocuments')}</p>
-                            <Link href="/mint" className="text-purple-600 hover:text-purple-700 text-sm font-medium">
+                            <Link href="/mint" className="text-primary-600 hover:text-purple-700 text-sm font-medium">
                                 {t('mint', 'mintNow')} →
                             </Link>
                         </div>
@@ -180,7 +180,7 @@ export default function HomePage() {
                                                 href={`${landingUrl}/verify/${doc.document_id}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900/30 rounded-lg transition-colors"
+                                                className="p-2 text-primary-600 hover:bg-purple-100 dark:hover:bg-primary-900/30 rounded-lg transition-colors"
                                                 title={t('nav', 'verify')}
                                             >
                                                 <QrCode className="w-5 h-5" />

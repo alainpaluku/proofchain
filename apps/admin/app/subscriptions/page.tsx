@@ -54,7 +54,7 @@ export default function SubscriptionsPage() {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                        <CreditCard className="w-8 h-8 text-purple-600" />
+                        <CreditCard className="w-8 h-8 text-primary-600" />
                         {t('admin', 'subscriptionsManagement')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
@@ -76,7 +76,7 @@ export default function SubscriptionsPage() {
                             </h3>
                             <div className="space-y-1">
                                 <div className="flex items-baseline justify-center gap-2">
-                                    <span className="text-4xl font-bold text-purple-600 dark:text-purple-400">
+                                    <span className="text-4xl font-bold text-primary-600 dark:text-primary-400">
                                         ${plan.priceUSD}
                                     </span>
                                     <span className="text-gray-600 dark:text-gray-400">{t('admin', 'perMonth')}</span>
@@ -163,9 +163,9 @@ export default function SubscriptionsPage() {
                     title={t('admin', 'subscriptionStats')} 
                 />
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="text-center p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                    <div className="text-center p-6 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('admin', 'monthlyRevenue')}</p>
-                        <p className="text-3xl font-bold text-purple-600 dark:text-purple-400">$0</p>
+                        <p className="text-3xl font-bold text-primary-600 dark:text-primary-400">$0</p>
                         <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">0 FC</p>
                     </div>
                     <div className="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl">

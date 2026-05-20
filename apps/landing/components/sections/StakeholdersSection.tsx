@@ -12,7 +12,7 @@ export function StakeholdersSection() {
     ];
 
     return (
-        <section id="pourqui" className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+        <section id="pourqui" className="py-24 bg-white dark:bg-auralis-inverse-surface">
             <div className="container mx-auto px-4 lg:px-8">
                 <div className="text-center mb-16">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium mb-6">
@@ -28,8 +28,8 @@ export function StakeholdersSection() {
                 </div>
                 <div className="grid lg:grid-cols-3 gap-8">
                     {valueProps.map((v, i) => (
-                        <div key={i} className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-md shadow-gray-200/50 dark:shadow-black/20 border border-gray-100 dark:border-gray-800 hover:border-primary-200 dark:hover:border-primary-800 transition-all duration-300">
-                            <div className="w-16 h-16 bg-gradient-to-br from-primary-600 to-primary-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm shadow-primary-500/25">
+                        <div key={i} className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-md  dark: border border-gray-100 dark:border-gray-800 hover:border-primary-200 dark:hover:border-primary-800 transition-all duration-300">
+                            <div className="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm ">
                                 <v.icon className="w-8 h-8 text-white" />
                             </div>
                             <h3 className="text-2xl font-bold mb-4">{v.title}</h3>

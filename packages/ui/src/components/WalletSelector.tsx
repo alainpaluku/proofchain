@@ -52,7 +52,7 @@ export function WalletSelector({ isOpen, onClose, onConnect }: WalletSelectorPro
                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
-                            <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md">
+                            <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant text-left shadow transition-all sm:my-8 sm:w-full sm:max-w-md">
                                 <div className="p-6">
                                     <div className="flex items-center justify-between mb-6">
                                         <Dialog.Title as="h3" className="text-xl font-bold text-auralis-on-surface dark:text-white">

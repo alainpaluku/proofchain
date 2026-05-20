@@ -5,8 +5,12 @@ import { LanguageIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { Menu, Transition } from '@headlessui/react';
 import { useTranslation } from '../contexts/LanguageContext';
 
-export function LanguageSelector() {
-  const { language, setLanguage } = useTranslation();
+export interface LanguageSelectorProps {
+  variant?: 'default' | 'minimal';
+}
+
+export function LanguageSelector({ variant = 'default' }: LanguageSelectorProps) {
+  const { locale: language, setLocale: setLanguage } = useTranslation();
 
   const languages = [
     { id: 'en', name: 'English', flag: '🇺🇸' },
@@ -31,7 +35,7 @@ export function LanguageSelector() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant rounded-xl shadow-2xl py-1.5 z-50 focus:outline-none">
+        <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant rounded-xl shadow py-1.5 z-50 focus:outline-none">
           <div className="px-3 py-1 mb-1">
             <p className="text-[10px] label-caps text-auralis-on-surface-variant dark:text-gray-500">Langue</p>
           </div>

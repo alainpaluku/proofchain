@@ -3,14 +3,21 @@ import { LanguageProvider, ThemeScript } from '@proofchain/ui';
 import './globals.css';
 
 export const metadata: Metadata = {
-    title: 'PROOFCHAINS - Vérification de Diplômes sur Blockchain',
-    description: 'Plateforme de certification académique sur la blockchain Cardano. Émettez, vérifiez et sécurisez vos diplômes avec la technologie NFT.',
-    keywords: ['blockchain', 'cardano', 'diplôme', 'certification', 'NFT', 'vérification', 'académique'],
-    themeColor: '#7c3aed',
+    title: 'AURALIS SYSTEM - Certification Académique sur Blockchain Cardano',
+    description: 'Auralis System est la plateforme leader pour l\'émission et la vérification de diplômes numériques infalsifiables sur la blockchain Cardano. Sécurisez vos parcours académiques avec la technologie NFT.',
+    keywords: ['blockchain', 'cardano', 'diplôme numérique', 'certification académique', 'NFT', 'vérification diplôme', 'RD Congo', 'éducation'],
+    themeColor: '#0f172a',
     viewport: {
         width: 'device-width',
         initialScale: 1,
     },
+    openGraph: {
+        title: 'AURALIS SYSTEM - Certification Académique sur Blockchain',
+        description: 'Émettez et vérifiez des diplômes infalsifiables sur Cardano.',
+        type: 'website',
+        locale: 'fr_FR',
+        siteName: 'Auralis System',
+    }
 };
 
 export default function RootLayout({
@@ -19,7 +26,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="fr" suppressHydrationWarning>
+        <html suppressHydrationWarning>
             <head>
                 <ThemeScript />
             </head>

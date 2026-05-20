@@ -5,15 +5,15 @@ module.exports = {
       colors: {
         // Auralis System Colors
         auralis: {
-          surface: '#fdf8f8',
-          'surface-dim': '#ddd9d8',
-          'surface-bright': '#fdf8f8',
-          'surface-container-lowest': '#ffffff',
-          'surface-container-low': '#f7f3f2',
-          'surface-container': '#f1edec',
-          'surface-container-high': '#ebe7e6',
-          'surface-container-highest': '#e5e2e1',
-          'on-surface': '#1c1b1b',
+          surface: '#F7F7F5',
+          'surface-dim': '#E7E7E4',
+          'surface-bright': '#FFFFFF',
+          'surface-container-lowest': '#FFFFFF',
+          'surface-container-low': '#F2F2F0',
+          'surface-container': '#E7E7E4',
+          'surface-container-high': '#DDDDDA',
+          'surface-container-highest': '#D2D2CF',
+          'on-surface': '#1C1C1A',
           'on-surface-variant': '#444748',
           'outline': '#747878',
           'outline-variant': '#c4c7c7',
@@ -36,6 +36,7 @@ module.exports = {
           700: '#1d4ed8',
           800: '#1e40af',
           900: '#1e3a8a',
+          950: '#0f172a',
           DEFAULT: '#2563eb',
         },
         secondary: {

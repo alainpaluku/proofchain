@@ -8,9 +8,10 @@ import React from 'react';
 export interface CardProps {
     children: React.ReactNode;
     className?: string;
-    variant?: 'default' | 'recessed' | 'elevated' | 'gradient';
+    variant?: 'default' | 'recessed' | 'elevated' | 'primary';
     padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
     hover?: boolean;
+    onClick?: () => void;
 }
 
 export function Card({ 
@@ -18,7 +19,8 @@ export function Card({
     className = '', 
     variant = 'default',
     padding = 'md',
-    hover = false 
+    hover = false,
+    onClick
 }: CardProps) {
     const baseClasses = 'rounded-xl transition-all duration-300'; // xl is 1.5rem / 24px as per Auralis
     
@@ -31,7 +33,7 @@ export function Card({
         recessed: 'bg-auralis-surface-container-low dark:bg-black/20 border border-transparent',
         // Elevated: White cards with slight depth (though Auralis favors borders, we can add a subtle glow)
         elevated: 'bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest shadow-sm',
-        gradient: 'bg-gradient-to-br from-primary-600 to-primary-800 text-white'
+        primary: 'bg-primary-600 text-white'
     };
     
     const paddingClasses = {
@@ -45,7 +47,10 @@ export function Card({
     const hoverClasses = hover ? 'hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-md' : '';
     
     return (
-        <div className={`${baseClasses} ${variantClasses[variant]} ${paddingClasses[padding]} ${hoverClasses} ${className}`}>
+        <div
+            className={`${baseClasses} ${variantClasses[variant]} ${paddingClasses[padding]} ${hoverClasses} ${className}`}
+            onClick={onClick}
+        >
             {children}
         </div>
     );
@@ -113,5 +118,29 @@ export function StatCard({ icon: Icon, iconBgClass = 'bg-primary-50 dark:bg-prim
                 {label}
             </p>
         </Card>
+    );
+}
+
+export interface EmptyStateProps {
+    icon: React.ElementType;
+    title: string;
+    description: string;
+    action?: React.ReactNode;
+}
+
+export function EmptyState({ icon: Icon, title, description, action }: EmptyStateProps) {
+    return (
+        <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+            <div className="w-16 h-16 bg-auralis-surface-container-low dark:bg-white/5 rounded-2xl flex items-center justify-center mb-6">
+                <Icon className="w-8 h-8 text-auralis-outline" />
+            </div>
+            <h3 className="text-xl font-bold text-auralis-on-surface dark:text-white mb-2">
+                {title}
+            </h3>
+            <p className="text-auralis-on-surface-variant dark:text-gray-400 max-w-sm mb-8">
+                {description}
+            </p>
+            {action}
+        </div>
     );
 }

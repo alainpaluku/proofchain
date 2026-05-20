@@ -23,7 +23,7 @@ body {
     }
 
     .gradient-text {
-        @apply text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-900 dark:from-primary-400 dark:to-primary-100;
+        @apply text-transparent bg-clip-text bg-primary-950 dark:bg-primary-400;
     }
 
     .form-input {

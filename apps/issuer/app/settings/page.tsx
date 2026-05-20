@@ -92,7 +92,7 @@ export default function SettingsPage() {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
             </div>
         );
     }
@@ -101,7 +101,7 @@ export default function SettingsPage() {
         <div className="p-6 space-y-8 max-w-4xl mx-auto">
             <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                    <Settings className="w-8 h-8 text-purple-600" />
+                    <Settings className="w-8 h-8 text-primary-600" />
                     {t('settings', 'title')}
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400 mt-1">{t('settings', 'subtitle')}</p>
@@ -121,14 +121,14 @@ export default function SettingsPage() {
                 </div>
             )}
 
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
-                    <Building2 className="w-6 h-6 text-purple-600" />
+                    <Building2 className="w-6 h-6 text-primary-600" />
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('settings', 'institution')}</h2>
                 </div>
 
                 {institution && (
-                    <div className="mb-6 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                    <div className="mb-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
                         <p className="text-sm text-purple-700 dark:text-purple-300">
                             {t('settings', 'code')}: <span className="font-mono font-bold">{institution.institution_code}</span> | 
                             KYC: <span className={institution.kyc_status === 'approved' ? 'text-green-600' : 'text-yellow-600'}>
@@ -169,9 +169,9 @@ export default function SettingsPage() {
                 </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
-                    <Shield className="w-6 h-6 text-purple-600" />
+                    <Shield className="w-6 h-6 text-primary-600" />
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('settings', 'account')}</h2>
                 </div>
                 <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
@@ -180,9 +180,9 @@ export default function SettingsPage() {
                 </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
-                    <Bell className="w-6 h-6 text-purple-600" />
+                    <Bell className="w-6 h-6 text-primary-600" />
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('settings', 'notifications_title')}</h2>
                 </div>
                 <div className="space-y-4">
@@ -197,7 +197,7 @@ export default function SettingsPage() {
                             <label className="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" checked={notifications[item.key as keyof typeof notifications]}
                                     onChange={(e) => setNotifications({ ...notifications, [item.key]: e.target.checked })} className="sr-only peer" />
-                                <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
                             </label>
                         </div>
                     ))}
@@ -208,7 +208,7 @@ export default function SettingsPage() {
 
             <div className="flex justify-end">
                 <button onClick={handleSave} disabled={saving}
-                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold disabled:opacity-50">
+                    className="flex items-center gap-2 px-8 py-3 bg-primary-900 hover:bg-black text-white rounded-xl font-semibold disabled:opacity-50">
                     {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                     {saving ? t('common', 'saving') : t('common', 'save')}
                 </button>

@@ -23,7 +23,7 @@ export function TechStackSection() {
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
                     {techStack.map((tech, i) => (
                         <div key={i} className="bg-white dark:bg-gray-800 rounded-2xl p-6 text-center hover:shadow-sm transition-all duration-300 border border-gray-100 dark:border-gray-700">
-                            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <div className="w-12 h-12 bg-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                                 <span className="text-white font-bold text-lg">{tech.name[0]}</span>
                             </div>
                             <h3 className="font-bold mb-1">{tech.name}</h3>

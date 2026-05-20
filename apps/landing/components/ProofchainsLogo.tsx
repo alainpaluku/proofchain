@@ -1,8 +1,10 @@
 import React from 'react';
 
 export function ProofchainsLogo({ size = 32, className = '' }: { size?: number; className?: string }) {
+    const width = size;
+    const height = (size * 1116) / 1011;
     return (
-        <svg width={size} height={size} viewBox="0 0 1011 1116" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+        <svg width={width} height={height} viewBox="0 0 1011 1116" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
             <g transform="translate(0, 1116) scale(0.1, -0.1)" fill="currentColor">
                 <path d="M5025 9730 c-201 -13 -349 -153 -411 -389 -42 -157 11 -316 145 -444 121 -115 246 -165 386 -154 78 6 157 33 223 78 23 16 47 29 51 29 19 0 126 128 150 179 24 52 26 65 25 191 -1 164 -15 220 -83 322 -104 156 -229 204 -486 188z"/>
                 <path d="M5808 9102 c-18 -3 -34 -51 -21 -62 4 -4 42 -15 83 -24 96 -23 172 -40 285 -66 97 -23 173 -47 190 -59 5 -5 19 -11 30 -14 121 -34 689 -313 752 -369 10 -9 37 -26 61 -38 41 -22 44 -22 62 -5 11 10 20 23 19 29 0 18 -244 173 -389 249 -296 155 -969 381 -1072 359z"/>

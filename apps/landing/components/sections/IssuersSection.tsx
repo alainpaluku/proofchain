@@ -30,7 +30,7 @@ export function IssuersSection() {
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                     {institutionTypes.map((inst, i) => (
                         <div key={i} className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 text-center border border-gray-100 dark:border-gray-800 hover:border-primary-200 dark:hover:border-primary-800 transition-all duration-300">
-                            <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+                            <div className="w-14 h-14 bg-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
                                 <inst.icon className="w-7 h-7 text-white" />
                             </div>
                             <h3 className="font-bold text-lg mb-2">{inst.name}</h3>
@@ -38,14 +38,14 @@ export function IssuersSection() {
                         </div>
                     ))}
                 </div>
-                <div className="bg-gradient-to-br from-primary-50 to-primary-50 dark:from-primary-900/20 dark:to-primary-900/20 rounded-3xl p-8 lg:p-12 text-center border border-primary-100 dark:border-primary-800">
+                <div className="bg-primary-50 dark:bg-primary-900/20 rounded-3xl p-8 lg:p-12 text-center border border-primary-100 dark:border-primary-800">
                     <h3 className="text-2xl lg:text-3xl font-bold mb-4">
                         {t('landing', 'areYouInstitution')}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
                         {t('landing', 'accessPlatformDesc')}
                     </p>
-                    <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 text-white font-bold rounded-2xl transition-all duration-300 shadow-sm shadow-primary-500/25 hover:shadow-primary-500/40">
+                    <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl transition-all duration-300 shadow-sm  hover:">
                         <Building2 className="w-5 h-5" />
                         {t('landing', 'accessIssuerPlatform')}
                         <ArrowRight className="w-5 h-5" />

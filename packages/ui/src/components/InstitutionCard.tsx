@@ -6,7 +6,7 @@
 'use client';
 
 import React from 'react';
-import { AcademicCapIcon, CalendarIcon, AwardIcon, BuildingLibraryIcon, CheckBadgeIcon, ArrowTopRightOnSquareIcon, DocumentTextIcon } from '@heroicons/react/24/solid';
+import { AcademicCapIcon, CalendarIcon, TrophyIcon, BuildingLibraryIcon, CheckBadgeIcon, ArrowTopRightOnSquareIcon, DocumentTextIcon } from '@heroicons/react/24/solid';
 import { Card } from './Card';
 
 // Données complètes du diplôme (depuis Supabase)
@@ -47,10 +47,9 @@ export function InstitutionCard({
             onClick={onClick}
             hover
         >
-            {/* Soft Industrial header with gradient glow */}
+            {/* Soft Industrial header */}
             <div className="h-28 bg-primary-900 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-600/40 to-transparent" />
-                <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary-400/10 rounded-full blur-3xl group-hover:bg-primary-400/20 transition-all duration-700" />
+                <div className="absolute inset-0 bg-primary-800/40" />
 
                 {verified && (
                     <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 bg-white/10 backdrop-blur-md text-white text-xs font-bold rounded-full border border-white/20">
@@ -90,7 +89,7 @@ export function InstitutionCard({
 
                     {data.field && (
                         <div className="flex items-center gap-3 text-auralis-on-surface-variant dark:text-gray-300">
-                            <AwardIcon className="w-5 h-5 text-auralis-outline" />
+                            <TrophyIcon className="w-5 h-5 text-auralis-outline" />
                             <span className="text-sm">{data.field}</span>
                         </div>
                     )}

@@ -40,7 +40,7 @@ export default function ProofchainsPage() {
                 <ProofchainsLogo size={24} className="text-white" />
             </div>
             <span className="text-xl font-bold text-auralis-on-surface dark:text-white tracking-tight">
-                AURALIS <span className="text-primary-600">SYSTEM</span>
+                AURALIS <span className="text-primary-600">SYSTEM</span> <span className="text-xs font-medium opacity-50">a proofchain</span>
             </span>
         </div>
     );
@@ -48,7 +48,7 @@ export default function ProofchainsPage() {
     const navAction = (
         <a
             href="#verify"
-            className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-primary-900 dark:bg-primary-600 hover:bg-black dark:hover:bg-primary-500 text-white text-sm font-bold rounded-lg transition-all shadow-sm active:scale-95"
+            className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-primary-900 dark:bg-primary-600 hover:bg-black dark:hover:bg-primary-500 text-white text-sm font-bold rounded-lg transition-all shadow-sm "
         >
             <MagnifyingGlassIcon className="w-4 h-4" />
             {t('nav', 'verify')}

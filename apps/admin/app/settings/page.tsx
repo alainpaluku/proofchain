@@ -57,7 +57,7 @@ export default function SettingsPage() {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
             </div>
         );
     }
@@ -66,7 +66,7 @@ export default function SettingsPage() {
         <div className="p-6 space-y-8 max-w-4xl mx-auto">
             <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                    <Settings className="w-8 h-8 text-purple-600" />
+                    <Settings className="w-8 h-8 text-primary-600" />
                     {t('admin', 'settings_title')}
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400 mt-1">{t('admin', 'settings_subtitle')}</p>
@@ -87,14 +87,14 @@ export default function SettingsPage() {
             )}
 
             {/* Stats Overview */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
-                    <Users className="w-6 h-6 text-purple-600" />
+                    <Users className="w-6 h-6 text-primary-600" />
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin', 'settings_platformOverview')}</h2>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl text-center">
-                        <p className="text-2xl font-bold text-purple-600">{stats.totalInstitutions}</p>
+                    <div className="p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl text-center">
+                        <p className="text-2xl font-bold text-primary-600">{stats.totalInstitutions}</p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">{t('admin', 'settings_institutions')}</p>
                     </div>
                     <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl text-center">
@@ -113,9 +113,9 @@ export default function SettingsPage() {
             </div>
 
             {/* Platform Settings */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
-                    <Settings className="w-6 h-6 text-purple-600" />
+                    <Settings className="w-6 h-6 text-primary-600" />
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin', 'settings_generalSettings')}</h2>
                 </div>
                 <div className="space-y-4">
@@ -140,22 +140,22 @@ export default function SettingsPage() {
             </div>
 
             {/* Account */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
-                    <Shield className="w-6 h-6 text-purple-600" />
+                    <Shield className="w-6 h-6 text-primary-600" />
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin', 'settings_adminAccount')}</h2>
                 </div>
-                <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                <div className="p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
                     <p className="text-sm text-gray-600 dark:text-gray-400">{t('admin', 'settings_connectedAs')}</p>
                     <p className="font-medium text-purple-700 dark:text-purple-300">{userEmail}</p>
-                    <p className="text-xs text-purple-600 mt-1">{t('admin', 'settings_roleAdmin')}</p>
+                    <p className="text-xs text-primary-600 mt-1">{t('admin', 'settings_roleAdmin')}</p>
                 </div>
             </div>
 
             {/* Notifications */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
-                    <Bell className="w-6 h-6 text-purple-600" />
+                    <Bell className="w-6 h-6 text-primary-600" />
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin', 'settings_notifications')}</h2>
                 </div>
                 <div className="space-y-4">
@@ -173,7 +173,7 @@ export default function SettingsPage() {
                             <label className="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" checked={settings.notifications[item.key as keyof typeof settings.notifications]}
                                     onChange={(e) => setSettings({ ...settings, notifications: { ...settings.notifications, [item.key]: e.target.checked } })} className="sr-only peer" />
-                                <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
                             </label>
                         </div>
                     ))}
@@ -181,9 +181,9 @@ export default function SettingsPage() {
             </div>
 
             {/* Security */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-6">
-                    <Shield className="w-6 h-6 text-purple-600" />
+                    <Shield className="w-6 h-6 text-primary-600" />
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin', 'settings_security')}</h2>
                 </div>
                 <div className="space-y-4">
@@ -195,7 +195,7 @@ export default function SettingsPage() {
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" checked={settings.security.twoFactor}
                                 onChange={(e) => setSettings({ ...settings, security: { ...settings.security, twoFactor: e.target.checked } })} className="sr-only peer" />
-                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
                         </label>
                     </div>
                     <div>
@@ -208,9 +208,9 @@ export default function SettingsPage() {
             </div>
 
             {/* API Key */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex items-center gap-3 mb-4">
-                    <Key className="w-6 h-6 text-purple-600" />
+                    <Key className="w-6 h-6 text-primary-600" />
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin', 'settings_apiKey')}</h2>
                 </div>
                 <div className="flex gap-2">
@@ -222,7 +222,7 @@ export default function SettingsPage() {
 
             <div className="flex justify-end">
                 <button onClick={handleSave} disabled={saving}
-                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold disabled:opacity-50">
+                    className="flex items-center gap-2 px-8 py-3 bg-primary-900 hover:bg-black text-white rounded-xl font-semibold disabled:opacity-50">
                     {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                     {saving ? t('admin', 'settings_saving') : t('admin', 'settings_save')}
                 </button>

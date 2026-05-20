@@ -128,7 +128,7 @@ export default function KYCPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                        <FileCheck className="w-7 h-7 sm:w-8 sm:h-8 text-purple-600" />
+                        <FileCheck className="w-7 h-7 sm:w-8 sm:h-8 text-primary-600" />
                         {t('kyc', 'title')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">{t('kyc', 'subtitle')}</p>
@@ -145,8 +145,8 @@ export default function KYCPage() {
 
             {(kycStatus === null || kycStatus === 'incomplete' || kycStatus === 'rejected') && (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><Building2 className="w-6 h-6 text-purple-600" />{t('kyc', 'institutionInfo')}</h2>
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><Building2 className="w-6 h-6 text-primary-600" />{t('kyc', 'institutionInfo')}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="md:col-span-2">
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('kyc', 'form_institutionName')} *</label>
@@ -175,8 +175,8 @@ export default function KYCPage() {
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2"><FileText className="w-6 h-6 text-purple-600" />{t('kyc', 'documents_title')}</h2>
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2"><FileText className="w-6 h-6 text-primary-600" />{t('kyc', 'documents_title')}</h2>
                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{t('kyc', 'documents_subtitle')}</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {[{ key: 'legalDocs', label: t('kyc', 'documents_legalDocs') }, { key: 'accreditation', label: t('kyc', 'documents_accreditation') }, { key: 'taxCertificate', label: t('kyc', 'documents_taxCertificate') }, { key: 'ministerialDecree', label: t('kyc', 'documents_ministerialDecree') }].map((doc) => (
@@ -198,7 +198,7 @@ export default function KYCPage() {
                     </div>
 
                     <div className="flex justify-end">
-                        <button type="submit" disabled={isSubmitting} className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-xl font-semibold transition-all shadow-lg disabled:cursor-not-allowed">
+                        <button type="submit" disabled={isSubmitting} className="flex items-center gap-2 px-8 py-3 bg-primary-900 hover:bg-black disabled:from-gray-400 disabled:to-gray-400 text-white rounded-xl font-semibold transition-all shadow-sm disabled:cursor-not-allowed">
                             {isSubmitting ? (<><Loader2 className="w-5 h-5 animate-spin" />{t('common', 'submitting')}</>) : (<><Send className="w-5 h-5" />{t('kyc', 'form_submitButton')}</>)}
                         </button>
                     </div>

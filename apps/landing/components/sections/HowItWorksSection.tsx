@@ -19,7 +19,7 @@ export function HowItWorksSection() {
                 </div>
                 <div className="max-w-4xl mx-auto">
                     <div className="relative">
-                        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 via-blue-500 to-green-500 hidden md:block" />
+                        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary-500 hidden md:block" />
                         {[
                             { step: '01', title: t('landing', 'step1Title'), description: t('landing', 'step1Desc'), icon: Building2, color: 'primary' },
                             { step: '02', title: t('landing', 'step2Title'), description: t('landing', 'step2Desc'), icon: Shield, color: 'blue' },
@@ -41,7 +41,7 @@ export function HowItWorksSection() {
                         <p className="text-gray-600 dark:text-gray-400 mb-6">
                             {t('landing', 'startIssuing')}
                         </p>
-                        <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 text-white font-bold rounded-2xl transition-all duration-300 shadow-sm shadow-primary-500/25 hover:shadow-primary-500/40 hover:scale-105">
+                        <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl transition-all duration-300 shadow-sm  hover: ">
                             <Building2 className="w-5 h-5" />
                             {t('landing', 'accessIssuerPlatform')}
                             <ArrowRight className="w-5 h-5" />

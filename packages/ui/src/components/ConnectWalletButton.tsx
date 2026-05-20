@@ -100,7 +100,7 @@ export function ConnectWalletButton({
                     <div className="flex items-center">
                         {/* Wallet info badge */}
                         <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 rounded-l-lg border border-r-0 border-green-200 dark:border-green-800">
-                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                            <div className="w-2 h-2 bg-green-500 rounded-full " />
                             <span className="text-sm font-bold text-green-700 dark:text-green-400">
                                 {walletType ? walletNames[walletType] : 'Connecté'}
                             </span>
@@ -133,7 +133,7 @@ export function ConnectWalletButton({
             </div>
 
             {error && (
-                <div className="fixed bottom-4 right-4 p-4 bg-error-container text-error border border-error/20 rounded-lg text-sm font-bold shadow-xl z-50">
+                <div className="fixed bottom-4 right-4 p-4 bg-error-container text-error border border-error/20 rounded-lg text-sm font-bold shadow-sm z-50">
                     {error}
                 </div>
             )}

@@ -40,7 +40,7 @@ export function Toast({
     };
 
     return (
-        <div className={`flex items-center gap-3 p-4 rounded-lg border shadow-xl backdrop-blur-md animate-in fade-in slide-in-from-bottom-5 duration-300 ${typeClasses[type]}`}>
+        <div className={`flex items-center gap-3 p-4 rounded-lg border shadow-sm backdrop-blur-md animate-in fade-in slide-in-from-bottom-5 duration-300 ${typeClasses[type]}`}>
             <div className="flex-shrink-0">
                 {icons[type]}
             </div>

@@ -14,7 +14,7 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <div className="w-10 h-10 rounded-lg bg-auralis-surface-container-low dark:bg-white/5 border border-auralis-surface-highest dark:border-auralis-on-surface-variant animate-pulse" />;
+    return <div className="w-10 h-10 rounded-lg bg-auralis-surface-container-low dark:bg-white/5 border border-auralis-surface-highest dark:border-auralis-on-surface-variant " />;
   }
 
   const themes = [
@@ -43,7 +43,7 @@ export function ThemeToggle() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant rounded-xl shadow-2xl py-1.5 z-50 focus:outline-none">
+        <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant rounded-xl shadow py-1.5 z-50 focus:outline-none">
           {themes.map((t) => (
             <Menu.Item key={t.id}>
               {({ active }) => (

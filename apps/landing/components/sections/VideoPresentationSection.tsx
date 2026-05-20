@@ -17,7 +17,7 @@ export function VideoPresentationSection() {
                     <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">{t('landing', 'videoDescription')}</p>
                 </div>
                 <div className="max-w-4xl mx-auto">
-                    <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-primary-500/20 border border-gray-200 dark:border-gray-800">
+                    <div className="relative aspect-video rounded-2xl overflow-hidden shadow  border border-gray-200 dark:border-gray-800">
                         <iframe className="w-full h-full" src="https://www.youtube.com/embed/WZUOnXIhghY" title="Présentation Proofchains" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
                     </div>
                 </div>

@@ -146,7 +146,7 @@ export default function StudentsPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                        <Users className="w-7 h-7 sm:w-8 sm:h-8 text-purple-600" />
+                        <Users className="w-7 h-7 sm:w-8 sm:h-8 text-primary-600" />
                         {t('students', 'title')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
@@ -164,7 +164,7 @@ export default function StudentsPage() {
                     >
                         <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
                     </button>
-                    <button onClick={() => setShowModal(true)} className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-medium transition-all shadow-lg">
+                    <button onClick={() => setShowModal(true)} className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-primary-900 hover:bg-black text-white rounded-xl font-medium transition-all shadow-sm">
                         <Plus className="w-5 h-5" />
                         <span className="sm:inline">{t('common', 'add')}</span>
                     </button>
@@ -177,7 +177,7 @@ export default function StudentsPage() {
                 </div>
             )}
 
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder={t('students', 'searchPlaceholder')} className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:border-transparent" />
@@ -186,10 +186,10 @@ export default function StudentsPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {filteredStudents.map((student) => (
-                    <div key={student.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 hover:shadow-xl transition-all">
+                    <div key={student.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-sm transition-all">
                         <div className="flex items-start justify-between mb-4">
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                <div className="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
                                     {student.full_name.split(' ').map(n => n[0]).join('').substring(0, 2)}
                                 </div>
                                 <div>
@@ -208,7 +208,7 @@ export default function StudentsPage() {
                         <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                             <div className="flex items-center justify-between mb-3">
                                 <span className="text-sm text-gray-600 dark:text-gray-400">{t('students', 'diplomasIssued')}</span>
-                                <span className="text-lg font-bold text-purple-600 dark:text-purple-400">{student.documents_issued || 0}</span>
+                                <span className="text-lg font-bold text-primary-600 dark:text-primary-400">{student.documents_issued || 0}</span>
                             </div>
                             <div className="flex gap-2">
                                 <button onClick={() => handleDelete(student.id)} className="p-2 bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 rounded-xl transition-all">
@@ -221,7 +221,7 @@ export default function StudentsPage() {
             </div>
 
             {filteredStudents.length === 0 && !loading && (
-                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-12 text-center">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
                     <Users className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{t('students', 'noStudents')}</h3>
                     <p className="text-gray-600 dark:text-gray-400 mb-4">{t('students', 'addFirstStudent')}</p>
@@ -234,7 +234,7 @@ export default function StudentsPage() {
 
             {showModal && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm max-w-lg w-full max-h-[90vh] overflow-y-auto">
                         <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
                             <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('students', 'formTitle')}</h2>
                             <button onClick={handleCloseModal} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><X className="w-5 h-5" /></button>

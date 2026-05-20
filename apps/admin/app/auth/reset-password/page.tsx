@@ -45,8 +45,8 @@ export default function ResetPasswordPage() {
 
     if (success) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4">
-                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+            <div className="min-h-screen flex items-center justify-center bg-auralis-surface dark:bg-auralis-inverse-surface p-4">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8 max-w-md w-full text-center">
                     <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                         <CheckCircle className="w-8 h-8 text-green-600" />
                     </div>
@@ -58,11 +58,11 @@ export default function ResetPasswordPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-md w-full">
+        <div className="min-h-screen flex items-center justify-center bg-auralis-surface dark:bg-auralis-inverse-surface p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8 max-w-md w-full">
                 <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Lock className="w-8 h-8 text-purple-600" />
+                    <div className="w-16 h-16 bg-purple-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Lock className="w-8 h-8 text-primary-600" />
                     </div>
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('admin', 'auth_resetPasswordTitle')}</h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-2">{t('admin', 'auth_resetPasswordSubtitle')}</p>
@@ -113,7 +113,7 @@ export default function ResetPasswordPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                        className="w-full py-3 bg-primary-900 hover:bg-black text-white rounded-xl font-semibold transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                     >
                         {loading ? <><Loader2 className="w-5 h-5 animate-spin" /> {t('admin', 'auth_updating')}</> : t('admin', 'auth_updatePasswordButton')}
                     </button>

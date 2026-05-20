@@ -33,12 +33,12 @@ export function Button({
     
     const variantClasses = {
         // Primary buttons are solid #111111 (mapped to primary-900/black) with #FCFCFB text
-        primary: 'bg-primary-900 dark:bg-primary-600 text-white hover:bg-black dark:hover:bg-primary-500 active:scale-[0.98]',
+        primary: 'bg-primary-900 dark:bg-primary-600 text-white hover:bg-black dark:hover:bg-primary-500 ',
         // Secondary buttons use #E7E7E4 (surface-highest) border with no fill or subtle fill
         secondary: 'bg-auralis-surface-container-high dark:bg-auralis-inverse-surface hover:bg-auralis-surface-highest dark:hover:bg-gray-700 text-auralis-on-surface dark:text-white',
         outline: 'border border-auralis-outline-variant dark:border-auralis-on-surface-variant hover:bg-auralis-surface-container-low dark:hover:bg-white/5 text-auralis-on-surface dark:text-white',
         ghost: 'hover:bg-auralis-surface-container-low dark:hover:bg-white/5 text-auralis-on-surface-variant dark:text-gray-300',
-        danger: 'bg-error dark:bg-red-600 text-white hover:bg-red-700 active:scale-[0.98]'
+        danger: 'bg-error dark:bg-red-600 text-white hover:bg-red-700 '
     };
     
     const sizeClasses = {

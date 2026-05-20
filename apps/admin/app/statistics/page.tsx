@@ -35,8 +35,8 @@ export default function StatisticsPage() {
     const globalStats = [
         {
             icon: Building2,
-            iconBgClass: 'bg-purple-100 dark:bg-purple-900/30',
-            iconClass: 'text-purple-600 dark:text-purple-400',
+            iconBgClass: 'bg-purple-100 dark:bg-primary-900/30',
+            iconClass: 'text-primary-600 dark:text-primary-400',
             value: loading ? '...' : String(stats?.totalInstitutions || 0),
             label: t('admin', 'totalInstitutions'),
             change: `${stats?.approvedKYC || 0} ${t('admin', 'approved_kyc').toLowerCase()}`
@@ -72,7 +72,7 @@ export default function StatisticsPage() {
             {/* Header */}
             <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                    <BarChart3 className="w-8 h-8 text-purple-600" />
+                    <BarChart3 className="w-8 h-8 text-primary-600" />
                     {t('admin', 'statisticsTitle')}
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400 mt-1">
@@ -128,7 +128,7 @@ export default function StatisticsPage() {
                     {['Starter', 'Professional', 'Enterprise'].map((plan) => (
                         <div key={plan} className="p-6 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
                             <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{plan}</h4>
-                            <p className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-1">$0</p>
+                            <p className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-1">$0</p>
                             <p className="text-sm text-gray-600 dark:text-gray-400">0 {t('admin', 'activeSubscriptions')}</p>
                         </div>
                     ))}
@@ -140,7 +140,7 @@ export default function StatisticsPage() {
                 <CardHeader title={t('admin', 'kycStatus')} />
                 {loading ? (
                     <div className="flex items-center justify-center py-12">
-                        <Loader2 className="w-8 h-8 text-purple-600 animate-spin" />
+                        <Loader2 className="w-8 h-8 text-primary-600 animate-spin" />
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -168,7 +168,7 @@ export default function StatisticsPage() {
                 <CardHeader title={t('admin', 'platformSummary')} />
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="text-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-                        <p className="text-2xl font-bold text-purple-600">{stats?.totalInstitutions || 0}</p>
+                        <p className="text-2xl font-bold text-primary-600">{stats?.totalInstitutions || 0}</p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">{t('admin', 'stats_card_institutions')}</p>
                     </div>
                     <div className="text-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">

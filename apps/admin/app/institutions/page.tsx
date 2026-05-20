@@ -92,7 +92,7 @@ export default function InstitutionsPage() {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                        <Building2 className="w-8 h-8 text-purple-600" />
+                        <Building2 className="w-8 h-8 text-primary-600" />
                         {t('nav', 'institutions')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
@@ -145,8 +145,8 @@ export default function InstitutionsPage() {
                         <Card key={institution.id} hover>
                             <div className="flex items-start justify-between mb-4">
                                 <div className="flex items-start gap-4">
-                                    <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl">
-                                        <Building2 className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                                    <div className="p-3 bg-purple-100 dark:bg-primary-900/30 rounded-xl">
+                                        <Building2 className="w-6 h-6 text-primary-600 dark:text-primary-400" />
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">

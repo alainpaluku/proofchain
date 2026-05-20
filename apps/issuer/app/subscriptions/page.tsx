@@ -48,7 +48,7 @@ export default function SubscriptionsPage() {
 
     const colorClasses: Record<string, { bg: string; text: string; button: string }> = {
         blue: { bg: 'bg-blue-50 dark:bg-blue-900/20', text: 'text-blue-600 dark:text-blue-400', button: 'bg-blue-600 hover:bg-blue-700' },
-        purple: { bg: 'bg-purple-50 dark:bg-purple-900/20', text: 'text-purple-600 dark:text-purple-400', button: 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700' },
+        purple: { bg: 'bg-primary-50 dark:bg-primary-900/20', text: 'text-primary-600 dark:text-primary-400', button: 'bg-primary-900 hover:bg-black' },
         indigo: { bg: 'bg-indigo-50 dark:bg-indigo-900/20', text: 'text-indigo-600 dark:text-indigo-400', button: 'bg-indigo-600 hover:bg-indigo-700' }
     };
 
@@ -57,7 +57,7 @@ export default function SubscriptionsPage() {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
             </div>
         );
     }
@@ -68,12 +68,12 @@ export default function SubscriptionsPage() {
                 <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">Choisissez votre plan</h1>
                 <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-4">Des solutions adaptées à vos besoins d'émission de diplômes</p>
                 <div className="inline-flex items-center gap-1 sm:gap-2 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl">
-                    <button onClick={() => setCurrency('USD')} className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-all text-sm sm:text-base ${currency === 'USD' ? 'bg-white dark:bg-gray-700 text-purple-600 dark:text-purple-400 shadow-md' : 'text-gray-600 dark:text-gray-400'}`}>USD ($)</button>
-                    <button onClick={() => setCurrency('CDF')} className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-all text-sm sm:text-base ${currency === 'CDF' ? 'bg-white dark:bg-gray-700 text-purple-600 dark:text-purple-400 shadow-md' : 'text-gray-600 dark:text-gray-400'}`}>FC</button>
+                    <button onClick={() => setCurrency('USD')} className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-all text-sm sm:text-base ${currency === 'USD' ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-md' : 'text-gray-600 dark:text-gray-400'}`}>USD ($)</button>
+                    <button onClick={() => setCurrency('CDF')} className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-all text-sm sm:text-base ${currency === 'CDF' ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-md' : 'text-gray-600 dark:text-gray-400'}`}>FC</button>
                 </div>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl p-4 sm:p-8 text-white">
+            <div className="bg-primary-950 rounded-2xl p-4 sm:p-8 text-white">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
                         <h2 className="text-xl sm:text-2xl font-bold mb-1">Plan actuel: {activePlan.name}</h2>
@@ -112,8 +112,8 @@ export default function SubscriptionsPage() {
                     const colors = colorClasses[plan.color] || colorClasses.blue;
                     const isCurrent = plan.id === currentPlan;
                     return (
-                        <div key={plan.id} className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg border-2 p-6 sm:p-8 ${plan.popular ? 'border-purple-500 dark:border-purple-600 md:scale-105' : 'border-gray-200 dark:border-gray-700'} ${isCurrent ? 'ring-4 ring-purple-200 dark:ring-purple-900/50' : ''}`}>
-                            {plan.popular && (<div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-bold rounded-full">POPULAIRE</div>)}
+                        <div key={plan.id} className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-sm border-2 p-6 sm:p-8 ${plan.popular ? 'border-purple-500 dark:border-primary-600 ' : 'border-gray-200 dark:border-gray-700'} ${isCurrent ? 'ring-4 ring-primary-200 dark:ring-primary-900/50' : ''}`}>
+                            {plan.popular && (<div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary-600 text-white text-xs font-bold rounded-full">POPULAIRE</div>)}
                             {isCurrent && (<div className="absolute -top-3 right-4 px-3 py-1 bg-green-600 text-white text-xs font-bold rounded-full">ACTUEL</div>)}
                             <div className={`inline-flex p-3 rounded-xl ${colors.bg} mb-4`}><plan.icon className={`w-6 h-6 sm:w-8 sm:h-8 ${colors.text}`} /></div>
                             <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">{plan.name}</h3>
@@ -130,7 +130,7 @@ export default function SubscriptionsPage() {
                                 ))}
                             </ul>
                             <button 
-                                className={`w-full py-3 ${colors.button} text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl ${isCurrent ? 'opacity-50 cursor-not-allowed' : ''}`} 
+                                className={`w-full py-3 ${colors.button} text-white rounded-xl font-semibold transition-all shadow-sm hover:shadow-sm ${isCurrent ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 disabled={isCurrent}
                             >
                                 {isCurrent ? 'Plan actuel' : plan.period ? 'Choisir ce plan' : 'Nous contacter'}
