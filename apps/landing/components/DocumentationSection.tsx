@@ -13,14 +13,14 @@ export default function DocumentationSection() {
     const handleDownloadGuide = () => {
         const link = document.createElement('a');
         link.href = '/docs/guide-utilisation.pdf';
-        link.download = 'Guide-Utilisation-Proofchains.pdf';
+        link.download = 'Guide-Utilisation-PROOFCHAINS.pdf';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     };
 
     return (
-        <section id="documentation" className="py-20 bg-auralis-surface dark:bg-auralis-inverse-surface">
+        <section id="documentation" className="py-20 bg-proofchains-surface dark:bg-proofchains-inverse-surface">
             <div className="container mx-auto px-4">
                 <div className="max-w-4xl mx-auto text-center">
                     {/* Header */}

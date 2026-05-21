@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Supabase Database Types
+ * PROOFCHAINS - Supabase Database Types
  * Types pour l'accès type-safe à la base de données
  */
 

@@ -24,7 +24,7 @@ export default function HomePage() {
         <div style={{ minHeight: '100vh', backgroundColor: '#f9fafb', padding: '20px' }}>
             <div style={{ maxWidth: '600px', margin: '0 auto' }}>
                 <h1 style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
-                    PROOFCHAIN Verifier
+                    PROOFCHAINS Verifier
                 </h1>
                 <p style={{ textAlign: 'center', color: '#666', marginBottom: '30px' }}>
                     Verifiez l authenticite d un diplome

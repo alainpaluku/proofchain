@@ -52,28 +52,28 @@ export function WalletSelector({ isOpen, onClose, onConnect }: WalletSelectorPro
                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
-                            <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant text-left shadow transition-all sm:my-8 sm:w-full sm:max-w-md">
+                            <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white dark:bg-proofchains-inverse-surface border border-proofchains-surface-highest dark:border-proofchains-on-surface-variant text-left shadow transition-all sm:my-8 sm:w-full sm:max-w-md">
                                 <div className="p-6">
                                     <div className="flex items-center justify-between mb-6">
-                                        <Dialog.Title as="h3" className="text-xl font-bold text-auralis-on-surface dark:text-white">
+                                        <Dialog.Title as="h3" className="text-xl font-bold text-proofchains-on-surface dark:text-white">
                                             Choisir un portefeuille
                                         </Dialog.Title>
                                         <button
                                             onClick={onClose}
-                                            className="rounded-full p-1 text-auralis-outline hover:bg-auralis-surface-container-low dark:hover:bg-white/5 transition-colors"
+                                            className="rounded-full p-1 text-proofchains-outline hover:bg-proofchains-surface-container-low dark:hover:bg-white/5 transition-colors"
                                         >
                                             <XMarkIcon className="w-6 h-6" />
                                         </button>
                                     </div>
 
-                                    {/* Tabs - Auralis Recessed Style */}
-                                    <div className="flex p-1 bg-auralis-surface-container-low dark:bg-black/20 rounded-xl mb-6">
+                                    {/* Tabs - PROOFCHAINS Recessed Style */}
+                                    <div className="flex p-1 bg-proofchains-surface-container-low dark:bg-black/20 rounded-xl mb-6">
                                         <button
                                             onClick={() => setSelectedTab('desktop')}
                                             className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold rounded-lg transition-all ${
                                                 selectedTab === 'desktop'
-                                                    ? 'bg-white dark:bg-auralis-inverse-surface text-primary-600 shadow-sm'
-                                                    : 'text-auralis-on-surface-variant dark:text-gray-400 hover:text-auralis-on-surface dark:hover:text-white'
+                                                    ? 'bg-white dark:bg-proofchains-inverse-surface text-primary-600 shadow-sm'
+                                                    : 'text-proofchains-on-surface-variant dark:text-gray-400 hover:text-proofchains-on-surface dark:hover:text-white'
                                             }`}
                                         >
                                             <ComputerDesktopIcon className="w-4 h-4" />
@@ -83,8 +83,8 @@ export function WalletSelector({ isOpen, onClose, onConnect }: WalletSelectorPro
                                             onClick={() => setSelectedTab('mobile')}
                                             className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold rounded-lg transition-all ${
                                                 selectedTab === 'mobile'
-                                                    ? 'bg-white dark:bg-auralis-inverse-surface text-primary-600 shadow-sm'
-                                                    : 'text-auralis-on-surface-variant dark:text-gray-400 hover:text-auralis-on-surface dark:hover:text-white'
+                                                    ? 'bg-white dark:bg-proofchains-inverse-surface text-primary-600 shadow-sm'
+                                                    : 'text-proofchains-on-surface-variant dark:text-gray-400 hover:text-proofchains-on-surface dark:hover:text-white'
                                             }`}
                                         >
                                             <DevicePhoneMobileIcon className="w-4 h-4" />
@@ -97,13 +97,13 @@ export function WalletSelector({ isOpen, onClose, onConnect }: WalletSelectorPro
                                             <button
                                                 key={wallet.id}
                                                 onClick={() => onConnect(wallet.id)}
-                                                className="w-full flex items-center justify-between p-4 rounded-xl border border-auralis-surface-highest dark:border-auralis-on-surface-variant hover:border-primary-500 hover:bg-primary-50/50 dark:hover:bg-primary-900/10 transition-all group"
+                                                className="w-full flex items-center justify-between p-4 rounded-xl border border-proofchains-surface-highest dark:border-proofchains-on-surface-variant hover:border-primary-500 hover:bg-primary-50/50 dark:hover:bg-primary-900/10 transition-all group"
                                             >
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-lg bg-white dark:bg-gray-800 p-2 border border-auralis-surface-highest dark:border-auralis-on-surface-variant group-hover:border-primary-200">
+                                                    <div className="w-10 h-10 rounded-lg bg-white dark:bg-gray-800 p-2 border border-proofchains-surface-highest dark:border-proofchains-on-surface-variant group-hover:border-primary-200">
                                                         <img src={wallet.icon} alt={wallet.name} className="w-full h-full object-contain" />
                                                     </div>
-                                                    <span className="font-bold text-auralis-on-surface dark:text-white">{wallet.name}</span>
+                                                    <span className="font-bold text-proofchains-on-surface dark:text-white">{wallet.name}</span>
                                                 </div>
                                                 <CheckCircleIcon className="w-5 h-5 text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             </button>

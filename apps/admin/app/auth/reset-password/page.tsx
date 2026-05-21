@@ -45,7 +45,7 @@ export default function ResetPasswordPage() {
 
     if (success) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-auralis-surface dark:bg-auralis-inverse-surface p-4">
+            <div className="min-h-screen flex items-center justify-center bg-proofchains-surface dark:bg-proofchains-inverse-surface p-4">
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8 max-w-md w-full text-center">
                     <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                         <CheckCircle className="w-8 h-8 text-green-600" />
@@ -58,7 +58,7 @@ export default function ResetPasswordPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-auralis-surface dark:bg-auralis-inverse-surface p-4">
+        <div className="min-h-screen flex items-center justify-center bg-proofchains-surface dark:bg-proofchains-inverse-surface p-4">
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8 max-w-md w-full">
                 <div className="text-center mb-8">
                     <div className="w-16 h-16 bg-purple-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">

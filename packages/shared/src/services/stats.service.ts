@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Stats Service
+ * PROOFCHAINS - Stats Service
  * Statistiques globales et par institution
  */
 

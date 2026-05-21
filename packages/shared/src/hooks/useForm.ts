@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Form Hook
+ * PROOFCHAINS - Form Hook
  * Hook générique pour gérer les formulaires
  */
 

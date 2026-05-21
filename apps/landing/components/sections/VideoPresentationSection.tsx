@@ -18,7 +18,7 @@ export function VideoPresentationSection() {
                 </div>
                 <div className="max-w-4xl mx-auto">
                     <div className="relative aspect-video rounded-2xl overflow-hidden shadow  border border-gray-200 dark:border-gray-800">
-                        <iframe className="w-full h-full" src="https://www.youtube.com/embed/WZUOnXIhghY" title="Présentation Proofchains" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+                        <iframe className="w-full h-full" src="https://www.youtube.com/embed/WZUOnXIhghY" title="Présentation PROOFCHAINS" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
                     </div>
                 </div>
             </div>

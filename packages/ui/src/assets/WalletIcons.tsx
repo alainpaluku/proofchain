@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Wallet Icons
+ * PROOFCHAINS - Wallet Icons
  * SVG icons for supported Cardano wallets
  */
 

@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Types
+ * PROOFCHAINS - Types
  * Re-export de tous les types
  */
 

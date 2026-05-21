@@ -6,7 +6,7 @@ export function FaqSection() {
     const { t } = useTranslation();
 
     const faqs = [
-        { question: t('landing', 'whatIsProofchains'), answer: t('landing', 'whatIsProofchainsAnswer') },
+        { question: t('landing', 'whatIsPROOFCHAINS'), answer: t('landing', 'whatIsPROOFCHAINSAnswer') },
         { question: t('landing', 'whatChallenges'), answer: t('landing', 'whatChallengesAnswer') },
         { question: t('landing', 'whyCardano'), answer: t('landing', 'whyCardanoAnswer') },
         { question: t('landing', 'whatValue'), answer: t('landing', 'whatValueAnswer') },

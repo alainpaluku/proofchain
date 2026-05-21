@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
-  "author": "PROOFCHAIN Team",
+  "author": "PROOFCHAINS Team",
   "description": "Cardano blockchain-based academic verification platform",
   "workspaces": [
     "apps/*",
@@ -27,6 +27,7 @@
     "deploy:admin:prod": "powershell -ExecutionPolicy Bypass -File scripts/deploy.ps1 -App admin -Production"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "buffer": "6.0.3",
     "turbo": "1.10.16",
     "typescript": "5.3.2"

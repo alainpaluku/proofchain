@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Global App Context
+ * PROOFCHAINS - Global App Context
  * Gestion d'état global avec Context API
  */
 

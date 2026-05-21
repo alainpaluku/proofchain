@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Student Service
+ * PROOFCHAINS - Student Service
  * Gestion des étudiants
  */
 

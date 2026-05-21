@@ -16,10 +16,10 @@ import DocumentationSection from '../components/DocumentationSection';
 import { CtaSection } from '../components/sections/CtaSection';
 import { Footer } from '../components/Footer';
 import { useTranslation } from '@proofchain/ui';
-import { ProofchainsLogo } from '../components/ProofchainsLogo';
+import { PROOFCHAINSLogo } from '../components/PROOFCHAINSLogo';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
-export default function ProofchainsPage() {
+export default function PROOFCHAINSPage() {
     const [mounted, setMounted] = useState(false);
     const { t } = useTranslation();
 
@@ -37,10 +37,10 @@ export default function ProofchainsPage() {
     const logo = (
         <div className="flex items-center gap-3 group">
             <div className="p-2 rounded-lg bg-primary-900 dark:bg-primary-600 transition-all duration-300">
-                <ProofchainsLogo size={24} className="text-white" />
+                <PROOFCHAINSLogo size={24} className="text-white" />
             </div>
-            <span className="text-xl font-bold text-auralis-on-surface dark:text-white tracking-tight">
-                AURALIS <span className="text-primary-600">SYSTEM</span> <span className="text-xs font-medium opacity-50">a proofchain</span>
+            <span className="text-xl font-bold text-proofchains-on-surface dark:text-white tracking-tight uppercase">
+                PROOFCHAINS
             </span>
         </div>
     );
@@ -56,7 +56,7 @@ export default function ProofchainsPage() {
     );
 
     return (
-        <div className="min-h-screen bg-auralis-surface dark:bg-auralis-inverse-surface text-auralis-on-surface dark:text-auralis-inverse-on-surface overflow-x-hidden">
+        <div className="min-h-screen bg-proofchains-surface dark:bg-proofchains-inverse-surface text-proofchains-on-surface dark:text-proofchains-inverse-on-surface overflow-x-hidden">
             <Navbar
                 logo={logo}
                 items={navItems}

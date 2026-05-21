@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Assets Index
+ * PROOFCHAINS - Assets Index
  * Export all logo and image assets
  */
 

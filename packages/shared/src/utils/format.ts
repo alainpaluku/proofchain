@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Format Utilities
+ * PROOFCHAINS - Format Utilities
  * Fonctions de formatage réutilisables
  */
 

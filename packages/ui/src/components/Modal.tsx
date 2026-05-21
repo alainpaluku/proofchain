@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN UI - Modal Component
+ * PROOFCHAINS UI - Modal Component
  * Composant modal réutilisable et accessible
  */
 

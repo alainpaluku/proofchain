@@ -306,7 +306,7 @@ export const translations = {
   // ============================================================================
   admin: {
     dashboardTitle: { fr: 'Tableau de bord', en: 'Dashboard' },
-    platformOverview: { fr: 'Vue d\'ensemble de la plateforme PROOFCHAIN', en: 'PROOFCHAIN platform overview' },
+    platformOverview: { fr: 'Vue d\'ensemble de la plateforme PROOFCHAINS', en: 'PROOFCHAINS platform overview' },
     registeredInstitutions: { fr: 'Institutions inscrites', en: 'Registered institutions' },
     pendingKYC: { fr: 'KYC en attente', en: 'Pending KYC' },
     issuedDiplomas: { fr: 'Diplômes émis', en: 'Diplomas issued' },
@@ -513,20 +513,20 @@ export const translations = {
     technicalInstitutesDesc: { fr: 'Brevets et qualifications', en: 'Patents and qualifications' },
     // Video section
     presentation: { fr: 'Présentation', en: 'Presentation' },
-    discoverInVideo: { fr: 'Découvrez Proofchains en vidéo', en: 'Discover Proofchains in video' },
+    discoverInVideo: { fr: 'Découvrez PROOFCHAINS en vidéo', en: 'Discover PROOFCHAINS in video' },
     videoDescription: { fr: 'Une présentation complète de notre solution de certification de diplômes sur la blockchain Cardano.', en: 'A complete presentation of our diploma certification solution on the Cardano blockchain.' },
     // FAQ
     faqTitle: { fr: 'Questions fréquentes', en: 'Frequently asked questions' },
-    whatIsProofchains: { fr: 'Qu\'est-ce que Proofchains ?', en: 'What is Proofchains?' },
-    whatIsProofchainsAnswer: { fr: 'Proofchains est une solution basée sur la blockchain Cardano, dont le principal objectif est de lutter contre la falsification des documents scolaires et académiques.', en: 'Proofchains is a solution based on the Cardano blockchain, whose main objective is to fight against the falsification of school and academic documents.' },
+    whatIsPROOFCHAINS: { fr: 'Qu\'est-ce que PROOFCHAINS ?', en: 'What is PROOFCHAINS?' },
+    whatIsPROOFCHAINSAnswer: { fr: 'PROOFCHAINS est une solution basée sur la blockchain Cardano, dont le principal objectif est de lutter contre la falsification des documents scolaires et académiques.', en: 'PROOFCHAINS is a solution based on the Cardano blockchain, whose main objective is to fight against the falsification of school and academic documents.' },
     whatChallenges: { fr: 'À quels défis répondez-vous ?', en: 'What challenges do you address?' },
-    whatChallengesAnswer: { fr: 'Proofchains répond au défi de la numérisation des documents scolaires et académiques afin de prévenir la perte et la falsification des supports physiques.', en: 'Proofchains addresses the challenge of digitizing school and academic documents to prevent loss and falsification of physical media.' },
+    whatChallengesAnswer: { fr: 'PROOFCHAINS répond au défi de la numérisation des documents scolaires et académiques afin de prévenir la perte et la falsification des supports physiques.', en: 'PROOFCHAINS addresses the challenge of digitizing school and academic documents to prevent loss and falsification of physical media.' },
     whyCardano: { fr: 'Pourquoi la blockchain Cardano ?', en: 'Why the Cardano blockchain?' },
     whyCardanoAnswer: { fr: 'Nous avons choisi la blockchain Cardano car c\'est l\'une des plus décentralisées au monde. Grâce à elle, nous enregistrons chaque document comme un actif numérique unique (NFT) sur un registre immuable et infalsifiable.', en: 'We chose the Cardano blockchain because it is one of the most decentralized in the world. Thanks to it, we record each document as a unique digital asset (NFT) on an immutable and unforgeable ledger.' },
     whatValue: { fr: 'Quelle est la valeur ajoutée pour l\'utilisateur ?', en: 'What is the added value for the user?' },
     whatValueAnswer: { fr: 'Pour l\'étudiant : une garantie de sécurité et d\'accès à ses documents, même en cas de perte physique. Pour l\'employeur : la possibilité de vérifier rapidement et avec certitude l\'authenticité d\'un document.', en: 'For the student: a guarantee of security and access to their documents, even in case of physical loss. For the employer: the ability to quickly and certainly verify the authenticity of a document.' },
     localImpact: { fr: 'Quel est l\'impact local de votre solution ?', en: 'What is the local impact of your solution?' },
-    localImpactAnswer: { fr: 'En RD Congo, Proofchains permet aux étudiants de conserver leurs diplômes même en cas de destruction des archives scolaires. Notre solution garantit l\'accès permanent aux documents académiques et facilite leur vérification par les employeurs.', en: 'In DR Congo, Proofchains allows students to keep their diplomas even if school archives are destroyed. Our solution guarantees permanent access to academic documents and facilitates their verification by employers.' },
+    localImpactAnswer: { fr: 'En RD Congo, PROOFCHAINS permet aux étudiants de conserver leurs diplômes même en cas de destruction des archives scolaires. Notre solution garantit l\'accès permanent aux documents académiques et facilite leur vérification par les employeurs.', en: 'In DR Congo, PROOFCHAINS allows students to keep their diplomas even if school archives are destroyed. Our solution guarantees permanent access to academic documents and facilitates their verification by employers.' },
     // Video section (Demo)
     demo: { fr: 'Démonstration', en: 'Demo' },
     seeInAction: { fr: 'Voir l\'application en action', en: 'See the application in action' },
@@ -553,12 +553,12 @@ export const translations = {
 
     // Solution section
     theSolution: { fr: 'La solution', en: 'The solution' },
-    howItSolves: { fr: 'Comment Proofchains résout ce problème', en: 'How Proofchains solves this problem' },
+    howItSolves: { fr: 'Comment PROOFCHAINS résout ce problème', en: 'How PROOFCHAINS solves this problem' },
     solutionDesc: { fr: 'Chaque diplôme devient un NFT unique sur Cardano, avec une preuve cryptographique impossible à falsifier.', en: 'Each diploma becomes a unique NFT on Cardano, with cryptographic proof impossible to forge.' },
 
     // For Who section
     stakeholderSolution: { fr: 'Une solution pour tous les acteurs', en: 'A solution for all stakeholders' },
-    stakeholderDesc: { fr: 'Proofchains s\'adresse à l\'ensemble de l\'écosystème éducatif et professionnel.', en: 'Proofchains addresses the entire educational and professional ecosystem.' },
+    stakeholderDesc: { fr: 'PROOFCHAINS s\'adresse à l\'ensemble de l\'écosystème éducatif et professionnel.', en: 'PROOFCHAINS addresses the entire educational and professional ecosystem.' },
 
     // How it works
     howItWorks: { fr: 'Comment ça marche ?', en: 'How does it work?' },
@@ -586,8 +586,8 @@ export const translations = {
     issuancePlatform: { fr: 'Plateforme d\'émission', en: 'Issuance platform' },
     reservedFor: { fr: 'Réservé aux institutions éducatives', en: 'Reserved for educational institutions' },
     reservedDesc: { 
-      fr: 'L\'émission de diplômes sur Proofchains est exclusivement réservée aux établissements d\'enseignement accrédités : universités, écoles, centres de formation et instituts techniques.', 
-      en: 'Diploma issuance on Proofchains is exclusively reserved for accredited educational institutions: universities, schools, training centers and technical institutes.' 
+      fr: 'L\'émission de diplômes sur PROOFCHAINS est exclusivement réservée aux établissements d\'enseignement accrédités : universités, écoles, centres de formation et instituts techniques.',
+      en: 'Diploma issuance on PROOFCHAINS is exclusively reserved for accredited educational institutions: universities, schools, training centers and technical institutes.'
     },
     areYouInstitution: { fr: 'Vous êtes une institution éducative ?', en: 'Are you an educational institution?' },
     accessPlatformDesc: { 
@@ -605,10 +605,10 @@ export const translations = {
     // Documentation section
     documentation: { fr: 'Documentation', en: 'Documentation' },
     userGuide: { fr: 'Guide d\'utilisation', en: 'User Guide' },
-    userGuideTitle: { fr: 'Guide d\'utilisation Proofchains', en: 'Proofchains User Guide' },
+    userGuideTitle: { fr: 'Guide d\'utilisation PROOFCHAINS', en: 'PROOFCHAINS User Guide' },
     userGuideDesc: { 
-      fr: 'Consultez notre guide complet pour apprendre à utiliser la plateforme Proofchains. Découvrez comment émettre, gérer et vérifier des diplômes sur la blockchain Cardano.', 
-      en: 'Consult our comprehensive guide to learn how to use the Proofchains platform. Discover how to issue, manage and verify diplomas on the Cardano blockchain.' 
+      fr: 'Consultez notre guide complet pour apprendre à utiliser la plateforme PROOFCHAINS. Découvrez comment émettre, gérer et vérifier des diplômes sur la blockchain Cardano.',
+      en: 'Consult our comprehensive guide to learn how to use the PROOFCHAINS platform. Discover how to issue, manage and verify diplomas on the Cardano blockchain.'
     },
     readGuide: { fr: 'Lire le guide', en: 'Read Guide' },
     downloadGuide: { fr: 'Télécharger le PDF', en: 'Download PDF' },

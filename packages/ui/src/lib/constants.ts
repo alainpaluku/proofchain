@@ -1,5 +1,5 @@
 /**
- * Shared UI Constants for PROOFCHAIN
+ * Shared UI Constants for PROOFCHAINS
  */
 
 export const Z_INDEX = {

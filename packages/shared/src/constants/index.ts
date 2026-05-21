@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Constants
+ * PROOFCHAINS - Constants
  * Constantes globales de l'application
  */
 

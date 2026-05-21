@@ -41,7 +41,7 @@ export function HowItWorksSection() {
                         <p className="text-gray-600 dark:text-gray-400 mb-6">
                             {t('landing', 'startIssuing')}
                         </p>
-                        <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl transition-all duration-300 shadow-sm  hover: ">
+                        <a href="https://issuer.PROOFCHAINS.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl transition-all duration-300 shadow-sm  hover: ">
                             <Building2 className="w-5 h-5" />
                             {t('landing', 'accessIssuerPlatform')}
                             <ArrowRight className="w-5 h-5" />

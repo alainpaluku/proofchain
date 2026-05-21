@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN UI - Logo Component
+ * PROOFCHAINS UI - Logo Component
  * Composant logo réutilisable pour toutes les apps
  */
 
@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { ProofchainLogoSVG } from '../assets/ProofchainLogo';
 
 export interface LogoProps {
-    /** Sous-titre affiché sous PROOFCHAIN (ex: "Verifier", "Issuer", "Admin") */
+    /** Sous-titre affiché sous PROOFCHAINS (ex: "Verifier", "Issuer", "Admin") */
     subtitle?: string;
     /** URL de redirection au clic (défaut: "/") */
     href?: string;

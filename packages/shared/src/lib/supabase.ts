@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Supabase Client
+ * PROOFCHAINS - Supabase Client
  * Client Supabase pour l'accès à la base de données
  */
 

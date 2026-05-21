@@ -21,7 +21,7 @@ export function UserMenu({ user, onSignOut, onProfileClick, onSettingsClick }: U
 
     return (
         <Menu as="div" className="relative">
-            <Menu.Button className="flex items-center gap-2 p-1 rounded-full hover:bg-auralis-surface-container-low dark:hover:bg-white/5 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500">
+            <Menu.Button className="flex items-center gap-2 p-1 rounded-full hover:bg-proofchains-surface-container-low dark:hover:bg-white/5 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500">
                 <div className="w-9 h-9 rounded-full bg-primary-900 flex items-center justify-center text-white text-sm font-bold shadow-sm border border-white/10">
                     {user.avatar ? (
                         <img src={user.avatar} alt={user.name || user.email} className="w-full h-full rounded-full object-cover" />
@@ -30,10 +30,10 @@ export function UserMenu({ user, onSignOut, onProfileClick, onSettingsClick }: U
                     )}
                 </div>
                 <div className="hidden sm:block text-left mr-1">
-                    <p className="text-sm font-bold text-auralis-on-surface dark:text-white leading-tight">{user.name}</p>
-                    <p className="text-[10px] label-caps text-auralis-on-surface-variant dark:text-gray-400">Admin</p>
+                    <p className="text-sm font-bold text-proofchains-on-surface dark:text-white leading-tight">{user.name}</p>
+                    <p className="text-[10px] label-caps text-proofchains-on-surface-variant dark:text-gray-400">Admin</p>
                 </div>
-                <ChevronDownIcon className="w-4 h-4 text-auralis-outline" />
+                <ChevronDownIcon className="w-4 h-4 text-proofchains-outline" />
             </Menu.Button>
 
             <Transition
@@ -45,10 +45,10 @@ export function UserMenu({ user, onSignOut, onProfileClick, onSettingsClick }: U
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant rounded-xl shadow py-2 z-50 focus:outline-none">
-                    <div className="px-4 py-3 border-b border-auralis-surface-highest dark:border-auralis-on-surface-variant mb-1">
-                        <p className="text-xs label-caps text-auralis-on-surface-variant dark:text-gray-500 mb-1">Connecté en tant que</p>
-                        <p className="text-sm font-bold text-auralis-on-surface dark:text-white truncate">{user.email}</p>
+                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right bg-white dark:bg-proofchains-inverse-surface border border-proofchains-surface-highest dark:border-proofchains-on-surface-variant rounded-xl shadow py-2 z-50 focus:outline-none">
+                    <div className="px-4 py-3 border-b border-proofchains-surface-highest dark:border-proofchains-on-surface-variant mb-1">
+                        <p className="text-xs label-caps text-proofchains-on-surface-variant dark:text-gray-500 mb-1">Connecté en tant que</p>
+                        <p className="text-sm font-bold text-proofchains-on-surface dark:text-white truncate">{user.email}</p>
                     </div>
 
                     <Menu.Item>
@@ -56,7 +56,7 @@ export function UserMenu({ user, onSignOut, onProfileClick, onSettingsClick }: U
                             <button
                                 onClick={onProfileClick}
                                 className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
-                                    active ? 'bg-auralis-surface-container-low dark:bg-white/5 text-primary-600 dark:text-primary-400' : 'text-auralis-on-surface dark:text-gray-300'
+                                    active ? 'bg-proofchains-surface-container-low dark:bg-white/5 text-primary-600 dark:text-primary-400' : 'text-proofchains-on-surface dark:text-gray-300'
                                 }`}
                             >
                                 <UserIcon className="w-5 h-5 opacity-60" />
@@ -70,7 +70,7 @@ export function UserMenu({ user, onSignOut, onProfileClick, onSettingsClick }: U
                             <button
                                 onClick={onSettingsClick}
                                 className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
-                                    active ? 'bg-auralis-surface-container-low dark:bg-white/5 text-primary-600 dark:text-primary-400' : 'text-auralis-on-surface dark:text-gray-300'
+                                    active ? 'bg-proofchains-surface-container-low dark:bg-white/5 text-primary-600 dark:text-primary-400' : 'text-proofchains-on-surface dark:text-gray-300'
                                 }`}
                             >
                                 <Cog8ToothIcon className="w-5 h-5 opacity-60" />
@@ -79,7 +79,7 @@ export function UserMenu({ user, onSignOut, onProfileClick, onSettingsClick }: U
                         )}
                     </Menu.Item>
 
-                    <div className="my-1 border-t border-auralis-surface-highest dark:border-auralis-on-surface-variant" />
+                    <div className="my-1 border-t border-proofchains-surface-highest dark:border-proofchains-on-surface-variant" />
 
                     <Menu.Item>
                         {({ active }) => (

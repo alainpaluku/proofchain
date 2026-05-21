@@ -4,8 +4,8 @@ import { AuthWrapper } from '../components/AuthWrapper';
 import { ThemeScript, LanguageProvider } from '@proofchain/ui';
 
 export const metadata: Metadata = {
-    title: 'PROOFCHAIN Admin',
-    description: 'Administration platform for PROOFCHAIN',
+    title: 'PROOFCHAINS Admin',
+    description: 'Administration platform for PROOFCHAINS',
     manifest: '/manifest.json',
     themeColor: '#6ecaff',
     viewport: {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     appleWebApp: {
         capable: true,
         statusBarStyle: 'default',
-        title: 'PROOFCHAIN Admin',
+        title: 'PROOFCHAINS Admin',
     },
 };
 

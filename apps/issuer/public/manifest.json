@@ -1,7 +1,7 @@
 {
-    "name": "PROOFCHAIN Issuer",
-    "short_name": "PROOFCHAIN",
-    "description": "Issue academic diplomas as NFTs on Cardano",
+    "name": "PROOFCHAINS Issuer",
+    "short_name": "PROOFCHAINS",
+    "description": "Educational institutions portal for PROOFCHAINS",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#1a1a2e",

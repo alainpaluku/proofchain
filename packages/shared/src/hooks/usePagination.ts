@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Pagination Hook
+ * PROOFCHAINS - Pagination Hook
  * Hook pour gérer la pagination
  */
 

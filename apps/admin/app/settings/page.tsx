@@ -15,7 +15,7 @@ export default function SettingsPage() {
     const [stats, setStats] = useState({ totalInstitutions: 0, pendingKYC: 0, approvedKYC: 0, totalDocuments: 0 });
     
     const [settings, setSettings] = useState({
-        platformName: 'PROOFCHAIN',
+        platformName: 'PROOFCHAINS',
         adminEmail: '',
         supportEmail: '',
         notifications: { newInstitution: true, kycSubmission: true, newSubscription: true, systemAlerts: true },

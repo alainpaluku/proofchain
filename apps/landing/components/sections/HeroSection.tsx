@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, ExternalLink, Search, FileCheck, Building2, ArrowRight, Play, Github } from 'lucide-react';
 import { useTranslation } from '@proofchain/ui';
-import { ProofchainsLogo } from '../ProofchainsLogo';
+import { PROOFCHAINSLogo } from '../PROOFCHAINSLogo';
 import { useRouter } from 'next/navigation';
 
 export function HeroSection() {
@@ -35,7 +35,7 @@ export function HeroSection() {
                     </div>
 
                     <div className="flex justify-center mb-10">
-                        <ProofchainsLogo size={120} className="text-primary-400" />
+                        <PROOFCHAINSLogo size={120} className="text-primary-400" />
                     </div>
 
                     <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-8 tracking-tight">
@@ -85,7 +85,7 @@ export function HeroSection() {
 
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-sm ">
+                        <a href="https://issuer.PROOFCHAINS.org/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-sm ">
                             <Building2 className="w-5 h-5" />
                             {t('landing', 'accessIssuerPlatform')}
                             <ArrowRight className="w-5 h-5" />
@@ -95,7 +95,7 @@ export function HeroSection() {
                             {t('landing', 'discover')}
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </a>
-                        <a href="https://github.com/alainpaluku/proofchains" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10">
+                        <a href="https://github.com/alainpaluku/PROOFCHAINS" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 border border-white/10">
                             <Github className="w-5 h-5" /> {t('landing', 'sourceCode')}
                         </a>
                     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Github } from 'lucide-react';
 import { useTranslation } from '@proofchain/ui';
-import { ProofchainsLogo } from './ProofchainsLogo';
+import { PROOFCHAINSLogo } from './PROOFCHAINSLogo';
 
 export function Footer() {
     const { t } = useTranslation();
@@ -12,7 +12,7 @@ export function Footer() {
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-primary-900/50 rounded-2xl">
-                            <ProofchainsLogo size={24} className="text-cyan-400" />
+                            <PROOFCHAINSLogo size={24} className="text-cyan-400" />
                         </div>
                         <span className="font-bold text-lg">PROOF<span className="text-cyan-400">CHAINS</span></span>
                     </div>
@@ -23,9 +23,9 @@ export function Footer() {
                         </a>
                     </div>
                     <p className="text-gray-400 text-sm text-center">
-                        © 2024 Proofchains. {t('landing', 'projectDesc')}
+                        © 2024 PROOFCHAINS. {t('landing', 'projectDesc')}
                     </p>
-                    <a href="https://github.com/alainpaluku/proofchains" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                    <a href="https://github.com/alainpaluku/PROOFCHAINS" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
                         <Github className="w-5 h-5" />
                         <span className="text-sm">GitHub</span>
                     </a>

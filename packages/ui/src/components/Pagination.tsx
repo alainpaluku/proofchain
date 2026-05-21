@@ -63,10 +63,10 @@ export function Pagination({
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="p-2 rounded-lg border border-auralis-outline-variant dark:border-auralis-on-surface-variant hover:bg-auralis-surface-container-low dark:hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                className="p-2 rounded-lg border border-proofchains-outline-variant dark:border-proofchains-on-surface-variant hover:bg-proofchains-surface-container-low dark:hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                 aria-label="Page précédente"
             >
-                <ChevronLeftIcon className="w-5 h-5 text-auralis-on-surface dark:text-gray-300" />
+                <ChevronLeftIcon className="w-5 h-5 text-proofchains-on-surface dark:text-gray-300" />
             </button>
 
             {/* Page numbers */}
@@ -76,7 +76,7 @@ export function Pagination({
                         return (
                             <span
                                 key={`ellipsis-${index}`}
-                                className="w-10 text-center text-auralis-outline"
+                                className="w-10 text-center text-proofchains-outline"
                             >
                                 ...
                             </span>
@@ -93,7 +93,7 @@ export function Pagination({
                             className={`min-w-[40px] px-3 py-2 rounded-lg font-bold transition-all ${
                                 isActive
                                     ? 'bg-primary-900 dark:bg-primary-600 text-white shadow-sm'
-                                    : 'border border-auralis-outline-variant dark:border-auralis-on-surface-variant text-auralis-on-surface dark:text-gray-300 hover:bg-auralis-surface-container-low dark:hover:bg-white/5'
+                                    : 'border border-proofchains-outline-variant dark:border-proofchains-on-surface-variant text-proofchains-on-surface dark:text-gray-300 hover:bg-proofchains-surface-container-low dark:hover:bg-white/5'
                             }`}
                             aria-label={`Page ${pageNum}`}
                             aria-current={isActive ? 'page' : undefined}
@@ -108,10 +108,10 @@ export function Pagination({
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-lg border border-auralis-outline-variant dark:border-auralis-on-surface-variant hover:bg-auralis-surface-container-low dark:hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                className="p-2 rounded-lg border border-proofchains-outline-variant dark:border-proofchains-on-surface-variant hover:bg-proofchains-surface-container-low dark:hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                 aria-label="Page suivante"
             >
-                <ChevronRightIcon className="w-5 h-5 text-auralis-on-surface dark:text-gray-300" />
+                <ChevronRightIcon className="w-5 h-5 text-proofchains-on-surface dark:text-gray-300" />
             </button>
         </div>
     );

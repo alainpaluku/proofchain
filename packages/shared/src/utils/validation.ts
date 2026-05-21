@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Validation Utilities
+ * PROOFCHAINS - Validation Utilities
  * Fonctions de validation réutilisables
  */
 

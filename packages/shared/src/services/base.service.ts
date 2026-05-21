@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Base Service
+ * PROOFCHAINS - Base Service
  * Utilitaires communs pour tous les services Supabase
  */
 

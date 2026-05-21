@@ -1,6 +1,6 @@
 /**
- * PROOFCHAIN - Institution Card Component
- * Display diploma/NFT information with Auralis System style
+ * PROOFCHAINS - Institution Card Component
+ * Display diploma/NFT information with PROOFCHAINS style
  */
 
 'use client';
@@ -69,10 +69,10 @@ export function InstitutionCard({
             <div className="p-6 space-y-5">
                 {/* Student name or Document ID */}
                 <div>
-                    <h3 className="text-xl font-bold text-auralis-on-surface dark:text-white leading-tight mb-1">
+                    <h3 className="text-xl font-bold text-proofchains-on-surface dark:text-white leading-tight mb-1">
                         {data.studentName || 'Document Vérifié'}
                     </h3>
-                    <div className="flex items-center gap-1.5 text-auralis-on-surface-variant dark:text-gray-400">
+                    <div className="flex items-center gap-1.5 text-proofchains-on-surface-variant dark:text-gray-400">
                         <DocumentTextIcon className="w-4 h-4 opacity-50" />
                         <span className="text-xs font-mono">{data.studentId || data.documentId}</span>
                     </div>
@@ -81,37 +81,37 @@ export function InstitutionCard({
                 {/* Degree info with clean typography */}
                 <div className="space-y-3">
                     {data.degree && (
-                        <div className="flex items-center gap-3 text-auralis-on-surface dark:text-gray-200">
+                        <div className="flex items-center gap-3 text-proofchains-on-surface dark:text-gray-200">
                             <AcademicCapIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                             <span className="text-sm font-semibold">{data.degree}</span>
                         </div>
                     )}
 
                     {data.field && (
-                        <div className="flex items-center gap-3 text-auralis-on-surface-variant dark:text-gray-300">
-                            <TrophyIcon className="w-5 h-5 text-auralis-outline" />
+                        <div className="flex items-center gap-3 text-proofchains-on-surface-variant dark:text-gray-300">
+                            <TrophyIcon className="w-5 h-5 text-proofchains-outline" />
                             <span className="text-sm">{data.field}</span>
                         </div>
                     )}
 
                     {data.institution && (
-                        <div className="flex items-center gap-3 text-auralis-on-surface-variant dark:text-gray-300">
-                            <BuildingLibraryIcon className="w-5 h-5 text-auralis-outline" />
+                        <div className="flex items-center gap-3 text-proofchains-on-surface-variant dark:text-gray-300">
+                            <BuildingLibraryIcon className="w-5 h-5 text-proofchains-outline" />
                             <span className="text-sm">{data.institution}</span>
                         </div>
                     )}
 
                     {data.graduationDate && (
-                        <div className="flex items-center gap-3 text-auralis-on-surface-variant dark:text-gray-400">
-                            <CalendarIcon className="w-5 h-5 text-auralis-outline" />
+                        <div className="flex items-center gap-3 text-proofchains-on-surface-variant dark:text-gray-400">
+                            <CalendarIcon className="w-5 h-5 text-proofchains-outline" />
                             <span className="text-xs font-medium">{new Date(data.graduationDate).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                         </div>
                     )}
                 </div>
 
-                {/* Transaction link with Auralis editorial style */}
+                {/* Transaction link with PROOFCHAINS editorial style */}
                 {txHash && (
-                    <div className="pt-4 border-t border-auralis-surface-highest dark:border-auralis-on-surface-variant">
+                    <div className="pt-4 border-t border-proofchains-surface-highest dark:border-proofchains-on-surface-variant">
                         <a
                             href={`${explorerUrl}/transaction/${txHash}`}
                             target="_blank"
@@ -127,7 +127,7 @@ export function InstitutionCard({
 
                 {/* Asset ID footer */}
                 {assetId && (
-                    <div className="text-[10px] text-auralis-outline font-mono truncate bg-auralis-surface-container-low dark:bg-black/20 p-2 rounded border border-auralis-surface-highest/50">
+                    <div className="text-[10px] text-proofchains-outline font-mono truncate bg-proofchains-surface-container-low dark:bg-black/20 p-2 rounded border border-proofchains-surface-highest/50">
                         ASSET: {assetId}
                     </div>
                 )}

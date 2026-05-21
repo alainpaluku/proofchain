@@ -1,6 +1,6 @@
 /**
- * PROOFCHAIN - Sidebar Navigation Component
- * Auralis System - Recessed style with Heroicons
+ * PROOFCHAINS - Sidebar Navigation Component
+ * PROOFCHAINS - Recessed style with Heroicons
  */
 
 'use client';
@@ -43,7 +43,7 @@ export function Sidebar({
         <aside
             className={`
                 ${collapsed ? 'w-20' : 'w-64'} 
-                h-screen bg-auralis-surface-container-low dark:bg-auralis-inverse-surface border-r border-auralis-surface-highest dark:border-auralis-on-surface-variant
+                h-screen bg-proofchains-surface-container-low dark:bg-proofchains-inverse-surface border-r border-proofchains-surface-highest dark:border-proofchains-on-surface-variant
                 flex flex-col fixed left-0 top-0 z-40 transition-all duration-300
                 ${className}
             `}
@@ -52,7 +52,7 @@ export function Sidebar({
             {logo && (
                 <div className={`
                     ${collapsed ? 'p-4' : 'p-8'}
-                    border-b border-auralis-surface-highest dark:border-auralis-on-surface-variant
+                    border-b border-proofchains-surface-highest dark:border-proofchains-on-surface-variant
                     transition-all duration-300
                     ${collapsed ? 'flex justify-center' : ''}
                 `}>
@@ -76,12 +76,12 @@ export function Sidebar({
                                 px-4 py-3 rounded-lg transition-all duration-200
                                 ${isActive
                                     ? 'bg-primary-900 dark:bg-primary-600 text-white shadow-sm font-bold'
-                                    : 'text-auralis-on-surface-variant dark:text-gray-400 hover:bg-auralis-surface-container dark:hover:bg-white/5 hover:text-auralis-on-surface dark:hover:text-white'
+                                    : 'text-proofchains-on-surface-variant dark:text-gray-400 hover:bg-proofchains-surface-container dark:hover:bg-white/5 hover:text-proofchains-on-surface dark:hover:text-white'
                                 }
                             `}
                             title={collapsed ? item.label : undefined}
                         >
-                            <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-auralis-outline'}`} />
+                            <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-proofchains-outline'}`} />
                             {!collapsed && (
                                 <>
                                     <span className="flex-1 truncate">{item.label}</span>
@@ -99,7 +99,7 @@ export function Sidebar({
 
             {/* Footer with tonal border */}
             {footer && !collapsed && (
-                <div className="p-6 border-t border-auralis-surface-highest dark:border-auralis-on-surface-variant bg-auralis-surface-container-low dark:bg-auralis-inverse-surface">
+                <div className="p-6 border-t border-proofchains-surface-highest dark:border-proofchains-on-surface-variant bg-proofchains-surface-container-low dark:bg-proofchains-inverse-surface">
                     {footer}
                 </div>
             )}

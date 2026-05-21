@@ -97,7 +97,7 @@ export function AuthForm({
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-auralis-surface dark:bg-auralis-inverse-surface p-4">
+        <div className="min-h-screen flex items-center justify-center bg-proofchains-surface dark:bg-proofchains-inverse-surface p-4">
             <div className="w-full max-w-md">
                 {/* Logo */}
                 {logo && (
@@ -106,14 +106,14 @@ export function AuthForm({
                     </div>
                 )}
 
-                {/* Auralis Card */}
+                {/* PROOFCHAINS Card */}
                 <Card variant="default" padding="xl" className="shadow-sm">
                     {/* Header */}
                     <div className="text-center mb-10">
-                        <h1 className="text-3xl font-bold text-auralis-on-surface dark:text-white mb-3">
+                        <h1 className="text-3xl font-bold text-proofchains-on-surface dark:text-white mb-3">
                             {getTitle()}
                         </h1>
-                        <p className="body-md text-auralis-on-surface-variant dark:text-gray-400">
+                        <p className="body-md text-proofchains-on-surface-variant dark:text-gray-400">
                             {getSubtitle()}
                         </p>
                     </div>
@@ -139,18 +139,18 @@ export function AuthForm({
                         {/* Name Field (Register only) */}
                         {mode === 'register' && (
                             <div>
-                                <label htmlFor="name" className="label-caps block text-auralis-on-surface-variant dark:text-gray-300 mb-2.5">
+                                <label htmlFor="name" className="label-caps block text-proofchains-on-surface-variant dark:text-gray-300 mb-2.5">
                                     {t('common', 'name')}
                                 </label>
                                 <div className="relative group">
-                                    <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-auralis-outline group-focus-within:text-primary-600 transition-colors" />
+                                    <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-proofchains-outline group-focus-within:text-primary-600 transition-colors" />
                                     <input
                                         id="name"
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         placeholder={t('auth', 'namePlaceholder')}
-                                        className="w-full pl-12 pr-4 py-3 bg-auralis-surface-container-low dark:bg-white/5 border border-auralis-outline-variant dark:border-auralis-on-surface-variant rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-auralis-on-surface dark:text-white placeholder-auralis-outline"
+                                        className="w-full pl-12 pr-4 py-3 bg-proofchains-surface-container-low dark:bg-white/5 border border-proofchains-outline-variant dark:border-proofchains-on-surface-variant rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-proofchains-on-surface dark:text-white placeholder-proofchains-outline"
                                     />
                                 </div>
                             </div>
@@ -158,11 +158,11 @@ export function AuthForm({
 
                         {/* Email Field */}
                         <div>
-                            <label htmlFor="email" className="label-caps block text-auralis-on-surface-variant dark:text-gray-300 mb-2.5">
+                            <label htmlFor="email" className="label-caps block text-proofchains-on-surface-variant dark:text-gray-300 mb-2.5">
                                 {t('common', 'email')}
                             </label>
                             <div className="relative group">
-                                <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-auralis-outline group-focus-within:text-primary-600 transition-colors" />
+                                <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-proofchains-outline group-focus-within:text-primary-600 transition-colors" />
                                 <input
                                     id="email"
                                     type="email"
@@ -170,7 +170,7 @@ export function AuthForm({
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder={t('auth', 'emailPlaceholder')}
                                     required
-                                    className="w-full pl-12 pr-4 py-3 bg-auralis-surface-container-low dark:bg-white/5 border border-auralis-outline-variant dark:border-auralis-on-surface-variant rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-auralis-on-surface dark:text-white placeholder-auralis-outline"
+                                    className="w-full pl-12 pr-4 py-3 bg-proofchains-surface-container-low dark:bg-white/5 border border-proofchains-outline-variant dark:border-proofchains-on-surface-variant rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-proofchains-on-surface dark:text-white placeholder-proofchains-outline"
                                 />
                             </div>
                         </div>
@@ -178,11 +178,11 @@ export function AuthForm({
                         {/* Password Field (Not for forgot-password) */}
                         {mode !== 'forgot-password' && (
                             <div>
-                                <label htmlFor="password" className="label-caps block text-auralis-on-surface-variant dark:text-gray-300 mb-2.5">
+                                <label htmlFor="password" className="label-caps block text-proofchains-on-surface-variant dark:text-gray-300 mb-2.5">
                                     {t('auth', 'password')}
                                 </label>
                                 <div className="relative group">
-                                    <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-auralis-outline group-focus-within:text-primary-600 transition-colors" />
+                                    <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-proofchains-outline group-focus-within:text-primary-600 transition-colors" />
                                     <input
                                         id="password"
                                         type={showPassword ? 'text' : 'password'}
@@ -191,12 +191,12 @@ export function AuthForm({
                                         placeholder="••••••••"
                                         required
                                         minLength={6}
-                                        className="w-full pl-12 pr-12 py-3 bg-auralis-surface-container-low dark:bg-white/5 border border-auralis-outline-variant dark:border-auralis-on-surface-variant rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-auralis-on-surface dark:text-white placeholder-auralis-outline"
+                                        className="w-full pl-12 pr-12 py-3 bg-proofchains-surface-container-low dark:bg-white/5 border border-proofchains-outline-variant dark:border-proofchains-on-surface-variant rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-proofchains-on-surface dark:text-white placeholder-proofchains-outline"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-auralis-outline hover:text-auralis-on-surface dark:hover:text-white transition-colors"
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-proofchains-outline hover:text-proofchains-on-surface dark:hover:text-white transition-colors"
                                         aria-label={showPassword ? t('common', 'hide') : t('common', 'show')}
                                     >
                                         {showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
@@ -234,7 +234,7 @@ export function AuthForm({
 
                     {/* Mode Switch */}
                     <div className="mt-8 text-center text-sm">
-                        <span className="text-auralis-on-surface-variant dark:text-gray-400">
+                        <span className="text-proofchains-on-surface-variant dark:text-gray-400">
                             {mode === 'login' && `${t('auth', 'noAccount')} `}
                             {mode === 'register' && `${t('auth', 'alreadyRegistered')} `}
                             {mode === 'forgot-password' && `${t('auth', 'backTo')} `}

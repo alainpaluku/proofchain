@@ -3,8 +3,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Auralis System Colors
-        auralis: {
+        // PROOFCHAINS Brand Colors
+        proofchains: {
+          // Light Theme (Soft Industrial / Warm Neutral)
           surface: '#F7F7F5',
           'surface-dim': '#E7E7E4',
           'surface-bright': '#FFFFFF',
@@ -19,10 +20,17 @@ module.exports = {
           'outline-variant': '#c4c7c7',
           background: '#fdf8f8',
           'on-background': '#1c1b1b',
-          'inverse-surface': '#313030',
-          'inverse-on-surface': '#f4f0ef',
-          'surface-variant': '#e5e2e1',
-          'surface-tint': '#5f5e5e',
+
+          // Dark Theme (Deep Industrial / Inspired by reference)
+          'inverse-surface': '#0B0F14', // Deep background
+          'inverse-on-surface': '#F7F7F5',
+          'surface-variant': '#111820', // Card background in dark mode
+          'surface-tint': '#2563eb',
+
+          // Semantic mappings for harmonization
+          'dark-border': 'rgba(255, 255, 255, 0.1)',
+          'dark-card': '#111820',
+          'dark-bg': '#0B0F14',
         },
         primary: {
           // Enterprise Blue palette
@@ -37,7 +45,7 @@ module.exports = {
           800: '#1e40af',
           900: '#1e3a8a',
           950: '#0f172a',
-          DEFAULT: '#2563eb',
+          DEFAULT: '#3b82f6',
         },
         secondary: {
           DEFAULT: '#5e5e5e',
@@ -70,8 +78,8 @@ module.exports = {
         'DEFAULT': '0.5rem',
         'md': '0.75rem',
         'lg': '1rem',
-        'xl': '1.5rem',
-        '2xl': '1.75rem', // For the 28px mentioned
+        'xl': '1.5rem', // 24px
+        '2xl': '1.75rem', // 28px
       },
       spacing: {
         'max-width': '1280px',

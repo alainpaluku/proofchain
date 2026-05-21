@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Media Query Hook
+ * PROOFCHAINS - Media Query Hook
  * Hook pour détecter les media queries
  */
 

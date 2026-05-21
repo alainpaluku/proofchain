@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Shared Package
+ * PROOFCHAINS - Shared Package
  * Exports centralisés pour toutes les applications
  */
 
