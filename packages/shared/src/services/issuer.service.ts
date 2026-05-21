@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Issuer Service
+ * PROOFCHAINS - Issuer Service
  * Gestion de l'institution de l'utilisateur connecté
  */
 

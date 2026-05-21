@@ -1,5 +1,5 @@
 -- ============================================================================
--- PROOFCHAIN - Complete Database Schema
+-- PROOFCHAINS - Complete Database Schema
 -- Supabase PostgreSQL Schema for Academic Document Verification Platform
 -- Version: 2.0 - Consolidated
 -- ============================================================================

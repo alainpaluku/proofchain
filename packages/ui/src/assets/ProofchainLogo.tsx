@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Logo SVG Component
+ * PROOFCHAINS - Logo SVG Component
  * Logo vectoriel optimisé pour React
  */
 

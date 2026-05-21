@@ -22,7 +22,7 @@ export function CtaSection() {
                         <Search className="w-5 h-5" />
                         {t('landing', 'verifyDiploma')}
                     </a>
-                    <a href="https://github.com/alainpaluku/proofchains" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-2xl hover:bg-white/20 transition-all duration-300 border border-white/20 flex items-center justify-center gap-2">
+                    <a href="https://github.com/alainpaluku/PROOFCHAINS" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-2xl hover:bg-white/20 transition-all duration-300 border border-white/20 flex items-center justify-center gap-2">
                         <Github className="w-5 h-5" />
                         {t('landing', 'sourceCode')}
                     </a>

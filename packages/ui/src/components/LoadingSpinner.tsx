@@ -1,6 +1,6 @@
 /**
- * PROOFCHAIN UI - Loading Spinner Component
- * Auralis System - Precision loading state
+ * PROOFCHAINS UI - Loading Spinner Component
+ * PROOFCHAINS - Precision loading state
  */
 
 import React from 'react';
@@ -29,7 +29,7 @@ export function LoadingSpinner({
     const colorClasses = {
         primary: 'text-primary-600 dark:text-primary-400',
         white: 'text-white',
-        gray: 'text-auralis-outline',
+        gray: 'text-proofchains-outline',
     };
 
     const spinner = (
@@ -40,7 +40,7 @@ export function LoadingSpinner({
                 aria-label="Chargement"
             />
             {message && (
-                <p className="label-caps text-auralis-on-surface-variant dark:text-gray-400 ">
+                <p className="label-caps text-proofchains-on-surface-variant dark:text-gray-400 ">
                     {message}
                 </p>
             )}
@@ -49,7 +49,7 @@ export function LoadingSpinner({
 
     if (fullScreen) {
         return (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-auralis-surface/80 dark:bg-auralis-inverse-surface/80 backdrop-blur-md">
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-proofchains-surface/80 dark:bg-proofchains-inverse-surface/80 backdrop-blur-md">
                 {spinner}
             </div>
         );

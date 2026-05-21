@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Lucid Initialization
+ * PROOFCHAINS - Lucid Initialization
  * Initialize Lucid with Blockfrost provider for Cardano Preprod
  */
 

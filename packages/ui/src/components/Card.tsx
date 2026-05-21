@@ -1,6 +1,6 @@
 /**
- * PROOFCHAIN UI - Card Component
- * Auralis System - Tonal Layering style
+ * PROOFCHAINS UI - Card Component
+ * PROOFCHAINS - Tonal Layering style
  */
 
 import React from 'react';
@@ -22,17 +22,17 @@ export function Card({
     hover = false,
     onClick
 }: CardProps) {
-    const baseClasses = 'rounded-xl transition-all duration-300'; // xl is 1.5rem / 24px as per Auralis
+    const baseClasses = 'rounded-xl transition-all duration-300'; // xl is 1.5rem / 24px as per PROOFCHAINS
     
     const variantClasses = {
         // White cards (#FCFCFB / White) represent the highest interactive surface level.
         // Must have a 1px border of #E7E7E4
-        default: 'bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant',
+        default: 'bg-white dark:bg-proofchains-surface-variant border border-proofchains-surface-highest dark:border-white/10',
         // Recessed Layer: Panels (#F3F2EF) which are used for sidebars, secondary navigation, or groupings.
         // These should appear "cut into" the base.
-        recessed: 'bg-auralis-surface-container-low dark:bg-black/20 border border-transparent',
-        // Elevated: White cards with slight depth (though Auralis favors borders, we can add a subtle glow)
-        elevated: 'bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest shadow-sm',
+        recessed: 'bg-proofchains-surface-container-low dark:bg-black/40 border border-transparent',
+        // Elevated: White cards with slight depth (though PROOFCHAINS favors borders, we can add a subtle glow)
+        elevated: 'bg-white dark:bg-proofchains-surface-variant border border-proofchains-surface-highest dark:border-white/10 shadow-sm',
         primary: 'bg-primary-600 text-white'
     };
     
@@ -69,16 +69,16 @@ export function CardHeader({ icon: Icon, iconColor = 'text-primary-600', title, 
         <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
                 {Icon && (
-                    <div className={`p-2.5 rounded-lg bg-auralis-surface-container-low dark:bg-white/5 ${iconColor}`}>
+                    <div className={`p-2.5 rounded-lg bg-proofchains-surface-container-low dark:bg-white/5 ${iconColor}`}>
                         <Icon className="w-6 h-6" />
                     </div>
                 )}
                 <div>
-                    <h3 className="text-xl font-bold text-auralis-on-surface dark:text-white leading-tight">
+                    <h3 className="text-xl font-bold text-proofchains-on-surface dark:text-white leading-tight">
                         {title}
                     </h3>
                     {subtitle && (
-                        <p className="text-sm text-auralis-on-surface-variant dark:text-gray-400 mt-1">
+                        <p className="text-sm text-proofchains-on-surface-variant dark:text-gray-400 mt-1">
                             {subtitle}
                         </p>
                     )}
@@ -111,10 +111,10 @@ export function StatCard({ icon: Icon, iconBgClass = 'bg-primary-50 dark:bg-prim
                     </span>
                 )}
             </div>
-            <h3 className="text-3xl font-bold text-auralis-on-surface dark:text-white mb-1">
+            <h3 className="text-3xl font-bold text-proofchains-on-surface dark:text-white mb-1">
                 {value}
             </h3>
-            <p className="label-caps text-auralis-on-surface-variant dark:text-gray-400">
+            <p className="label-caps text-proofchains-on-surface-variant dark:text-gray-400">
                 {label}
             </p>
         </Card>
@@ -131,13 +131,13 @@ export interface EmptyStateProps {
 export function EmptyState({ icon: Icon, title, description, action }: EmptyStateProps) {
     return (
         <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-            <div className="w-16 h-16 bg-auralis-surface-container-low dark:bg-white/5 rounded-2xl flex items-center justify-center mb-6">
-                <Icon className="w-8 h-8 text-auralis-outline" />
+            <div className="w-16 h-16 bg-proofchains-surface-container-low dark:bg-white/5 rounded-2xl flex items-center justify-center mb-6">
+                <Icon className="w-8 h-8 text-proofchains-outline" />
             </div>
-            <h3 className="text-xl font-bold text-auralis-on-surface dark:text-white mb-2">
+            <h3 className="text-xl font-bold text-proofchains-on-surface dark:text-white mb-2">
                 {title}
             </h3>
-            <p className="text-auralis-on-surface-variant dark:text-gray-400 max-w-sm mb-8">
+            <p className="text-proofchains-on-surface-variant dark:text-gray-400 max-w-sm mb-8">
                 {description}
             </p>
             {action}

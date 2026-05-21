@@ -1,6 +1,6 @@
 /**
- * PROOFCHAIN UI - Button Component
- * Auralis System - Precision tools style
+ * PROOFCHAINS UI - Button Component
+ * PROOFCHAINS - Precision tools style
  */
 
 import React from 'react';
@@ -28,16 +28,16 @@ export function Button({
 }: ButtonProps) {
     const baseClasses = 'inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900';
 
-    // Auralis: Interactive elements use a tighter radius (8px-12px)
+    // PROOFCHAINS: Interactive elements use a tighter radius (8px-12px)
     const roundedClass = 'rounded-lg'; // 8px
     
     const variantClasses = {
         // Primary buttons are solid #111111 (mapped to primary-900/black) with #FCFCFB text
         primary: 'bg-primary-900 dark:bg-primary-600 text-white hover:bg-black dark:hover:bg-primary-500 ',
         // Secondary buttons use #E7E7E4 (surface-highest) border with no fill or subtle fill
-        secondary: 'bg-auralis-surface-container-high dark:bg-auralis-inverse-surface hover:bg-auralis-surface-highest dark:hover:bg-gray-700 text-auralis-on-surface dark:text-white',
-        outline: 'border border-auralis-outline-variant dark:border-auralis-on-surface-variant hover:bg-auralis-surface-container-low dark:hover:bg-white/5 text-auralis-on-surface dark:text-white',
-        ghost: 'hover:bg-auralis-surface-container-low dark:hover:bg-white/5 text-auralis-on-surface-variant dark:text-gray-300',
+        secondary: 'bg-proofchains-surface-container-high dark:bg-proofchains-surface-variant hover:bg-proofchains-surface-highest dark:hover:bg-white/10 text-proofchains-on-surface dark:text-white',
+        outline: 'border border-proofchains-outline-variant dark:border-white/10 hover:bg-proofchains-surface-container-low dark:hover:bg-white/5 text-proofchains-on-surface dark:text-white',
+        ghost: 'hover:bg-proofchains-surface-container-low dark:hover:bg-white/5 text-proofchains-on-surface-variant dark:text-gray-300',
         danger: 'bg-error dark:bg-red-600 text-white hover:bg-red-700 '
     };
     

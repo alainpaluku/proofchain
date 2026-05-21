@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Wallet Connection Hook
+ * PROOFCHAINS - Wallet Connection Hook
  * Supports Eternl and Lace wallets (desktop + mobile)
  */
 

@@ -1,7 +1,7 @@
 {
-    "name": "PROOFCHAIN Admin",
-    "short_name": "PROOFCHAIN",
-    "description": "Admin panel for PROOFCHAIN platform",
+    "name": "PROOFCHAINS Admin",
+    "short_name": "PROOFCHAINS",
+    "description": "Admin panel for PROOFCHAINS platform",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#1a1a2e",

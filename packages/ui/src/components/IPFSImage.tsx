@@ -55,12 +55,12 @@ export function IPFSImage({
 
     if (loadState === 'error') {
         return (
-            <div className={`flex flex-col items-center justify-center bg-auralis-surface-container-low dark:bg-black/20 p-8 rounded-xl border border-auralis-surface-highest dark:border-auralis-on-surface-variant ${className}`}>
-                <PhotoIcon className="w-16 h-16 text-auralis-outline opacity-30 mb-4" />
-                <p className="text-auralis-on-surface dark:text-white font-bold text-center mb-1">
+            <div className={`flex flex-col items-center justify-center bg-proofchains-surface-container-low dark:bg-black/20 p-8 rounded-xl border border-proofchains-surface-highest dark:border-proofchains-on-surface-variant ${className}`}>
+                <PhotoIcon className="w-16 h-16 text-proofchains-outline opacity-30 mb-4" />
+                <p className="text-proofchains-on-surface dark:text-white font-bold text-center mb-1">
                     {fallbackText || 'Image non disponible'}
                 </p>
-                <p className="text-xs text-auralis-on-surface-variant dark:text-gray-500 text-center mb-6">
+                <p className="text-xs text-proofchains-on-surface-variant dark:text-gray-500 text-center mb-6">
                     L'image pourrait être en cours de chargement sur IPFS
                 </p>
                 <button
@@ -75,12 +75,12 @@ export function IPFSImage({
     }
 
     return (
-        <div className={`relative overflow-hidden rounded-xl bg-auralis-surface-container-low dark:bg-black/20 ${className}`}>
+        <div className={`relative overflow-hidden rounded-xl bg-proofchains-surface-container-low dark:bg-black/20 ${className}`}>
             {loadState === 'loading' && (
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="flex flex-col items-center gap-4">
                         <ArrowPathIcon className="w-10 h-10 text-primary-600 animate-spin" />
-                        <p className="label-caps text-auralis-on-surface-variant dark:text-gray-500">
+                        <p className="label-caps text-proofchains-on-surface-variant dark:text-gray-500">
                             IPFS LOAD...
                         </p>
                     </div>

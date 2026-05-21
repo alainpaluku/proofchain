@@ -14,7 +14,7 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <div className="w-10 h-10 rounded-lg bg-auralis-surface-container-low dark:bg-white/5 border border-auralis-surface-highest dark:border-auralis-on-surface-variant " />;
+    return <div className="w-10 h-10 rounded-lg bg-proofchains-surface-container-low dark:bg-white/5 border border-proofchains-surface-highest dark:border-proofchains-on-surface-variant " />;
   }
 
   const themes = [
@@ -28,7 +28,7 @@ export function ThemeToggle() {
   return (
     <Menu as="div" className="relative">
       <Menu.Button
-        className="flex items-center justify-center w-10 h-10 rounded-lg bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant text-auralis-on-surface dark:text-white hover:bg-auralis-surface-container-low dark:hover:bg-white/5 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+        className="flex items-center justify-center w-10 h-10 rounded-lg bg-white dark:bg-proofchains-inverse-surface border border-proofchains-surface-highest dark:border-proofchains-on-surface-variant text-proofchains-on-surface dark:text-white hover:bg-proofchains-surface-container-low dark:hover:bg-white/5 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
         aria-label="Changer le thème"
       >
         <CurrentIcon className="w-5 h-5" />
@@ -43,14 +43,14 @@ export function ThemeToggle() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant rounded-xl shadow py-1.5 z-50 focus:outline-none">
+        <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white dark:bg-proofchains-inverse-surface border border-proofchains-surface-highest dark:border-proofchains-on-surface-variant rounded-xl shadow py-1.5 z-50 focus:outline-none">
           {themes.map((t) => (
             <Menu.Item key={t.id}>
               {({ active }) => (
                 <button
                   onClick={() => setTheme(t.id as any)}
                   className={`w-full flex items-center justify-between px-3 py-2 text-sm font-semibold transition-colors ${
-                    active ? 'bg-auralis-surface-container-low dark:bg-white/5 text-primary-600 dark:text-primary-400' : 'text-auralis-on-surface dark:text-gray-300'
+                    active ? 'bg-proofchains-surface-container-low dark:bg-white/5 text-primary-600 dark:text-primary-400' : 'text-proofchains-on-surface dark:text-gray-300'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">

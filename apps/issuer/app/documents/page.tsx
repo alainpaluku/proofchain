@@ -29,7 +29,7 @@ export default function DocumentsPage() {
     const [revokeReason, setRevokeReason] = useState('');
     const [revoking, setRevoking] = useState(false);
 
-    const landingUrl = process.env.NEXT_PUBLIC_LANDING_URL || 'https://proofchains.org';
+    const landingUrl = process.env.NEXT_PUBLIC_LANDING_URL || 'https://PROOFCHAINS.org';
     const explorerUrl = process.env.NEXT_PUBLIC_CARDANO_EXPLORER || 'https://preprod.cardanoscan.io';
 
     const loadData = useCallback(async () => {

@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Document Service
+ * PROOFCHAINS - Document Service
  * Gestion des documents/diplômes
  */
 

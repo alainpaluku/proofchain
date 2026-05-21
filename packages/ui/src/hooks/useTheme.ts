@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Theme Hook
+ * PROOFCHAINS - Theme Hook
  * Manage light/dark theme
  */
 

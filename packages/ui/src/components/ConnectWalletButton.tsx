@@ -91,8 +91,8 @@ export function ConnectWalletButton({
         <>
             <div className={`flex items-center gap-2 ${className}`}>
                 {connected && showBalance && balance && (
-                    <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-auralis-surface-container-low dark:bg-white/5 rounded-lg border border-auralis-outline-variant dark:border-auralis-on-surface-variant">
-                        <span className="text-sm font-semibold text-auralis-on-surface dark:text-white">{balance} ₳</span>
+                    <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-proofchains-surface-container-low dark:bg-white/5 rounded-lg border border-proofchains-outline-variant dark:border-proofchains-on-surface-variant">
+                        <span className="text-sm font-semibold text-proofchains-on-surface dark:text-white">{balance} ₳</span>
                     </div>
                 )}
 

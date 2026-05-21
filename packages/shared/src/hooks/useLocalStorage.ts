@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - LocalStorage Hook
+ * PROOFCHAINS - LocalStorage Hook
  * Hook pour gérer le localStorage avec type safety
  */
 

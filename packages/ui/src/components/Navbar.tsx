@@ -1,6 +1,6 @@
 /**
- * PROOFCHAIN - Navbar Component
- * Auralis System - Clean & Centered navigation
+ * PROOFCHAINS - Navbar Component
+ * PROOFCHAINS - Clean & Centered navigation
  */
 
 'use client';
@@ -38,7 +38,7 @@ export function Navbar({ logo, items, action }: NavbarProps) {
         <nav
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                 scrolled
-                    ? 'bg-white/80 dark:bg-auralis-inverse-surface/80 backdrop-blur-md py-3 shadow-sm border-b border-auralis-surface-highest dark:border-auralis-on-surface-variant'
+                    ? 'bg-white/90 dark:bg-proofchains-inverse-surface/90 backdrop-blur-md py-3 shadow-sm border-b border-proofchains-surface-highest dark:border-white/10'
                     : 'bg-transparent py-5'
             }`}
         >
@@ -55,14 +55,14 @@ export function Navbar({ logo, items, action }: NavbarProps) {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className="text-sm font-bold text-auralis-on-surface-variant dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                                className="text-sm font-bold text-proofchains-on-surface-variant dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                             >
                                 {item.label}
                             </Link>
                         ))}
                     </div>
 
-                    <div className="flex items-center gap-4 pl-6 border-l border-auralis-surface-highest dark:border-auralis-on-surface-variant">
+                    <div className="flex items-center gap-4 pl-6 border-l border-proofchains-surface-highest dark:border-white/10">
                         <LanguageSelector />
                         <ThemeToggle />
                         {action && <div className="ml-2">{action}</div>}
@@ -71,7 +71,7 @@ export function Navbar({ logo, items, action }: NavbarProps) {
 
                 {/* Mobile Toggle */}
                 <button
-                    className="md:hidden p-2 text-auralis-on-surface dark:text-white"
+                    className="md:hidden p-2 text-proofchains-on-surface dark:text-white"
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     {isOpen ? <XMarkIcon className="w-6 h-6" /> : <Bars3Icon className="w-6 h-6" />}
@@ -80,26 +80,26 @@ export function Navbar({ logo, items, action }: NavbarProps) {
 
             {/* Mobile Menu */}
             {isOpen && (
-                <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-auralis-inverse-surface border-b border-auralis-surface-highest dark:border-auralis-on-surface-variant p-6 space-y-6 animate-in slide-in-from-top duration-300">
+                <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-proofchains-inverse-surface border-b border-proofchains-surface-highest dark:border-proofchains-on-surface-variant p-6 space-y-6 animate-in slide-in-from-top duration-300">
                     <div className="flex flex-col gap-4">
                         {items.map((item) => (
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className="text-lg font-bold text-auralis-on-surface dark:text-white"
+                                className="text-lg font-bold text-proofchains-on-surface dark:text-white"
                                 onClick={() => setIsOpen(false)}
                             >
                                 {item.label}
                             </Link>
                         ))}
                     </div>
-                    <div className="flex flex-col gap-4 pt-6 border-t border-auralis-surface-highest dark:border-auralis-on-surface-variant">
+                    <div className="flex flex-col gap-4 pt-6 border-t border-proofchains-surface-highest dark:border-proofchains-on-surface-variant">
                         <div className="flex items-center justify-between">
-                            <span className="label-caps text-auralis-on-surface-variant">Langue</span>
+                            <span className="label-caps text-proofchains-on-surface-variant">Langue</span>
                             <LanguageSelector />
                         </div>
                         <div className="flex items-center justify-between">
-                            <span className="label-caps text-auralis-on-surface-variant">Thème</span>
+                            <span className="label-caps text-proofchains-on-surface-variant">Thème</span>
                             <ThemeToggle />
                         </div>
                         {action && <div className="pt-2">{action}</div>}

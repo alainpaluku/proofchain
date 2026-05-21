@@ -1,6 +1,6 @@
 # @proofchain/ui
 
-Package de composants UI partagés pour les applications PROOFCHAIN.
+Package de composants UI partagés pour les applications PROOFCHAINS.
 
 ## Installation
 
@@ -137,4 +137,4 @@ import { getStorageItem, setStorageItem } from '@proofchain/ui';
 
 ## License
 
-Propriétaire - PROOFCHAIN
+Propriétaire - PROOFCHAINS

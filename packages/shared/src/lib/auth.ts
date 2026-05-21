@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Authentication par Email/Mot de passe via Supabase
+ * PROOFCHAINS - Authentication par Email/Mot de passe via Supabase
  */
 
 import { getSupabaseClient, isSupabaseConfigured } from './supabase';
@@ -38,7 +38,7 @@ export async function signUp(email: string, password: string, name?: string): Pr
     // Determine redirect URL based on environment
     const redirectUrl = typeof window !== 'undefined' 
         ? window.location.origin 
-        : process.env.NEXT_PUBLIC_ISSUER_URL || 'https://issuer.proofchains.org';
+        : process.env.NEXT_PUBLIC_ISSUER_URL || 'https://issuer.PROOFCHAINS.org';
 
     const supabase = getSupabaseClient();
     const { error } = await supabase.auth.signUp({

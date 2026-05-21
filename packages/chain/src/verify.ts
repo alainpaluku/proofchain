@@ -1,10 +1,10 @@
 /**
- * PROOFCHAIN - NFT Verification
+ * PROOFCHAINS - NFT Verification
  * Verify diploma authenticity using Blockfrost API
  */
 
 /**
- * PROOFCHAIN - NFT Verification
+ * PROOFCHAINS - NFT Verification
  * Verify diploma authenticity using Blockfrost API (Fetch implementation)
  */
 
@@ -91,7 +91,7 @@ export async function verifyNFT(assetId: string): Promise<VerificationResult> {
                 documentHash: metadata.documentHash || '',
                 // New format fields
                 documentId: metadata.documentId || '',
-                platform: metadata.platform || 'PROOFCHAIN',
+                platform: metadata.platform || 'PROOFCHAINS',
                 version: metadata.version || '1.0',
                 verifyUrl: metadata.verifyUrl || '',
             },

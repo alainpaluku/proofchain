@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN UI - Form Field Components
+ * PROOFCHAINS UI - Form Field Components
  * Composants de formulaire réutilisables
  */
 

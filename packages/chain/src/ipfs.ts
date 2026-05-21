@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - IPFS Upload Utility
+ * PROOFCHAINS - IPFS Upload Utility
  * Upload diploma documents to IPFS via Pinata
  */
 
@@ -78,7 +78,7 @@ export async function uploadMetadataToIPFS(metadata: any): Promise<IPFSUploadRes
                 pinataMetadata: {
                     name: 'diploma-metadata.json',
                     keyvalues: {
-                        project: 'PROOFCHAIN',
+                        project: 'PROOFCHAINS',
                         type: 'metadata',
                     }
                 },

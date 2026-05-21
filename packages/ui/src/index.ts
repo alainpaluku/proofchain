@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - UI Package Index
+ * PROOFCHAINS - UI Package Index
  */
 
 // Components

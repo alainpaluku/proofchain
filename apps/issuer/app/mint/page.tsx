@@ -38,7 +38,7 @@ type IPFSResult = {
 };
 
 // URL de base pour la vérification
-const LANDING_URL = process.env.NEXT_PUBLIC_LANDING_URL || 'https://proofchains.org';
+const LANDING_URL = process.env.NEXT_PUBLIC_LANDING_URL || 'https://PROOFCHAINS.org';
 
 export default function MintPage() {
     const { t } = useTranslation();
@@ -222,13 +222,13 @@ export default function MintPage() {
             const verifyUrl = `${LANDING_URL}/verify/${document.document_id}`;
             
             const metadata = {
-                name: `PROOFCHAIN Diploma - ${document.document_id}`,
+                name: `PROOFCHAINS Diploma - ${document.document_id}`,
                 image: imageUpload.url!,
                 mediaType: imageFile.type === 'image/png' ? 'image/png' : 'image/jpeg',
-                description: `Academic credential verified by PROOFCHAIN. Verify at: ${verifyUrl}`,
+                description: `Academic credential verified by PROOFCHAINS. Verify at: ${verifyUrl}`,
                 attributes: {
                     documentId: document.document_id,
-                    platform: 'PROOFCHAIN',
+                    platform: 'PROOFCHAINS',
                     version: '2.0',
                     verifyUrl: verifyUrl,
                 },

@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Async Hook
+ * PROOFCHAINS - Async Hook
  * Hook générique pour gérer les opérations asynchrones
  */
 

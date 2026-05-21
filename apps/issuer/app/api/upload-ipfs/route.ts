@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN Issuer - IPFS Upload API Route
+ * PROOFCHAINS Issuer - IPFS Upload API Route
  * Handles file uploads to IPFS via Pinata on the server side
  * This keeps the JWT secret secure
  */
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
         const metadata = JSON.stringify({
             name: file.name,
             keyvalues: {
-                project: 'PROOFCHAIN',
+                project: 'PROOFCHAINS',
                 type: file.type,
             }
         });

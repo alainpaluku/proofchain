@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - NFT Minting Function
+ * PROOFCHAINS - NFT Minting Function
  * Real implementation using Lucid for Cardano Preprod
  * 
  * This is the CORE function for diploma NFT creation

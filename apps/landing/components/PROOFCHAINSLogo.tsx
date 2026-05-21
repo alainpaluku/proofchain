@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function ProofchainsLogo({ size = 32, className = '' }: { size?: number; className?: string }) {
+export function PROOFCHAINSLogo({ size = 32, className = '' }: { size?: number; className?: string }) {
     const width = size;
     const height = (size * 1116) / 1011;
     return (

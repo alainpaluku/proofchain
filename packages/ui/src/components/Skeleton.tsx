@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN UI - Skeleton Component
+ * PROOFCHAINS UI - Skeleton Component
  * Composant de chargement skeleton
  */
 

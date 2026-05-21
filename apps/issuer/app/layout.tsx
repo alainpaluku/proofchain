@@ -4,7 +4,7 @@ import { AuthWrapper } from '../components/AuthWrapper';
 import { ThemeScript, LanguageProvider } from '@proofchain/ui';
 
 export const metadata: Metadata = {
-    title: 'PROOFCHAIN Issuer',
+    title: 'PROOFCHAINS Issuer',
     description: 'Issue academic diplomas as NFTs on Cardano',
     manifest: '/manifest.json',
     themeColor: '#6ecaff',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     appleWebApp: {
         capable: true,
         statusBarStyle: 'default',
-        title: 'PROOFCHAIN Issuer',
+        title: 'PROOFCHAINS Issuer',
     },
 };
 

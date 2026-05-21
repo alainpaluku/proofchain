@@ -1,6 +1,6 @@
 # @proofchain/shared
 
-Package partagé contenant les utilitaires, hooks, types et services communs à toutes les applications PROOFCHAIN.
+Package partagé contenant les utilitaires, hooks, types et services communs à toutes les applications PROOFCHAINS.
 
 ## 📦 Contenu
 

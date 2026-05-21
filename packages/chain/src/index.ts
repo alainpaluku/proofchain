@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Chain Package Index
+ * PROOFCHAINS - Chain Package Index
  * Export all blockchain utilities
  */
 

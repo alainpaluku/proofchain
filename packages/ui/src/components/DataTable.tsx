@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN UI - DataTable Component
+ * PROOFCHAINS UI - DataTable Component
  * Composant de tableau réutilisable avec tri, pagination et recherche
  */
 

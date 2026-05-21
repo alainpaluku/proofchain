@@ -13,7 +13,7 @@ export function FeaturesSection() {
     ];
 
     return (
-        <section id="features" className="py-24 bg-white dark:bg-auralis-inverse-surface">
+        <section id="features" className="py-24 bg-white dark:bg-proofchains-inverse-surface">
             <div className="container mx-auto px-4 lg:px-8">
                 <div className="text-center mb-16">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full text-sm font-medium mb-6">
@@ -29,7 +29,7 @@ export function FeaturesSection() {
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {features.map((f, i) => (
-                        <div key={i} className="group relative bg-auralis-surface-container-low dark:bg-white/5 rounded-2xl p-8 hover:shadow-sm transition-all duration-500  border border-auralis-surface-highest dark:border-auralis-on-surface-variant">
+                        <div key={i} className="group relative bg-proofchains-surface-container-low dark:bg-white/5 rounded-2xl p-8 hover:shadow-sm transition-all duration-500  border border-proofchains-surface-highest dark:border-proofchains-on-surface-variant">
                             <div className={`w-14 h-14 ${f.color} rounded-2xl flex items-center justify-center mb-6 shadow-sm  transition-transform duration-300`}>
                                 <f.icon className="w-7 h-7 text-white" />
                             </div>

@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Debounce Callback Hook
+ * PROOFCHAINS - Debounce Callback Hook
  * Hook pour debouncer les fonctions
  */
 

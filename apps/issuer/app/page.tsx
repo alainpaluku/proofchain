@@ -1,5 +1,5 @@
 'use client';
-// Issuer Dashboard - Proofchains v1.0
+// Issuer Dashboard - PROOFCHAINS v1.0
 import React, { useEffect, useState } from 'react';
 import { Coins, Users, FileCheck, Award, Clock, ExternalLink, QrCode } from 'lucide-react';
 import Link from 'next/link';
@@ -87,7 +87,7 @@ export default function HomePage() {
         }
     ];
 
-    const landingUrl = process.env.NEXT_PUBLIC_LANDING_URL || 'https://proofchains.org';
+    const landingUrl = process.env.NEXT_PUBLIC_LANDING_URL || 'https://PROOFCHAINS.org';
     const explorerUrl = process.env.NEXT_PUBLIC_CARDANO_EXPLORER || 'https://preprod.cardanoscan.io';
 
     return (

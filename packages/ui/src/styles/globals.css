@@ -89,11 +89,11 @@ body {
         padding-bottom: env(safe-area-inset-bottom);
     }
 
-    .auralis-panel {
+    .PROOFCHAINS-panel {
         @apply bg-[#f1edec] dark:bg-[#313030];
     }
 
-    .auralis-card {
+    .PROOFCHAINS-card {
         @apply bg-white dark:bg-[#3d3c3c] border border-[#e5e2e1] dark:border-[#444748];
     }
 }

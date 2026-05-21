@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Debounce Hook
+ * PROOFCHAINS - Debounce Hook
  * Hook pour debouncer les valeurs (utile pour search)
  */
 

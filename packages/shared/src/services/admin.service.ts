@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Admin Service
+ * PROOFCHAINS - Admin Service
  * Gestion des institutions et validation KYC (admin uniquement)
  */
 

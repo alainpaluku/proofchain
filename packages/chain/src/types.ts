@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN - Blockchain Types
+ * PROOFCHAINS - Blockchain Types
  * Type definitions for Cardano NFT operations
  * 
  * IMPORTANT: Les données sensibles (nom étudiant, etc.) sont stockées dans Supabase
@@ -20,7 +20,7 @@ export interface DiplomaMetadata {
     // Référence vers Supabase - SEULE donnée sensible stockée
     attributes: {
         documentId: string;      // ID unique du document dans Supabase (ex: CD-UN-000E-02032024-0000A00)
-        platform: string;        // "PROOFCHAIN"
+        platform: string;        // "PROOFCHAINS"
         version: string;         // Version du format
         verifyUrl: string;       // URL de vérification
     };

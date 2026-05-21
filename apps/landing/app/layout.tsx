@@ -3,8 +3,8 @@ import { LanguageProvider, ThemeScript } from '@proofchain/ui';
 import './globals.css';
 
 export const metadata: Metadata = {
-    title: 'AURALIS SYSTEM - Certification Académique sur Blockchain Cardano',
-    description: 'Auralis System est la plateforme leader pour l\'émission et la vérification de diplômes numériques infalsifiables sur la blockchain Cardano. Sécurisez vos parcours académiques avec la technologie NFT.',
+    title: 'PROOFCHAINS - Certification Académique sur Blockchain Cardano',
+    description: 'PROOFCHAINS est la plateforme leader pour l\'émission et la vérification de diplômes numériques infalsifiables sur la blockchain Cardano. Sécurisez vos parcours académiques avec la technologie NFT.',
     keywords: ['blockchain', 'cardano', 'diplôme numérique', 'certification académique', 'NFT', 'vérification diplôme', 'RD Congo', 'éducation'],
     themeColor: '#0f172a',
     viewport: {
@@ -12,11 +12,11 @@ export const metadata: Metadata = {
         initialScale: 1,
     },
     openGraph: {
-        title: 'AURALIS SYSTEM - Certification Académique sur Blockchain',
+        title: 'PROOFCHAINS - Certification Académique sur Blockchain',
         description: 'Émettez et vérifiez des diplômes infalsifiables sur Cardano.',
         type: 'website',
         locale: 'fr_FR',
-        siteName: 'Auralis System',
+        siteName: 'PROOFCHAINS',
     }
 };
 

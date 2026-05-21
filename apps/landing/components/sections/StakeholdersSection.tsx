@@ -12,7 +12,7 @@ export function StakeholdersSection() {
     ];
 
     return (
-        <section id="pourqui" className="py-24 bg-white dark:bg-auralis-inverse-surface">
+        <section id="pourqui" className="py-24 bg-white dark:bg-proofchains-inverse-surface">
             <div className="container mx-auto px-4 lg:px-8">
                 <div className="text-center mb-16">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium mb-6">

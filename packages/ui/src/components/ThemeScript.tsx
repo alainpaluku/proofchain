@@ -1,5 +1,5 @@
 /**
- * PROOFCHAIN UI - Theme Script Component
+ * PROOFCHAINS UI - Theme Script Component
  * Script inline pour éviter le flash de thème au chargement
  */
 
