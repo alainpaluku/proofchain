@@ -39,8 +39,8 @@ export default function AdminDashboard() {
     const statsCards = [
         {
             icon: Building2,
-            iconBgClass: 'bg-purple-100 dark:bg-purple-900/30',
-            iconClass: 'text-purple-600 dark:text-purple-400',
+            iconBgClass: 'bg-purple-100 dark:bg-primary-900/30',
+            iconClass: 'text-primary-600 dark:text-primary-400',
             value: loading ? '...' : String(stats?.totalInstitutions || 0),
             label: t('admin', 'registeredInstitutions'),
             change: `${stats?.approvedKYC || 0} ${t('admin', 'approved')}`
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Link
                     href="/kyc-validation"
-                    className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl p-6 text-white hover:shadow-xl transition-all hover:-translate-y-1"
+                    className="bg-primary-950 rounded-2xl p-6 text-white hover:shadow-sm transition-all "
                 >
                     <FileCheck className="w-8 h-8 mb-3" />
                     <h3 className="text-xl font-bold mb-2">{t('admin', 'validateKYC')}</h3>
@@ -114,7 +114,7 @@ export default function AdminDashboard() {
 
                 <Link
                     href="/institutions"
-                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all hover:-translate-y-1"
+                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:shadow-sm transition-all "
                 >
                     <Building2 className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('admin', 'manageInstitutions')}</h3>
@@ -123,7 +123,7 @@ export default function AdminDashboard() {
 
                 <Link
                     href="/subscriptions"
-                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all hover:-translate-y-1"
+                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:shadow-sm transition-all "
                 >
                     <CreditCard className="w-8 h-8 text-green-600 dark:text-green-400 mb-3" />
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('nav', 'subscriptions')}</h3>

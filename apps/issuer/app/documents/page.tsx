@@ -146,7 +146,7 @@ export default function DocumentsPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                        <FileText className="w-7 h-7 sm:w-8 sm:h-8 text-purple-600" />
+                        <FileText className="w-7 h-7 sm:w-8 sm:h-8 text-primary-600" />
                         {t('documents', 'title')}
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
@@ -173,7 +173,7 @@ export default function DocumentsPage() {
             )}
 
             {/* Filtres */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1 relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -204,13 +204,13 @@ export default function DocumentsPage() {
             {/* Liste des documents */}
             <div className="space-y-4">
                 {filteredDocuments.length === 0 ? (
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-12 text-center">
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
                         <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                         <p className="text-gray-600 dark:text-gray-400">{t('documents', 'noDocuments')}</p>
                     </div>
                 ) : (
                     filteredDocuments.map((doc) => (
-                        <div key={doc.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 hover:shadow-xl transition-all">
+                        <div key={doc.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-sm transition-all">
                             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                                 <div className="flex-1">
                                     <div className="flex items-center gap-3 mb-2">
@@ -243,7 +243,7 @@ export default function DocumentsPage() {
                                                 href={`${landingUrl}/verify/${doc.document_id}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="p-2 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-colors"
+                                                className="p-2 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                                                 title={t('documents', 'verify')}
                                             >
                                                 <QrCode className="w-5 h-5" />
@@ -288,7 +288,7 @@ export default function DocumentsPage() {
             {/* Modal de révocation */}
             {showRevokeModal && revokeDoc && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full p-6">
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm max-w-md w-full p-6">
                         <div className="flex items-center justify-between mb-4">
                             <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('documents', 'revoke_title')}</h3>
                             <button

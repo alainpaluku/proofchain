@@ -134,7 +134,7 @@ export default function KYCValidationPage() {
         <div className="p-6 space-y-6 max-w-7xl mx-auto">
             <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                    <FileCheck className="w-8 h-8 text-purple-600" />
+                    <FileCheck className="w-8 h-8 text-primary-600" />
                     {t('admin', 'kycValidationTitle')}
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400 mt-1">
@@ -175,7 +175,7 @@ export default function KYCValidationPage() {
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-bold text-gray-900 dark:text-white">{request.institutionName}</h3>
-                                        <p className="text-sm text-purple-600 font-medium">{getTypeLabel(request.type)}</p>
+                                        <p className="text-sm text-primary-600 font-medium">{getTypeLabel(request.type)}</p>
                                         <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
                                             <p className="flex items-center gap-2"><Mail className="w-4 h-4" />{request.email}</p>
                                             {request.phone && <p className="flex items-center gap-2"><Phone className="w-4 h-4" />{request.phone}</p>}
@@ -194,7 +194,7 @@ export default function KYCValidationPage() {
 
                             <button
                                 onClick={() => openModal(request)}
-                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl font-semibold"
+                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary-900 hover:bg-black text-white rounded-xl font-semibold"
                             >
                                 <FileCheck className="w-5 h-5" />
                                 {t('admin', 'validateThisInstitution')}
@@ -207,7 +207,7 @@ export default function KYCValidationPage() {
             {showModal && selectedRequest && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center">
                     <div className="absolute inset-0 bg-black/60" onClick={closeModal} />
-                    <div className="relative w-full max-w-lg mx-4 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl">
+                    <div className="relative w-full max-w-lg mx-4 bg-white dark:bg-gray-800 rounded-2xl shadow">
                         <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
                             <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin', 'validateInstitutionTitle')}</h2>
                             <button onClick={closeModal} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
@@ -217,8 +217,8 @@ export default function KYCValidationPage() {
 
                         <div className="p-6">
                             <div className="text-center mb-6">
-                                <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
-                                    <Building2 className="w-8 h-8 text-purple-600" />
+                                <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                                    <Building2 className="w-8 h-8 text-primary-600" />
                                 </div>
                                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">{selectedRequest.institutionName}</h3>
                                 <p className="text-gray-600 dark:text-gray-400">{selectedRequest.email}</p>

@@ -1,17 +1,17 @@
 /**
  * PROOFCHAIN UI - Card Component
- * Composant de carte réutilisable avec variants
+ * Auralis System - Tonal Layering style
  */
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 
 export interface CardProps {
     children: React.ReactNode;
     className?: string;
-    variant?: 'default' | 'bordered' | 'gradient';
-    padding?: 'sm' | 'md' | 'lg';
+    variant?: 'default' | 'recessed' | 'elevated' | 'primary';
+    padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
     hover?: boolean;
+    onClick?: () => void;
 }
 
 export function Card({ 
@@ -19,54 +19,66 @@ export function Card({
     className = '', 
     variant = 'default',
     padding = 'md',
-    hover = false 
+    hover = false,
+    onClick
 }: CardProps) {
-    const baseClasses = 'rounded-2xl transition-all';
+    const baseClasses = 'rounded-xl transition-all duration-300'; // xl is 1.5rem / 24px as per Auralis
     
     const variantClasses = {
-        default: 'bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700',
-        bordered: 'bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700',
-        gradient: 'bg-gradient-to-br from-purple-600 to-blue-600 text-white'
+        // White cards (#FCFCFB / White) represent the highest interactive surface level.
+        // Must have a 1px border of #E7E7E4
+        default: 'bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant',
+        // Recessed Layer: Panels (#F3F2EF) which are used for sidebars, secondary navigation, or groupings.
+        // These should appear "cut into" the base.
+        recessed: 'bg-auralis-surface-container-low dark:bg-black/20 border border-transparent',
+        // Elevated: White cards with slight depth (though Auralis favors borders, we can add a subtle glow)
+        elevated: 'bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest shadow-sm',
+        primary: 'bg-primary-600 text-white'
     };
     
     const paddingClasses = {
+        none: '',
         sm: 'p-4',
         md: 'p-6',
-        lg: 'p-8'
+        lg: 'p-8',
+        xl: 'p-10'
     };
     
-    const hoverClasses = hover ? 'hover:shadow-xl hover:-translate-y-1' : '';
+    const hoverClasses = hover ? 'hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-md' : '';
     
     return (
-        <div className={`${baseClasses} ${variantClasses[variant]} ${paddingClasses[padding]} ${hoverClasses} ${className}`}>
+        <div
+            className={`${baseClasses} ${variantClasses[variant]} ${paddingClasses[padding]} ${hoverClasses} ${className}`}
+            onClick={onClick}
+        >
             {children}
         </div>
     );
 }
 
 export interface CardHeaderProps {
-    icon?: LucideIcon;
+    icon?: React.ElementType;
     iconColor?: string;
     title: string;
     subtitle?: string;
     action?: React.ReactNode;
 }
 
-export function CardHeader({ icon: Icon, iconColor = 'text-purple-600', title, subtitle, action }: CardHeaderProps) {
+export function CardHeader({ icon: Icon, iconColor = 'text-primary-600', title, subtitle, action }: CardHeaderProps) {
     return (
         <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
                 {Icon && (
-                    <div className={`p-2 rounded-xl ${iconColor}`}>
+                    <div className={`p-2.5 rounded-lg bg-auralis-surface-container-low dark:bg-white/5 ${iconColor}`}>
                         <Icon className="w-6 h-6" />
                     </div>
                 )}
                 <div>
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                    <h3 className="text-xl font-bold text-auralis-on-surface dark:text-white leading-tight">
                         {title}
-                    </h2>
+                    </h3>
                     {subtitle && (
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        <p className="text-sm text-auralis-on-surface-variant dark:text-gray-400 mt-1">
                             {subtitle}
                         </p>
                     )}
@@ -78,31 +90,31 @@ export function CardHeader({ icon: Icon, iconColor = 'text-purple-600', title, s
 }
 
 export interface StatCardProps {
-    icon: LucideIcon;
-    iconBgClass: string;
-    iconClass: string;
+    icon: React.ElementType;
+    iconBgClass?: string;
+    iconClass?: string;
     value: string | number;
     label: string;
     change?: string;
 }
 
-export function StatCard({ icon: Icon, iconBgClass, iconClass, value, label, change }: StatCardProps) {
+export function StatCard({ icon: Icon, iconBgClass = 'bg-primary-50 dark:bg-primary-900/20', iconClass = 'text-primary-600', value, label, change }: StatCardProps) {
     return (
         <Card>
             <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 rounded-xl ${iconBgClass}`}>
+                <div className={`p-3 rounded-lg ${iconBgClass}`}>
                     <Icon className={`w-6 h-6 ${iconClass}`} />
                 </div>
                 {change && (
-                    <span className={`text-sm font-medium ${change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
+                    <span className={`text-sm font-semibold ${change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
                         {change}
                     </span>
                 )}
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+            <h3 className="text-3xl font-bold text-auralis-on-surface dark:text-white mb-1">
                 {value}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="label-caps text-auralis-on-surface-variant dark:text-gray-400">
                 {label}
             </p>
         </Card>
@@ -110,7 +122,7 @@ export function StatCard({ icon: Icon, iconBgClass, iconClass, value, label, cha
 }
 
 export interface EmptyStateProps {
-    icon: LucideIcon;
+    icon: React.ElementType;
     title: string;
     description: string;
     action?: React.ReactNode;
@@ -118,17 +130,17 @@ export interface EmptyStateProps {
 
 export function EmptyState({ icon: Icon, title, description, action }: EmptyStateProps) {
     return (
-        <Card className="text-center" padding="lg">
-            <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon className="w-10 h-10 text-gray-400 dark:text-gray-500" />
+        <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+            <div className="w-16 h-16 bg-auralis-surface-container-low dark:bg-white/5 rounded-2xl flex items-center justify-center mb-6">
+                <Icon className="w-8 h-8 text-auralis-outline" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-xl font-bold text-auralis-on-surface dark:text-white mb-2">
                 {title}
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-auralis-on-surface-variant dark:text-gray-400 max-w-sm mb-8">
                 {description}
             </p>
-            {action && <div className="mt-6">{action}</div>}
-        </Card>
+            {action}
+        </div>
     );
 }

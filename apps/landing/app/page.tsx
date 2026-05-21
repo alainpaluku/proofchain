@@ -1,6 +1,6 @@
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
-import { Navbar } from '../components/Navbar';
+import React, { useState, useEffect } from 'react';
+import { Navbar } from '@proofchain/ui';
 import { HeroSection } from '../components/sections/HeroSection';
 import { StatsSection } from '../components/sections/StatsSection';
 import { VideoPresentationSection } from '../components/sections/VideoPresentationSection';
@@ -15,58 +15,69 @@ import { FaqSection } from '../components/sections/FaqSection';
 import DocumentationSection from '../components/DocumentationSection';
 import { CtaSection } from '../components/sections/CtaSection';
 import { Footer } from '../components/Footer';
+import { useTranslation } from '@proofchain/ui';
+import { ProofchainsLogo } from '../components/ProofchainsLogo';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 export default function ProofchainsPage() {
-    const [isScrolled, setIsScrolled] = useState(false);
     const [mounted, setMounted] = useState(false);
-    const [theme, setTheme] = useState('light');
+    const { t } = useTranslation();
 
     useEffect(() => { setMounted(true); }, []);
 
-    useEffect(() => {
-        if (!mounted) return;
-        const saved = localStorage.getItem('theme');
-        if (saved) {
-            setTheme(saved);
-            document.documentElement.classList.toggle('dark', saved === 'dark');
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            setTheme('dark');
-            document.documentElement.classList.add('dark');
-        }
-    }, [mounted]);
-
-    const toggleTheme = useCallback(() => {
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-        document.documentElement.classList.toggle('dark', newTheme === 'dark');
-    }, [theme]);
-
-    useEffect(() => {
-        const h = () => setIsScrolled(window.scrollY > 20);
-        window.addEventListener('scroll', h, { passive: true });
-        return () => window.removeEventListener('scroll', h);
-    }, []);
-
     if (!mounted) return null;
 
+    const navItems = [
+        { label: t('nav', 'home'), href: '#accueil' },
+        { label: t('nav', 'features'), href: '#features' },
+        { label: t('nav', 'forWho'), href: '#pourqui' },
+        { label: t('nav', 'faq'), href: '#faq' }
+    ];
+
+    const logo = (
+        <div className="flex items-center gap-3 group">
+            <div className="p-2 rounded-lg bg-primary-900 dark:bg-primary-600 transition-all duration-300">
+                <ProofchainsLogo size={24} className="text-white" />
+            </div>
+            <span className="text-xl font-bold text-auralis-on-surface dark:text-white tracking-tight">
+                AURALIS <span className="text-primary-600">SYSTEM</span> <span className="text-xs font-medium opacity-50">a proofchain</span>
+            </span>
+        </div>
+    );
+
+    const navAction = (
+        <a
+            href="#verify"
+            className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-primary-900 dark:bg-primary-600 hover:bg-black dark:hover:bg-primary-500 text-white text-sm font-bold rounded-lg transition-all shadow-sm "
+        >
+            <MagnifyingGlassIcon className="w-4 h-4" />
+            {t('nav', 'verify')}
+        </a>
+    );
+
     return (
-        <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white overflow-x-hidden">
-            <Navbar theme={theme} toggleTheme={toggleTheme} isScrolled={isScrolled} />
+        <div className="min-h-screen bg-auralis-surface dark:bg-auralis-inverse-surface text-auralis-on-surface dark:text-auralis-inverse-on-surface overflow-x-hidden">
+            <Navbar
+                logo={logo}
+                items={navItems}
+                action={navAction}
+            />
             
-            <HeroSection />
-            <StatsSection />
-            <VideoPresentationSection />
-            <VideoDemoSection />
-            <ProblemSection />
-            <FeaturesSection />
-            <StakeholdersSection />
-            <HowItWorksSection />
-            <TechStackSection />
-            <IssuersSection />
-            <FaqSection />
-            <DocumentationSection />
-            <CtaSection />
+            <main className="pt-20">
+                <HeroSection />
+                <StatsSection />
+                <VideoPresentationSection />
+                <VideoDemoSection />
+                <ProblemSection />
+                <FeaturesSection />
+                <StakeholdersSection />
+                <HowItWorksSection />
+                <TechStackSection />
+                <IssuersSection />
+                <FaqSection />
+                <DocumentationSection />
+                <CtaSection />
+            </main>
             
             <Footer />
         </div>

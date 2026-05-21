@@ -43,8 +43,8 @@ export default function ResetPasswordPage() {
 
     if (success) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4">
-                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+            <div className="min-h-screen flex items-center justify-center bg-auralis-surface dark:bg-auralis-inverse-surface p-4">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8 max-w-md w-full text-center">
                     <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Mot de passe mis à jour !</h1>
                     <p className="text-gray-600 dark:text-gray-400">Redirection...</p>
@@ -54,10 +54,10 @@ export default function ResetPasswordPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-md w-full">
+        <div className="min-h-screen flex items-center justify-center bg-auralis-surface dark:bg-auralis-inverse-surface p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8 max-w-md w-full">
                 <div className="text-center mb-8">
-                    <Lock className="w-12 h-12 text-purple-600 mx-auto mb-4" />
+                    <Lock className="w-12 h-12 text-primary-600 mx-auto mb-4" />
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Nouveau mot de passe</h1>
                 </div>
 

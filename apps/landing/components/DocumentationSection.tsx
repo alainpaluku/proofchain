@@ -20,7 +20,7 @@ export default function DocumentationSection() {
     };
 
     return (
-        <section id="documentation" className="py-20 bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <section id="documentation" className="py-20 bg-auralis-surface dark:bg-auralis-inverse-surface">
             <div className="container mx-auto px-4">
                 <div className="max-w-4xl mx-auto text-center">
                     {/* Header */}
@@ -34,9 +34,9 @@ export default function DocumentationSection() {
                     </div>
 
                     {/* Description Card */}
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12 mb-8 border border-gray-100 dark:border-gray-700">
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8 md:p-12 mb-8 border border-gray-100 dark:border-gray-700">
                         <div className="flex items-center justify-center mb-6">
-                            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                            <div className="w-16 h-16 bg-primary-900 rounded-full flex items-center justify-center">
                                 <BookOpen className="w-8 h-8 text-white" />
                             </div>
                         </div>
@@ -49,7 +49,7 @@ export default function DocumentationSection() {
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <button
                                 onClick={handleReadGuide}
-                                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-900 hover:bg-black text-white font-semibold rounded-2xl transition-all duration-300 shadow-sm hover:shadow-sm "
                             >
                                 <BookOpen className="w-5 h-5" />
                                 {t('landing', 'readGuide')}
@@ -57,7 +57,7 @@ export default function DocumentationSection() {
                             
                             <button
                                 onClick={handleDownloadGuide}
-                                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 border-2 border-gray-200 dark:border-gray-600"
+                                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold rounded-2xl transition-all duration-300 shadow-sm hover:shadow-sm  border-2 border-gray-200 dark:border-gray-600"
                             >
                                 <Download className="w-5 h-5" />
                                 {t('landing', 'downloadGuide')}

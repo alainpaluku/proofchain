@@ -48,7 +48,7 @@ export function Logo({
 
     const content = (
         <>
-            <div className="group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+            <div className=" transition-transform duration-200 flex-shrink-0">
                 <ProofchainLogoSVG 
                     size={config.logoSize} 
                     color="#6ecaff"

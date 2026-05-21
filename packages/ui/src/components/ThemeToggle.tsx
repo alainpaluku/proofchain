@@ -1,174 +1,69 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon, Monitor } from 'lucide-react';
+import { SunIcon, MoonIcon, ComputerDesktopIcon, ChevronDownIcon, CheckIcon } from '@heroicons/react/24/solid';
+import { Menu, Transition } from '@headlessui/react';
+import { useTheme } from '../hooks/useTheme';
 
-type Theme = 'light' | 'dark' | 'system';
-
-// Apply theme changes to document
-const applyTheme = (newTheme: Theme) => {
-    const root = document.documentElement;
-    
-    if (newTheme === 'dark') {
-        root.classList.add('dark');
-    } else if (newTheme === 'light') {
-        root.classList.remove('dark');
-    } else {
-        // System theme
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (prefersDark) {
-            root.classList.add('dark');
-        } else {
-            root.classList.remove('dark');
-        }
-    }
-};
-
-/**
- * Theme toggle component with light, dark, and system modes
- * 
- * Features:
- * - Three theme options: light, dark, system
- * - Persists selection to localStorage
- * - Applies theme immediately
- * - Accessible dropdown menu
- */
 export function ThemeToggle() {
-    const [theme, setTheme] = useState<Theme>('system');
-    const [mounted, setMounted] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-    // Load theme from localStorage on mount and apply it
-    useEffect(() => {
-        setMounted(true);
-        const savedTheme = (localStorage.getItem('theme') as Theme) || 'system';
-        setTheme(savedTheme);
-        applyTheme(savedTheme);
-    }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-    // Listen for system theme changes
-    useEffect(() => {
-        if (!mounted || theme !== 'system') return;
+  if (!mounted) {
+    return <div className="w-10 h-10 rounded-lg bg-auralis-surface-container-low dark:bg-white/5 border border-auralis-surface-highest dark:border-auralis-on-surface-variant " />;
+  }
 
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const handleChange = () => {
-            applyTheme('system');
-        };
+  const themes = [
+    { id: 'light', name: 'Clair', icon: SunIcon },
+    { id: 'dark', name: 'Sombre', icon: MoonIcon },
+    { id: 'system', name: 'Système', icon: ComputerDesktopIcon },
+  ];
 
-        mediaQuery.addEventListener('change', handleChange);
-        return () => mediaQuery.removeEventListener('change', handleChange);
-    }, [mounted, theme]);
+  const CurrentIcon = themes.find(t => t.id === theme)?.icon || ComputerDesktopIcon;
 
-    // Listen for storage changes (theme changes in other tabs)
-    useEffect(() => {
-        if (!mounted) return;
+  return (
+    <Menu as="div" className="relative">
+      <Menu.Button
+        className="flex items-center justify-center w-10 h-10 rounded-lg bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant text-auralis-on-surface dark:text-white hover:bg-auralis-surface-container-low dark:hover:bg-white/5 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+        aria-label="Changer le thème"
+      >
+        <CurrentIcon className="w-5 h-5" />
+      </Menu.Button>
 
-        const handleStorageChange = (e: StorageEvent) => {
-            if (e.key === 'theme' && e.newValue) {
-                const newTheme = e.newValue as Theme;
-                setTheme(newTheme);
-                applyTheme(newTheme);
-            }
-        };
-
-        window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
-    }, [mounted]);
-
-    // Handle theme change
-    const handleThemeChange = (newTheme: Theme) => {
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-        applyTheme(newTheme);
-        setIsOpen(false);
-    };
-
-    // Don't render until mounted to avoid hydration mismatch
-    if (!mounted) {
-        return (
-            <div className="w-[44px] h-[44px] rounded-xl bg-gray-100 dark:bg-gray-700 animate-pulse" />
-        );
-    }
-
-    const themeIcons = {
-        light: Sun,
-        dark: Moon,
-        system: Monitor,
-    };
-
-    const CurrentIcon = themeIcons[theme];
-
-    return (
-        <div className="relative">
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="p-2 min-w-[44px] min-h-[44px] rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                aria-label="Changer le thème"
-                aria-expanded={isOpen}
-                aria-haspopup="true"
-            >
-                <CurrentIcon className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-            </button>
-
-            {isOpen && (
-                <>
-                    {/* Backdrop */}
-                    <div
-                        className="fixed inset-0 z-40"
-                        onClick={() => setIsOpen(false)}
-                    />
-                    
-                    {/* Dropdown Menu */}
-                    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
-                        <div className="py-1">
-                            <button
-                                onClick={() => handleThemeChange('light')}
-                                className={`w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
-                                    theme === 'light' ? 'bg-gray-50 dark:bg-gray-700/50' : ''
-                                }`}
-                            >
-                                <Sun className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Clair
-                                </span>
-                                {theme === 'light' && (
-                                    <div className="ml-auto w-2 h-2 rounded-full bg-purple-600" />
-                                )}
-                            </button>
-                            
-                            <button
-                                onClick={() => handleThemeChange('dark')}
-                                className={`w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
-                                    theme === 'dark' ? 'bg-gray-50 dark:bg-gray-700/50' : ''
-                                }`}
-                            >
-                                <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Sombre
-                                </span>
-                                {theme === 'dark' && (
-                                    <div className="ml-auto w-2 h-2 rounded-full bg-purple-600" />
-                                )}
-                            </button>
-                            
-                            <button
-                                onClick={() => handleThemeChange('system')}
-                                className={`w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
-                                    theme === 'system' ? 'bg-gray-50 dark:bg-gray-700/50' : ''
-                                }`}
-                            >
-                                <Monitor className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Système
-                                </span>
-                                {theme === 'system' && (
-                                    <div className="ml-auto w-2 h-2 rounded-full bg-purple-600" />
-                                )}
-                            </button>
-                        </div>
-                    </div>
-                </>
-            )}
-        </div>
-    );
+      <Transition
+        as={React.Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white dark:bg-auralis-inverse-surface border border-auralis-surface-highest dark:border-auralis-on-surface-variant rounded-xl shadow py-1.5 z-50 focus:outline-none">
+          {themes.map((t) => (
+            <Menu.Item key={t.id}>
+              {({ active }) => (
+                <button
+                  onClick={() => setTheme(t.id as any)}
+                  className={`w-full flex items-center justify-between px-3 py-2 text-sm font-semibold transition-colors ${
+                    active ? 'bg-auralis-surface-container-low dark:bg-white/5 text-primary-600 dark:text-primary-400' : 'text-auralis-on-surface dark:text-gray-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <t.icon className="w-4 h-4 opacity-70" />
+                    {t.name}
+                  </div>
+                  {theme === t.id && <CheckIcon className="w-4 h-4 text-primary-500" />}
+                </button>
+              )}
+            </Menu.Item>
+          ))}
+        </Menu.Items>
+      </Transition>
+    </Menu>
+  );
 }

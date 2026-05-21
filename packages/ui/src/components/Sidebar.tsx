@@ -1,6 +1,6 @@
 /**
  * PROOFCHAIN - Sidebar Navigation Component
- * Reusable sidebar for all applications with collapse support
+ * Auralis System - Recessed style with Heroicons
  */
 
 'use client';
@@ -8,12 +8,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LucideIcon } from 'lucide-react';
 
 export interface SidebarItem {
     label: string;
     href: string;
-    icon: LucideIcon;
+    icon: React.ElementType;
     badge?: string | number;
 }
 
@@ -37,7 +36,6 @@ export function Sidebar({
     const pathname = usePathname();
 
     const handleLinkClick = () => {
-        // Close mobile menu when a link is clicked
         onClose?.();
     };
 
@@ -45,16 +43,16 @@ export function Sidebar({
         <aside
             className={`
                 ${collapsed ? 'w-20' : 'w-64'} 
-                h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800
+                h-screen bg-auralis-surface-container-low dark:bg-auralis-inverse-surface border-r border-auralis-surface-highest dark:border-auralis-on-surface-variant
                 flex flex-col fixed left-0 top-0 z-40 transition-all duration-300
                 ${className}
             `}
         >
-            {/* Logo */}
+            {/* Logo area - Clean and centered */}
             {logo && (
                 <div className={`
-                    ${collapsed ? 'p-4' : 'p-6'} 
-                    border-b border-gray-200 dark:border-gray-800 
+                    ${collapsed ? 'p-4' : 'p-8'}
+                    border-b border-auralis-surface-highest dark:border-auralis-on-surface-variant
                     transition-all duration-300
                     ${collapsed ? 'flex justify-center' : ''}
                 `}>
@@ -62,8 +60,8 @@ export function Sidebar({
                 </div>
             )}
 
-            {/* Navigation */}
-            <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+            {/* Navigation - Recessed list style */}
+            <nav className="flex-1 overflow-y-auto p-4 space-y-1.5">
                 {items.map((item) => {
                     const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
                     const Icon = item.icon;
@@ -75,20 +73,20 @@ export function Sidebar({
                             onClick={handleLinkClick}
                             className={`
                                 flex items-center ${collapsed ? 'justify-center' : 'gap-3'} 
-                                px-4 py-3 rounded-lg transition-all
+                                px-4 py-3 rounded-lg transition-all duration-200
                                 ${isActive
-                                    ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-medium'
-                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                                    ? 'bg-primary-900 dark:bg-primary-600 text-white shadow-sm font-bold'
+                                    : 'text-auralis-on-surface-variant dark:text-gray-400 hover:bg-auralis-surface-container dark:hover:bg-white/5 hover:text-auralis-on-surface dark:hover:text-white'
                                 }
                             `}
                             title={collapsed ? item.label : undefined}
                         >
-                            <Icon className="w-5 h-5 flex-shrink-0" />
+                            <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-auralis-outline'}`} />
                             {!collapsed && (
                                 <>
-                                    <span className="flex-1">{item.label}</span>
+                                    <span className="flex-1 truncate">{item.label}</span>
                                     {item.badge && (
-                                        <span className="px-2 py-0.5 text-xs font-semibold bg-purple-600 text-white rounded-full">
+                                        <span className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${isActive ? 'bg-white/20 text-white' : 'bg-primary-600 text-white'}`}>
                                             {item.badge}
                                         </span>
                                     )}
@@ -99,9 +97,9 @@ export function Sidebar({
                 })}
             </nav>
 
-            {/* Footer */}
+            {/* Footer with tonal border */}
             {footer && !collapsed && (
-                <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+                <div className="p-6 border-t border-auralis-surface-highest dark:border-auralis-on-surface-variant bg-auralis-surface-container-low dark:bg-auralis-inverse-surface">
                     {footer}
                 </div>
             )}

@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Wallet, LogOut, ChevronDown } from 'lucide-react';
+import { WalletIcon, ArrowLeftOnRectangleIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
 import { useWallet, WalletType } from '../hooks/useWallet';
 import { WalletSelector } from './WalletSelector';
+import { Button } from './Button';
 
 interface ConnectWalletButtonProps {
     className?: string;
@@ -44,18 +45,6 @@ export function ConnectWalletButton({
 
     React.useEffect(() => { setMounted(true); }, []);
 
-    const sizeClasses = {
-        sm: 'px-3 py-1.5 text-sm',
-        md: 'px-4 py-2 text-base',
-        lg: 'px-6 py-3 text-lg',
-    };
-
-    const variantClasses = {
-        primary: 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white',
-        secondary: 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white',
-        outline: 'border-2 border-purple-600 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/20',
-    };
-
     const handleConnect = () => {
         setShowSelector(true);
     };
@@ -68,10 +57,9 @@ export function ConnectWalletButton({
     if (!mounted) {
         return (
             <div className={`flex items-center gap-2 ${className}`}>
-                <button disabled className={`flex items-center gap-2 rounded-lg font-medium transition-all ${sizeClasses[size]} ${variantClasses[variant]} opacity-50`}>
-                    <Wallet className="w-4 h-4" />
-                    Connecter le portefeuille
-                </button>
+                <Button disabled variant={variant} size={size} icon={WalletIcon}>
+                    Connecter
+                </Button>
             </div>
         );
     }
@@ -82,13 +70,14 @@ export function ConnectWalletButton({
     if (!hasAvailableWallet) {
         return (
             <div className={`flex items-center gap-2 ${className}`}>
-                <button 
+                <Button
                     onClick={handleConnect}
-                    className={`flex items-center gap-2 rounded-lg font-medium transition-all ${sizeClasses[size]} ${variantClasses[variant]}`}
+                    variant={variant}
+                    size={size}
+                    icon={WalletIcon}
                 >
-                    <Wallet className="w-4 h-4" />
                     Installer un portefeuille
-                </button>
+                </Button>
                 <WalletSelector 
                     isOpen={showSelector} 
                     onClose={() => setShowSelector(false)}
@@ -102,17 +91,17 @@ export function ConnectWalletButton({
         <>
             <div className={`flex items-center gap-2 ${className}`}>
                 {connected && showBalance && balance && (
-                    <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{balance} ₳</span>
+                    <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-auralis-surface-container-low dark:bg-white/5 rounded-lg border border-auralis-outline-variant dark:border-auralis-on-surface-variant">
+                        <span className="text-sm font-semibold text-auralis-on-surface dark:text-white">{balance} ₳</span>
                     </div>
                 )}
 
                 {connected ? (
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center">
                         {/* Wallet info badge */}
-                        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-green-100 dark:bg-green-900/30 rounded-l-lg border-r border-green-200 dark:border-green-800">
-                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                            <span className="text-sm font-medium text-green-700 dark:text-green-400">
+                        <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 rounded-l-lg border border-r-0 border-green-200 dark:border-green-800">
+                            <div className="w-2 h-2 bg-green-500 rounded-full " />
+                            <span className="text-sm font-bold text-green-700 dark:text-green-400">
                                 {walletType ? walletNames[walletType] : 'Connecté'}
                             </span>
                         </div>
@@ -121,37 +110,30 @@ export function ConnectWalletButton({
                         <button 
                             onClick={disconnect} 
                             disabled={isLoading} 
-                            className={`flex items-center gap-2 rounded-lg sm:rounded-l-none font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${sizeClasses[size]} bg-red-500 hover:bg-red-600 text-white`}
+                            className="flex items-center gap-2 px-4 py-2 bg-error text-white font-bold rounded-r-lg hover:bg-red-700 transition-colors disabled:opacity-50"
                         >
-                            <LogOut className="w-4 h-4" />
+                            <ArrowLeftOnRectangleIcon className="w-5 h-5" />
                             <span className="hidden sm:inline">Déconnecter</span>
                             <span className="sm:hidden">{address?.slice(0, 6)}...{address?.slice(-4)}</span>
                         </button>
                     </div>
                 ) : (
-                    <button 
+                    <Button
                         onClick={handleConnect} 
-                        disabled={isLoading} 
-                        className={`flex items-center gap-2 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${sizeClasses[size]} ${variantClasses[variant]}`}
+                        loading={isLoading}
+                        variant={variant}
+                        size={size}
+                        icon={WalletIcon}
+                        iconPosition="left"
                     >
-                        {isLoading ? (
-                            <>
-                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                Connexion...
-                            </>
-                        ) : (
-                            <>
-                                <Wallet className="w-4 h-4" />
-                                Connecter
-                                <ChevronDown className="w-4 h-4" />
-                            </>
-                        )}
-                    </button>
+                        Connecter
+                        <ChevronDownIcon className="w-4 h-4 ml-1" />
+                    </Button>
                 )}
             </div>
 
             {error && (
-                <div className="fixed bottom-4 right-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-600 dark:text-red-400 max-w-xs shadow-lg z-50">
+                <div className="fixed bottom-4 right-4 p-4 bg-error-container text-error border border-error/20 rounded-lg text-sm font-bold shadow-sm z-50">
                     {error}
                 </div>
             )}

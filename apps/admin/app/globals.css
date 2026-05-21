@@ -3,23 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 28, 27, 27; /* on-surface #1c1b1b */
+    --background-rgb: 253, 248, 248; /* surface #fdf8f8 */
 }
 
 .dark {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 244, 240, 239; /* inverse-on-surface */
+    --background-rgb: 49, 48, 48; /* inverse-surface */
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-rgb));
+}
+
+@layer base {
+    *:focus-visible {
+        @apply outline-none ring-2 ring-primary-600 ring-offset-2 dark:ring-primary-400 dark:ring-offset-gray-900;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+        @apply outline-none ring-2 ring-primary-600 ring-offset-2 dark:ring-primary-400 dark:ring-offset-gray-900;
+    }
 }

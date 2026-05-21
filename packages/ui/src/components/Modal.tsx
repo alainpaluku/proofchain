@@ -71,7 +71,7 @@ export function Modal({
             aria-labelledby="modal-title"
         >
             <div
-                className={`w-full ${sizeClasses[size]} bg-white dark:bg-gray-800 rounded-2xl shadow-2xl transform transition-all`}
+                className={`w-full ${sizeClasses[size]} bg-white dark:bg-gray-800 rounded-2xl shadow transform transition-all`}
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}

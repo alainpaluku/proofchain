@@ -310,7 +310,7 @@ export default function MintPage() {
                                             href={`${explorerUrl}/transaction/${mintResult.txHash}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-purple-600 hover:text-purple-700 font-mono text-sm flex items-center gap-2"
+                                            className="text-primary-600 hover:text-purple-700 font-mono text-sm flex items-center gap-2"
                                         >
                                             {mintResult.txHash?.substring(0, 20)}...
                                             <ExternalLink className="w-4 h-4" />
@@ -328,7 +328,7 @@ export default function MintPage() {
                                         <a
                                             href={qrCodeUrl}
                                             download={`diploma-qr-${documentId}.png`}
-                                            className="mt-3 flex items-center gap-2 text-sm text-purple-600 hover:text-purple-700"
+                                            className="mt-3 flex items-center gap-2 text-sm text-primary-600 hover:text-purple-700"
                                         >
                                             <Download className="w-4 h-4" />
                                             {t('mint', 'successModal_downloadQR')}
@@ -369,9 +369,9 @@ export default function MintPage() {
 
             {!mintResult?.success && (
                 <form onSubmit={handleMint} className="space-y-6">
-                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
                         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                            <Users className="w-6 h-6 text-purple-600" />
+                            <Users className="w-6 h-6 text-primary-600" />
                             {t('mint', 'selectStudent')}
                         </h2>
 
@@ -386,7 +386,7 @@ export default function MintPage() {
                                 <p className="text-gray-600 dark:text-gray-400 mb-4">
                                     {t('students', 'noStudents')}
                                 </p>
-                                <a href="/students" className="text-purple-600 hover:text-purple-700 font-medium">
+                                <a href="/students" className="text-primary-600 hover:text-purple-700 font-medium">
                                     {t('students', 'addStudent')} →
                                 </a>
                             </div>
@@ -426,7 +426,7 @@ export default function MintPage() {
                         )}
                     </div>
 
-                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
                         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                             {t('mint', 'diplomaDetails')}
                         </h2>
@@ -483,7 +483,7 @@ export default function MintPage() {
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
                         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                             {t('mint', 'uploadImage')}
                         </h2>
@@ -501,7 +501,7 @@ export default function MintPage() {
                                 className={`flex flex-col items-center justify-center w-full px-4 py-8 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${
                                     imageFile
                                         ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
-                                        : 'border-gray-300 dark:border-gray-600 hover:border-purple-600'
+                                        : 'border-gray-300 dark:border-gray-600 hover:border-primary-600'
                                 }`}
                             >
                                 {imagePreview ? (
@@ -519,7 +519,7 @@ export default function MintPage() {
                     <button
                         type="submit"
                         disabled={isUploading || isMinting || !connected || loadingStudents}
-                        className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-xl font-semibold text-lg transition-all shadow-lg disabled:cursor-not-allowed"
+                        className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-primary-900 hover:bg-black disabled:from-gray-400 disabled:to-gray-400 text-white rounded-xl font-semibold text-lg transition-all shadow-sm disabled:cursor-not-allowed"
                     >
                         {isUploading ? (
                             <>

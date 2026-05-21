@@ -113,12 +113,12 @@ export function AppLayout({
                             {showSidebarToggle && (
                                 <button
                                     onClick={toggleSidebar}
-                                    className="hidden md:flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-purple-100 dark:hover:bg-purple-900/30 border border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-700 transition-all duration-200 group"
+                                    className="hidden md:flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-purple-100 dark:hover:bg-primary-900/30 border border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-700 transition-all duration-200 group"
                                     aria-label={isSidebarCollapsed ? 'Ouvrir la sidebar' : 'Fermer la sidebar'}
                                     title={isSidebarCollapsed ? 'Ouvrir la sidebar' : 'Fermer la sidebar'}
                                 >
                                     <div className={`transition-transform duration-200 ${isSidebarCollapsed ? 'rotate-180' : ''}`}>
-                                        <ChevronLeft className="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-purple-600 dark:group-hover:text-purple-400" />
+                                        <ChevronLeft className="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400" />
                                     </div>
                                 </button>
                             )}

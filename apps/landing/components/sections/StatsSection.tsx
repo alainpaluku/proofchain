@@ -13,7 +13,7 @@ export function StatsSection() {
     ];
 
     return (
-        <section className="py-16 bg-gradient-to-b from-indigo-900 to-purple-900 relative">
+        <section className="py-16 bg-primary-900 relative">
             <div className="container mx-auto px-4 lg:px-8">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
                     {stats.map((stat, i) => (
@@ -21,7 +21,7 @@ export function StatsSection() {
                             <div className="text-4xl lg:text-5xl font-black text-white mb-2">
                                 <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                             </div>
-                            <p className="text-purple-200/70 font-medium">{stat.label}</p>
+                            <p className="text-primary-200/70 font-medium">{stat.label}</p>
                         </div>
                     ))}
                 </div>

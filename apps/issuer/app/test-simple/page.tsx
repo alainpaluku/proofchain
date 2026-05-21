@@ -14,7 +14,7 @@ export default function TestPage() {
 
     return (
         <div className="min-h-screen bg-gray-100 p-8">
-            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-8">
                 <h1 className="text-3xl font-bold mb-6">Test Simple</h1>
                 
                 {message && (

@@ -19,9 +19,9 @@ export function HowItWorksSection() {
                 </div>
                 <div className="max-w-4xl mx-auto">
                     <div className="relative">
-                        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-blue-500 to-green-500 hidden md:block" />
+                        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary-500 hidden md:block" />
                         {[
-                            { step: '01', title: t('landing', 'step1Title'), description: t('landing', 'step1Desc'), icon: Building2, color: 'purple' },
+                            { step: '01', title: t('landing', 'step1Title'), description: t('landing', 'step1Desc'), icon: Building2, color: 'primary' },
                             { step: '02', title: t('landing', 'step2Title'), description: t('landing', 'step2Desc'), icon: Shield, color: 'blue' },
                             { step: '03', title: t('landing', 'step3Title'), description: t('landing', 'step3Desc'), icon: CheckCircle, color: 'green' },
                         ].map((item, i) => (
@@ -30,7 +30,7 @@ export function HowItWorksSection() {
                                     <item.icon className={`w-8 h-8 text-${item.color}-600 dark:text-${item.color}-400`} />
                                 </div>
                                 <div className="flex-1 pt-2">
-                                    <div className="text-sm font-bold text-purple-600 dark:text-purple-400 mb-1">{t('landing', 'step')} {item.step}</div>
+                                    <div className="text-sm font-bold text-primary-600 dark:text-primary-400 mb-1">{t('landing', 'step')} {item.step}</div>
                                     <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
                                     <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">{item.description}</p>
                                 </div>
@@ -41,7 +41,7 @@ export function HowItWorksSection() {
                         <p className="text-gray-600 dark:text-gray-400 mb-6">
                             {t('landing', 'startIssuing')}
                         </p>
-                        <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105">
+                        <a href="https://issuer.proofchains.org/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl transition-all duration-300 shadow-sm  hover: ">
                             <Building2 className="w-5 h-5" />
                             {t('landing', 'accessIssuerPlatform')}
                             <ArrowRight className="w-5 h-5" />

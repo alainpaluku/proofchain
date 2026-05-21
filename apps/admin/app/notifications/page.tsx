@@ -128,7 +128,7 @@ export default function NotificationsPage() {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-                <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
             </div>
         );
     }
@@ -144,14 +144,14 @@ export default function NotificationsPage() {
                             </button>
                             <div>
                                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                                    <Bell className="w-6 h-6 text-purple-600" />
+                                    <Bell className="w-6 h-6 text-primary-600" />
                                     {t('admin', 'notificationsTitle')}
                                 </h1>
                                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{t('admin', 'unreadCount', { count: unreadCount })}</p>
                             </div>
                         </div>
                         {unreadCount > 0 && (
-                            <button onClick={markAllAsRead} className="text-sm text-purple-600 hover:text-purple-700 dark:text-purple-400 font-medium px-4 py-2 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors">
+                            <button onClick={markAllAsRead} className="text-sm text-primary-600 hover:text-purple-700 dark:text-primary-400 font-medium px-4 py-2 rounded-lg hover:bg-purple-100 dark:hover:bg-primary-900/30 transition-colors">
                                 {t('admin', 'markAllAsRead')}
                             </button>
                         )}
@@ -172,7 +172,7 @@ export default function NotificationsPage() {
                     <div className="space-y-3">
                         {notifications.map((notification) => (
                             <div key={notification.id} onClick={() => markAsRead(notification.id)}
-                                className={`bg-white dark:bg-gray-800 rounded-2xl p-5 cursor-pointer transition-all shadow-sm hover:shadow-md ${notification.read ? '' : 'ring-2 ring-purple-200 dark:ring-purple-800'}`}>
+                                className={`bg-white dark:bg-gray-800 rounded-2xl p-5 cursor-pointer transition-all shadow-sm hover:shadow-md ${notification.read ? '' : 'ring-2 ring-primary-200 dark:ring-purple-800'}`}>
                                 <div className="flex items-start gap-4">
                                     <div className="mt-1">{getIcon(notification.type, notification.title)}</div>
                                     <div className="flex-1 min-w-0">

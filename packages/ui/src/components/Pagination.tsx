@@ -1,12 +1,7 @@
-/**
- * PROOFCHAIN UI - Pagination Component
- * Composant de pagination réutilisable
- */
-
 'use client';
 
 import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
 export interface PaginationProps {
     currentPage: number;
@@ -68,53 +63,55 @@ export function Pagination({
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 rounded-lg border border-auralis-outline-variant dark:border-auralis-on-surface-variant hover:bg-auralis-surface-container-low dark:hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                 aria-label="Page précédente"
             >
-                <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                <ChevronLeftIcon className="w-5 h-5 text-auralis-on-surface dark:text-gray-300" />
             </button>
 
             {/* Page numbers */}
-            {pages.map((page, index) => {
-                if (page === '...') {
+            <div className="flex items-center gap-1">
+                {pages.map((page, index) => {
+                    if (page === '...') {
+                        return (
+                            <span
+                                key={`ellipsis-${index}`}
+                                className="w-10 text-center text-auralis-outline"
+                            >
+                                ...
+                            </span>
+                        );
+                    }
+
+                    const pageNum = page as number;
+                    const isActive = pageNum === currentPage;
+
                     return (
-                        <span
-                            key={`ellipsis-${index}`}
-                            className="px-3 py-2 text-gray-500 dark:text-gray-400"
+                        <button
+                            key={pageNum}
+                            onClick={() => onPageChange(pageNum)}
+                            className={`min-w-[40px] px-3 py-2 rounded-lg font-bold transition-all ${
+                                isActive
+                                    ? 'bg-primary-900 dark:bg-primary-600 text-white shadow-sm'
+                                    : 'border border-auralis-outline-variant dark:border-auralis-on-surface-variant text-auralis-on-surface dark:text-gray-300 hover:bg-auralis-surface-container-low dark:hover:bg-white/5'
+                            }`}
+                            aria-label={`Page ${pageNum}`}
+                            aria-current={isActive ? 'page' : undefined}
                         >
-                            ...
-                        </span>
+                            {pageNum}
+                        </button>
                     );
-                }
-
-                const pageNum = page as number;
-                const isActive = pageNum === currentPage;
-
-                return (
-                    <button
-                        key={pageNum}
-                        onClick={() => onPageChange(pageNum)}
-                        className={`min-w-[40px] px-3 py-2 rounded-lg font-medium transition-colors ${
-                            isActive
-                                ? 'bg-purple-600 text-white'
-                                : 'border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                        }`}
-                        aria-label={`Page ${pageNum}`}
-                        aria-current={isActive ? 'page' : undefined}
-                    >
-                        {pageNum}
-                    </button>
-                );
-            })}
+                })}
+            </div>
 
             {/* Next button */}
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 rounded-lg border border-auralis-outline-variant dark:border-auralis-on-surface-variant hover:bg-auralis-surface-container-low dark:hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                 aria-label="Page suivante"
             >
-                <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                <ChevronRightIcon className="w-5 h-5 text-auralis-on-surface dark:text-gray-300" />
             </button>
         </div>
     );
